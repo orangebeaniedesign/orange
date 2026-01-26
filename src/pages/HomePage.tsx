@@ -1,17 +1,16 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from "lucide-react";
 
 interface HomePageProps {
   onViewWork: () => void;
   onContact: () => void;
 }
 
+const BASE = import.meta.env.BASE_URL;
+
 export default function HomePage({ onViewWork, onContact }: HomePageProps) {
   return (
     <article className="bg-offwhite text-offblack">
-      {/* ------------------------------------------------------------------ */}
-      {/* HERO WITH SUBTLE VIDEO                                              */}
-      {/* ------------------------------------------------------------------ */}
-
+      {/* HERO WITH SUBTLE VIDEO */}
       <section className="relative min-h-screen flex items-center px-gutter overflow-hidden">
         {/* Background video */}
         <video
@@ -21,10 +20,10 @@ export default function HomePage({ onViewWork, onContact }: HomePageProps) {
           playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-20"
         >
-          <source src="/videos/hero.mp4" type="video/mp4" />
+          <source src={`${BASE}videos/hero.mp4`} type="video/mp4" />
         </video>
 
-        {/* Soft overlay for readability */}
+        {/* Overlay */}
         <div className="absolute inset-0 bg-offwhite/80" />
 
         {/* Content */}
@@ -33,13 +32,11 @@ export default function HomePage({ onViewWork, onContact }: HomePageProps) {
             Creative Direction & Design
           </span>
 
-          <h1 className="text-hero leading-[1.05] mb-12">
-            OrangeBeanie
-          </h1>
+          <h1 className="text-hero leading-[1.05] mb-12">OrangeBeanie</h1>
 
           <p className="text-display-md text-neutral-600 max-w-2xl leading-relaxed mb-16">
-            Brand identity, digital design and visual systems
-            for culture-driven brands.
+            Brand identity, digital design and visual systems for culture-driven
+            brands.
           </p>
 
           <button
@@ -54,22 +51,16 @@ export default function HomePage({ onViewWork, onContact }: HomePageProps) {
         </div>
       </section>
 
-      {/* ------------------------------------------------------------------ */}
-      {/* FEATURED PROJECT IMAGE                                              */}
-      {/* ------------------------------------------------------------------ */}
-
+      {/* FEATURED IMAGE */}
       <section className="py-section-lg">
         <img
-          src="/images/featured-project.jpg"
+          src={`${BASE}images/featured-project.jpg`}
           alt="Featured project"
           className="w-full h-[70vh] object-cover"
         />
       </section>
 
-      {/* ------------------------------------------------------------------ */}
-      {/* AREAS OF FOCUS                                                      */}
-      {/* ------------------------------------------------------------------ */}
-
+      {/* AREAS OF FOCUS */}
       <section className="py-section-lg px-gutter border-t border-neutral-200">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-display-lg mb-20">Areas of focus</h2>
@@ -78,40 +69,32 @@ export default function HomePage({ onViewWork, onContact }: HomePageProps) {
             <FocusItem
               title="Identity & Branding"
               description="Visual identities and systems built for longevity."
-              image="/images/focus-branding.jpg"
+              image={`${BASE}images/focus-branding.jpg`}
             />
-
             <FocusItem
               title="Digital Design"
               description="Web and digital experiences with clarity and intent."
-              image="/images/focus-digital.jpg"
+              image={`${BASE}images/focus-digital.jpg`}
             />
-
             <FocusItem
               title="Visual Content"
               description="Photography, motion and visual storytelling."
-              image="/images/focus-visual.jpg"
+              image={`${BASE}images/focus-visual.jpg`}
             />
           </div>
         </div>
       </section>
 
-      {/* ------------------------------------------------------------------ */}
-      {/* SECOND IMAGE STRIP                                                  */}
-      {/* ------------------------------------------------------------------ */}
-
+      {/* SECOND IMAGE STRIP */}
       <section className="py-section-lg">
         <img
-          src="/images/secondary-project.jpg"
+          src={`${BASE}images/secondary-project.jpg`}
           alt="Selected work detail"
           className="w-full h-[60vh] object-cover"
         />
       </section>
 
-      {/* ------------------------------------------------------------------ */}
-      {/* CTA                                                                */}
-      {/* ------------------------------------------------------------------ */}
-
+      {/* CTA */}
       <section className="py-section-lg px-gutter border-t border-neutral-200">
         <div className="max-w-5xl mx-auto text-center">
           <p className="text-display-lg leading-relaxed mb-16">
@@ -134,8 +117,6 @@ export default function HomePage({ onViewWork, onContact }: HomePageProps) {
 }
 
 /* -------------------------------------------------------------------------- */
-/*                              Components                                    */
-/* -------------------------------------------------------------------------- */
 
 function FocusItem({
   title,
@@ -149,11 +130,7 @@ function FocusItem({
   return (
     <div>
       <div className="aspect-[4/3] mb-6 overflow-hidden">
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover"
-        />
+        <img src={image} alt={title} className="w-full h-full object-cover" />
       </div>
 
       <h3 className="text-display-sm mb-4">{title}</h3>
