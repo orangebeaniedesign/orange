@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ✅ Premium type stack: Poppins for display, Inter for body */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700;800&display=swap");
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  }
+
+  /* Optional helper for headings */
+  .font-display {
+    font-family: Poppins, Inter, system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  /* ✅ Minimal, premium buttons (soft lift + tasteful shadow) */
+  .btn-primary {
+    @apply inline-flex items-center gap-3 px-7 py-3.5
+           rounded-full bg-offblack text-offwhite text-body-sm font-medium
+           border border-offblack
+           transition-all duration-300
+           hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(0,0,0,0.12)]
+           active:translate-y-0;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-3 px-7 py-3.5
+           rounded-full border border-neutral-300 text-offblack text-body-sm
+           transition-all duration-300
+           hover:border-offblack hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)]
+           active:translate-y-0;
+  }
+
+  /* ✅ Clean, “expensive” inputs */
+  .input-line {
+    @apply w-full bg-transparent border-0 border-b border-neutral-300 py-4
+           text-offblack placeholder:text-neutral-400
+           focus:outline-none focus:border-offblack transition-colors;
+  }
+
+  /* ✅ Gallery frame utility (use around images) */
+  .media-frame {
+    @apply overflow-hidden rounded-3xl border border-neutral-200;
+  }
+}

@@ -1,0 +1,20 @@
+<svg viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .logo-circle { fill: none; stroke: currentColor; stroke-width: 2; }
+      .logo-dot { fill: currentColor; }
+    </style>
+  </defs>
+
+  <g transform="translate(50, 50)">
+    <circle class="logo-circle" cx="0" cy="0" r="20"/>
+    <circle class="logo-dot" cx="0" cy="0" r="14"/>
+  </g>
+
+  <text x="50" y="125" font-family="Poppins, system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" fill="currentColor" text-anchor="middle">
+    Orange
+  </text>
+  <text x="50" y="150" font-family="Poppins, system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" fill="currentColor" text-anchor="middle">
+    Beanie
+  </text>
+</svg>
