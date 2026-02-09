@@ -42,7 +42,7 @@ function OpeningSection() {
         >
           About me
           <br />
-          <em className="italic">Cláudia Brito</em>
+          <em className="italic">Orange Beanie Design</em>
         </motion.h1>
 
         <motion.div
