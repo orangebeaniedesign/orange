@@ -65,18 +65,18 @@ function HeroSection() {
           <div className="max-w-7xl mx-auto">
             <div className="md:ml-[8%] lg:ml-[12%] max-w-3xl">
               <motion.p
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3, ease: easing.expoOut }}
+                transition={{ duration: 1, delay: 0.4, ease: easing.expoOut }}
                 className="text-caption uppercase tracking-[0.2em] text-cream/60 mb-6 md:mb-8"
               >
                 Creative Studio
               </motion.p>
 
               <motion.h1
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.2, delay: 0.5, ease: easing.expoOut }}
+                transition={{ duration: 1.4, delay: 0.6, ease: easing.expoOut }}
                 className="font-serif text-cream"
                 style={{ fontSize: 'clamp(3.5rem, 10vw, 9rem)', lineHeight: '0.95', letterSpacing: '-0.03em' }}
               >
@@ -86,9 +86,9 @@ function HeroSection() {
               </motion.h1>
 
               <motion.p
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.9, ease: easing.expoOut }}
+                transition={{ duration: 1.2, delay: 1.0, ease: easing.expoOut }}
                 className="text-body-lg md:text-body-xl text-cream/70 font-light leading-relaxed mt-8 md:mt-10 max-w-md"
               >
                 Design that listens before it speaks.
@@ -99,7 +99,7 @@ function HeroSection() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 1.4, ease: easing.expoOut }}
+                transition={{ duration: 1, delay: 1.6, ease: easing.expoOut }}
                 className="mt-10 md:mt-14"
               >
                 <div className="w-8 h-[1px] bg-cream/30" />
@@ -133,7 +133,7 @@ function IntroSection() {
 
           <div className="md:col-span-8">
             <motion.p
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: duration.slowest, ease: easing.expoOut }}
               className="font-serif text-display-2xl leading-[1.15]"
@@ -179,7 +179,7 @@ function SelectedWork({
       <div className="px-gutter mb-20 md:mb-24">
         <div className="max-w-7xl mx-auto flex items-end justify-between">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: duration.slower, ease: easing.expoOut }}
           >
@@ -192,10 +192,10 @@ function SelectedWork({
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ duration: duration.slow, delay: 0.3, ease: easing.expoOut }}
             onClick={onViewWork}
-            className="hidden md:flex items-center gap-3 text-body-sm text-stone-500 hover:text-charcoal transition-colors duration-300 group"
+            className="hidden md:flex items-center gap-3 text-body-sm text-stone-400 hover:text-charcoal transition-colors duration-500 group"
           >
             View all
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-500" />
           </motion.button>
         </div>
       </div>
@@ -214,10 +214,10 @@ function SelectedWork({
       >
         <button
           onClick={onViewWork}
-          className="flex items-center gap-3 text-body-sm text-stone-500 hover:text-charcoal transition-colors duration-300 group"
+          className="flex items-center gap-3 text-body-sm text-stone-400 hover:text-charcoal transition-colors duration-500 group"
         >
           View all work
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-500" />
         </button>
       </motion.div>
     </section>
@@ -308,11 +308,11 @@ function ProjectCard({
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{
         duration: duration.slowest,
-        delay: index * 0.08,
+        delay: index * 0.1,
         ease: easing.expoOut,
       }}
     >
@@ -376,28 +376,28 @@ function CloseSection({
     <section ref={ref} className="py-section-lg px-gutter">
       <div className="max-w-5xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: duration.slowest, ease: easing.expoOut }}
           className="md:ml-[16%]"
         >
-          <div className="w-10 h-[1px] bg-stone-300 mb-12" />
+          <div className="w-10 h-[1px] bg-stone-300 mb-14" />
 
-          <h2 className="font-serif text-display-2xl leading-[1.12] max-w-2xl mb-14">
+          <h2 className="font-serif text-display-2xl leading-[1.12] max-w-2xl mb-16">
             Good design is quiet.
             <br />
             It doesn't shout -- it speaks
             clearly, and stays.
           </h2>
 
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-5">
             <button onClick={onViewWork} className="btn-primary">
               Explore work
               <ArrowRight className="w-4 h-4" />
             </button>
             {onViewContact && (
               <button onClick={onViewContact} className="btn-outline">
-                Start a project
+                Say hello
               </button>
             )}
           </div>

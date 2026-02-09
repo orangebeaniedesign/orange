@@ -93,9 +93,9 @@ function HeroImage({
         src={src}
         alt={alt}
         style={{ y, opacity }}
-        initial={{ scale: 1.08 }}
+        initial={{ scale: 1.05 }}
         animate={{ scale: 1 }}
-        transition={{ duration: 2, ease: easing.expoOut }}
+        transition={{ duration: 2.4, ease: easing.expoOut }}
         className="absolute inset-0 w-full h-full object-cover"
       />
 
@@ -105,9 +105,9 @@ function HeroImage({
         <div className="max-w-7xl mx-auto">
           <button
             onClick={onBack}
-            className="inline-flex items-center gap-2.5 text-body-sm text-cream/80 hover:text-cream transition-colors duration-300 group"
+            className="inline-flex items-center gap-2.5 text-body-sm text-cream/80 hover:text-cream transition-colors duration-500 group"
           >
-            <ArrowLeft className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" />
+            <ArrowLeft className="w-4 h-4 transition-transform duration-500 group-hover:-translate-x-1" />
             All projects
           </button>
         </div>
@@ -124,7 +124,7 @@ function TitleBlock({
   description?: string | null;
 }) {
   return (
-    <section className="px-gutter pt-16 md:pt-24 pb-12 md:pb-16">
+    <section className="px-gutter pt-20 md:pt-28 pb-14 md:pb-18">
       <div className="max-w-7xl mx-auto">
         <motion.div
           variants={staggerContainer}
@@ -170,13 +170,13 @@ function MetadataStrip({
   ].filter((item) => item.value);
 
   return (
-    <section className="px-gutter pb-16 md:pb-24">
+    <section className="px-gutter pb-20 md:pb-28">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: duration.slow, delay: 0.4, ease: easing.expoOut }}
-          className="border-t border-stone-200 pt-8"
+          transition={{ duration: duration.slow, delay: 0.5, ease: easing.expoOut }}
+          className="border-t border-stone-200/60 pt-10"
         >
           <div className="flex flex-wrap items-start gap-x-16 gap-y-6">
             {items.map((item) => (
@@ -193,7 +193,7 @@ function MetadataStrip({
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-body-md font-light text-charcoal hover:text-stone-600 transition-colors duration-300"
+                  className="inline-flex items-center gap-2 text-body-md font-light text-charcoal hover:text-stone-600 transition-colors duration-500"
                 >
                   View live
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -215,12 +215,12 @@ function NarrativeBlock({ text }: { text: string }) {
     <section ref={ref} className="px-gutter pb-section">
       <div className="max-w-7xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: duration.slowest, ease: easing.expoOut }}
           className="md:ml-[16%] max-w-2xl"
         >
-          <div className="w-10 h-[1px] bg-stone-300 mb-12" />
+          <div className="w-10 h-[1px] bg-stone-300 mb-14" />
           <p className="text-body-xl md:text-display-sm text-stone-700 font-light leading-[1.8] whitespace-pre-line">
             {text}
           </p>
@@ -239,7 +239,7 @@ const galleryLayouts = [
 function GalleryFlow({ images, title }: { images: string[]; title: string }) {
   return (
     <section className="pb-section-lg">
-      <div className="space-y-16 md:space-y-28">
+      <div className="space-y-20 md:space-y-32">
         {images.map((url, index) => (
           <GalleryImage
             key={index}
@@ -272,11 +272,11 @@ function GalleryImage({
     <div ref={ref} className="px-gutter">
       <div className={`max-w-7xl mx-auto ${layout.wrapper}`}>
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{
             duration: duration.slowest,
-            delay: index * 0.05,
+            delay: index * 0.06,
             ease: easing.expoOut,
           }}
           className="overflow-hidden"
@@ -285,9 +285,9 @@ function GalleryImage({
             src={src}
             alt={alt}
             loading="lazy"
-            initial={{ scale: 1.06 }}
+            initial={{ scale: 1.04 }}
             animate={isInView ? { scale: 1 } : {}}
-            transition={{ duration: 2.2, ease: easing.expoOut }}
+            transition={{ duration: 2.4, ease: easing.expoOut }}
             className={`w-full ${layout.aspect} object-cover`}
             data-cursor="zoom"
           />
@@ -314,7 +314,7 @@ function ProjectNavigation({
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section ref={ref} className="border-t border-stone-200">
+    <section ref={ref} className="border-t border-stone-200/60">
       <motion.div
         initial={{ opacity: 0 }}
         animate={isInView ? { opacity: 1 } : {}}
@@ -334,7 +334,7 @@ function ProjectNavigation({
 
               {onContact && (
                 <button onClick={onContact} className="btn-outline">
-                  Start a project
+                  Get in touch
                   <ArrowRight className="w-4 h-4" />
                 </button>
               )}

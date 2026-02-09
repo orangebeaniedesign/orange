@@ -5,14 +5,15 @@ export const easing = {
   expoIn: [0.7, 0, 0.84, 0],
   expoInOut: [0.87, 0, 0.13, 1],
   smooth: [0.4, 0, 0.2, 1],
+  gentle: [0.25, 0.1, 0.25, 1],
 };
 
 export const duration = {
-  fast: 0.3,
-  normal: 0.6,
-  slow: 0.9,
-  slower: 1.2,
-  slowest: 1.6,
+  fast: 0.35,
+  normal: 0.7,
+  slow: 1.0,
+  slower: 1.4,
+  slowest: 1.8,
 };
 
 export const pageTransition: Variants = {
@@ -23,7 +24,7 @@ export const pageTransition: Variants = {
       duration: duration.slow,
       ease: easing.expoOut,
       when: 'beforeChildren',
-      staggerChildren: 0.08,
+      staggerChildren: 0.12,
     },
   },
   exit: {
@@ -47,7 +48,7 @@ export const fade: Variants = {
 };
 
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
@@ -59,7 +60,7 @@ export const fadeUp: Variants = {
 };
 
 export const fadeDown: Variants = {
-  hidden: { opacity: 0, y: -30 },
+  hidden: { opacity: 0, y: -16 },
   visible: {
     opacity: 1,
     y: 0,
@@ -71,7 +72,7 @@ export const fadeDown: Variants = {
 };
 
 export const scaleIn: Variants = {
-  hidden: { opacity: 0, scale: 0.96 },
+  hidden: { opacity: 0, scale: 0.97 },
   visible: {
     opacity: 1,
     scale: 1,
@@ -97,14 +98,14 @@ export const staggerContainer: Variants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.1,
+      staggerChildren: 0.12,
+      delayChildren: 0.15,
     },
   },
 };
 
 export const staggerItem: Variants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
@@ -115,7 +116,7 @@ export const staggerItem: Variants = {
   },
 };
 
-export const createStaggerDelay = (index: number, base = 0.06): Transition => ({
+export const createStaggerDelay = (index: number, base = 0.08): Transition => ({
   delay: index * base,
   duration: duration.slow,
   ease: easing.expoOut,

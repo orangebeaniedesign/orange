@@ -27,18 +27,18 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center gap-3 px-8 py-4 bg-charcoal text-cream text-body-sm font-normal tracking-wide
-      transition-all duration-500 ease-expo-out hover:bg-stone-800 active:scale-[0.98];
+    @apply inline-flex items-center gap-3 px-8 py-4 bg-charcoal text-cream text-body-sm font-light tracking-wider
+      transition-colors duration-700 ease-expo-out hover:bg-stone-800;
   }
 
   .btn-outline {
-    @apply inline-flex items-center gap-3 px-8 py-4 border border-stone-300 text-charcoal text-body-sm font-normal tracking-wide
-      transition-all duration-500 ease-expo-out hover:border-charcoal active:scale-[0.98];
+    @apply inline-flex items-center gap-3 px-8 py-4 border border-stone-300 text-charcoal text-body-sm font-light tracking-wider
+      transition-colors duration-700 ease-expo-out hover:border-charcoal;
   }
 
   .input-field {
     @apply w-full bg-transparent border-b border-stone-300 py-4 text-body-md text-charcoal font-light
-      placeholder:text-stone-400 outline-none transition-colors duration-500
+      placeholder:text-stone-400 outline-none transition-colors duration-700
       focus:border-charcoal;
   }
 

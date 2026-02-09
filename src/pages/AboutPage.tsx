@@ -23,21 +23,21 @@ export default function AboutPage({ onContact, onWork }: AboutPageProps) {
 
 function OpeningSection() {
   return (
-    <section className="pt-40 md:pt-52 lg:pt-60 pb-section px-gutter">
+    <section className="pt-44 md:pt-56 lg:pt-64 pb-section px-gutter">
       <div className="max-w-7xl mx-auto">
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: easing.expoOut }}
+          transition={{ duration: 1, delay: 0.3, ease: easing.expoOut }}
           className="label-caption mb-10 md:mb-14"
         >
           About
         </motion.p>
 
         <motion.h1
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.4, delay: 0.4, ease: easing.expoOut }}
+          transition={{ duration: 1.6, delay: 0.5, ease: easing.expoOut }}
           className="font-serif text-hero leading-[0.98] max-w-5xl"
         >
           Design is an act
@@ -46,10 +46,10 @@ function OpeningSection() {
         </motion.h1>
 
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.8, ease: easing.expoOut }}
-          className="mt-12 md:mt-16 md:ml-[30%] max-w-lg"
+          transition={{ duration: 1.2, delay: 0.9, ease: easing.expoOut }}
+          className="mt-14 md:mt-18 md:ml-[30%] max-w-lg"
         >
           <p className="text-body-xl text-stone-500 font-light leading-relaxed">
             Before any line is drawn, there is a conversation.
@@ -75,7 +75,7 @@ function PortraitSection() {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: duration.slowest, ease: easing.expoOut }}
             className="md:col-span-7 md:col-start-1 overflow-hidden"
@@ -90,7 +90,7 @@ function PortraitSection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: duration.slower, delay: 0.3, ease: easing.expoOut }}
             className="md:col-span-4 md:col-start-9 flex flex-col justify-end"
@@ -128,10 +128,10 @@ function StatementSection() {
 
           <div className="md:col-span-7">
             <motion.p
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: duration.slowest, ease: easing.expoOut }}
-              className="font-serif text-display-xl leading-[1.2] mb-12"
+              className="font-serif text-display-xl leading-[1.2] mb-14"
             >
               Every project begins with stillness -- a careful pause
               to understand what already exists before imagining what
@@ -139,9 +139,9 @@ function StatementSection() {
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 14 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: duration.slower, delay: 0.15, ease: easing.expoOut }}
+              transition={{ duration: duration.slower, delay: 0.2, ease: easing.expoOut }}
               className="space-y-8 max-w-xl"
             >
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
@@ -192,7 +192,7 @@ function ValuesSection() {
   return (
     <section ref={ref} className="py-section-lg px-gutter">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 mb-20 md:mb-28">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 mb-24 md:mb-32">
           <div className="md:col-span-3">
             <motion.p
               initial={{ opacity: 0 }}
@@ -206,7 +206,7 @@ function ValuesSection() {
 
           <div className="md:col-span-7">
             <motion.p
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: duration.slowest, ease: easing.expoOut }}
               className="font-serif text-display-2xl leading-[1.15]"
@@ -217,15 +217,15 @@ function ValuesSection() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-14">
           {values.map((value, index) => (
             <motion.div
               key={value.heading}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{
                 duration: duration.slower,
-                delay: 0.15 + index * 0.1,
+                delay: 0.2 + index * 0.12,
                 ease: easing.expoOut,
               }}
             >
@@ -258,9 +258,9 @@ function PerspectiveSection() {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: duration.slower, delay: 0.1, ease: easing.expoOut }}
+            transition={{ duration: duration.slower, delay: 0.15, ease: easing.expoOut }}
             className="md:col-span-5 md:col-start-1 order-2 md:order-1"
           >
             <p className="label-caption mb-10">Process</p>
@@ -289,7 +289,7 @@ function PerspectiveSection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: duration.slowest, ease: easing.expoOut }}
             className="md:col-span-5 md:col-start-8 order-1 md:order-2 overflow-hidden"
@@ -319,30 +319,30 @@ function ClosingSection({
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section ref={ref} className="py-section-lg px-gutter border-t border-stone-200">
+    <section ref={ref} className="py-section-lg px-gutter border-t border-stone-200/60">
       <div className="max-w-7xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: duration.slowest, ease: easing.expoOut }}
           className="md:ml-[16%] max-w-2xl"
         >
-          <div className="w-10 h-[1px] bg-stone-300 mb-14" />
+          <div className="w-10 h-[1px] bg-stone-300 mb-16" />
 
-          <h2 className="font-serif text-display-2xl leading-[1.12] mb-8">
+          <h2 className="font-serif text-display-2xl leading-[1.12] mb-10">
             If you value thoughtful work
             and honest conversation --
             I'd like to hear from you.
           </h2>
 
-          <p className="text-body-lg text-stone-500 font-light leading-relaxed mb-14 max-w-md">
+          <p className="text-body-lg text-stone-400 font-light leading-relaxed mb-16 max-w-md">
             Whether it's a new identity, a digital presence,
             or a visual system that needs rethinking.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-5">
             <button onClick={onContact} className="btn-primary">
-              Start a conversation
+              Say hello
               <ArrowRight className="w-4 h-4" />
             </button>
             <button onClick={onWork} className="btn-outline">

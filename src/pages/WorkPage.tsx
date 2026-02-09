@@ -55,7 +55,7 @@ export default function WorkPage({ onProjectClick, onContact }: WorkPageProps) {
 
 function HeroSection() {
   return (
-    <section className="pt-40 md:pt-52 lg:pt-60 pb-12 md:pb-16 px-gutter">
+    <section className="pt-44 md:pt-56 lg:pt-64 pb-12 md:pb-16 px-gutter">
       <div className="max-w-7xl mx-auto">
         <motion.div
           variants={staggerContainer}
@@ -70,9 +70,9 @@ function HeroSection() {
           </motion.h1>
           <motion.p
             variants={staggerItem}
-            className="text-body-xl text-stone-500 max-w-lg mt-8 font-light leading-relaxed"
+            className="text-body-xl text-stone-400 max-w-lg mt-10 font-light leading-relaxed"
           >
-            A curated collection of projects across brand identity,
+            A curated collection across brand identity,
             digital experience, and visual narrative.
           </motion.p>
         </motion.div>
@@ -83,9 +83,9 @@ function HeroSection() {
 
 function FilterBar({ active, onChange }: { active: Filter; onChange: (f: Filter) => void }) {
   return (
-    <section className="px-gutter pb-16 md:pb-20">
+    <section className="px-gutter pb-16 md:pb-24">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           {filters.map((filter) => {
             const isActive = active === filter.value;
             return (
@@ -153,7 +153,7 @@ function ProjectRow({
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 60 }}
+      initial={{ opacity: 0, y: 28 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: duration.slowest, ease: easing.expoOut }}
       className="grid grid-cols-1 md:grid-cols-12"
@@ -245,28 +245,29 @@ function CTASection({ onContact }: { onContact: () => void }) {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section ref={ref} className="py-section-lg px-gutter border-t border-stone-200">
+    <section ref={ref} className="py-section-lg px-gutter border-t border-stone-200/60">
       <div className="max-w-7xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: duration.slowest, ease: easing.expoOut }}
           className="md:ml-[16%] max-w-2xl"
         >
-          <div className="w-10 h-[1px] bg-stone-300 mb-14" />
+          <div className="w-10 h-[1px] bg-stone-300 mb-16" />
 
-          <h2 className="font-serif text-display-2xl leading-[1.12] mb-8">
-            Open to working with brands
-            that value clarity and culture.
+          <h2 className="font-serif text-display-2xl leading-[1.12] mb-10">
+            Have something in mind?
+            <br />
+            I'd enjoy hearing about it.
           </h2>
 
-          <p className="text-body-lg text-stone-500 font-light leading-relaxed mb-14 max-w-md">
+          <p className="text-body-lg text-stone-400 font-light leading-relaxed mb-16 max-w-md">
             Whether it's a complete rebrand or a focused digital project,
-            let's create something with lasting impact.
+            the best work starts with a conversation.
           </p>
 
           <button onClick={onContact} className="btn-primary">
-            Start a project
+            Get in touch
           </button>
         </motion.div>
       </div>

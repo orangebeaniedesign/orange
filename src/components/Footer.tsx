@@ -29,20 +29,20 @@ export default function Footer({ onNavigate }: FooterProps) {
     <footer ref={ref} className="border-t border-stone-200 bg-cream">
       <div className="px-gutter py-section">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: duration.slower, ease: easing.expoOut }}
           className="max-w-7xl mx-auto"
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-10 mb-24">
             <div>
-              <p className="label-caption mb-6">Navigation</p>
-              <nav className="space-y-3">
+              <p className="label-caption mb-7">Navigation</p>
+              <nav className="space-y-4">
                 {navLinks.map((link) => (
                   <button
                     key={link.page}
                     onClick={() => onNavigate(link.page)}
-                    className="block text-body-md text-stone-600 hover:text-charcoal transition-colors duration-300"
+                    className="block text-body-md text-stone-500 hover:text-charcoal transition-colors duration-500"
                   >
                     {link.label}
                   </button>
@@ -51,43 +51,40 @@ export default function Footer({ onNavigate }: FooterProps) {
             </div>
 
             <div>
-              <p className="label-caption mb-6">Connect</p>
-              <div className="space-y-3">
+              <p className="label-caption mb-7">Elsewhere</p>
+              <div className="space-y-4">
                 {socials.map((social) => (
                   <a
                     key={social.label}
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-body-md text-stone-600 hover:text-charcoal transition-colors duration-300 group"
+                    className="flex items-center gap-2 text-body-md text-stone-500 hover:text-charcoal transition-colors duration-500 group"
                   >
                     {social.label}
-                    <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </a>
                 ))}
               </div>
             </div>
 
             <div>
-              <p className="label-caption mb-6">Say hello</p>
+              <p className="label-caption mb-7">Say hello</p>
               <a
                 href="mailto:hello@orangebeanie.design"
-                className="text-body-md text-stone-600 hover:text-charcoal transition-colors duration-300"
+                className="text-body-md text-stone-500 hover:text-charcoal transition-colors duration-500"
               >
                 hello@orangebeanie.design
               </a>
-              <p className="text-body-sm text-stone-400 mt-4">
+              <p className="text-body-sm text-stone-400 font-light mt-5">
                 Porto, Portugal
               </p>
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pt-8 border-t border-stone-200">
-            <span className="text-body-sm text-stone-400 font-light">
+          <div className="pt-8 border-t border-stone-200/60">
+            <span className="text-body-xs text-stone-400 font-light">
               {new Date().getFullYear()} OrangeBeanie Design
-            </span>
-            <span className="text-caption text-stone-400">
-              Crafted with intention
             </span>
           </div>
         </motion.div>

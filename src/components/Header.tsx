@@ -38,24 +38,24 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
   return (
     <>
       <header
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-700 ease-expo-out ${
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-1000 ease-expo-out ${
           scrolled
-            ? 'bg-cream/90 backdrop-blur-md border-b border-stone-200/60'
+            ? 'bg-cream/90 backdrop-blur-md border-b border-stone-200/40'
             : 'bg-transparent'
         }`}
       >
-        <div className="flex items-center justify-between px-gutter py-6 md:py-8">
+        <div className="flex items-center justify-between px-gutter py-7 md:py-9">
           <Logo onClick={() => handleNavigate('home')} />
 
-          <nav className="hidden md:flex items-center gap-10">
+          <nav className="hidden md:flex items-center gap-12">
             {navItems.map((item) => (
               <button
                 key={item.page}
                 onClick={() => handleNavigate(item.page)}
-                className={`text-body-sm tracking-wide transition-colors duration-300 ${
+                className={`text-body-sm tracking-wide transition-colors duration-500 ${
                   currentPage === item.page
                     ? 'text-charcoal'
-                    : 'text-stone-500 hover:text-charcoal'
+                    : 'text-stone-400 hover:text-charcoal'
                 }`}
               >
                 {item.label}
@@ -65,7 +65,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
 
           <button
             onClick={() => setMenuOpen(true)}
-            className="md:hidden text-caption uppercase tracking-widest text-charcoal hover:text-stone-500 transition-colors"
+            className="md:hidden text-caption uppercase tracking-widest text-charcoal hover:text-stone-500 transition-colors duration-500"
           >
             Menu
           </button>
@@ -78,11 +78,11 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: easing.expoOut }}
+            transition={{ duration: 0.5, ease: easing.expoOut }}
             className="fixed inset-0 z-[100] bg-cream"
           >
             <div className="flex flex-col h-full">
-              <div className="flex items-center justify-between px-gutter py-6">
+              <div className="flex items-center justify-between px-gutter py-7">
                 <Logo onClick={() => handleNavigate('home')} />
                 <button
                   onClick={() => setMenuOpen(false)}
@@ -100,15 +100,15 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
                 ].map((item, index) => (
                   <motion.button
                     key={item.page}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 14 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{
-                      duration: 0.6,
-                      delay: index * 0.06,
+                      duration: 0.7,
+                      delay: 0.1 + index * 0.07,
                       ease: easing.expoOut,
                     }}
                     onClick={() => handleNavigate(item.page)}
-                    className={`block text-left py-4 font-serif text-display-2xl transition-colors duration-300 ${
+                    className={`block text-left py-5 font-serif text-display-2xl transition-colors duration-500 ${
                       currentPage === item.page
                         ? 'text-stone-400'
                         : 'text-charcoal hover:text-stone-500'
@@ -119,8 +119,8 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
                 ))}
               </nav>
 
-              <div className="px-gutter py-8 border-t border-stone-200">
-                <span className="text-body-sm text-stone-500">
+              <div className="px-gutter py-10 border-t border-stone-200/60">
+                <span className="text-body-sm text-stone-400 font-light">
                   hello@orangebeanie.design
                 </span>
               </div>

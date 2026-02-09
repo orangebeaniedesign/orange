@@ -20,7 +20,7 @@ export default function VisualPage({ onProjectClick, onContact }: VisualPageProp
         <div className="px-gutter mb-16">
           <div className="max-w-7xl mx-auto">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: duration.slower, ease: easing.expoOut }}
@@ -57,7 +57,7 @@ export default function VisualPage({ onProjectClick, onContact }: VisualPageProp
 
 function HeroSection() {
   return (
-    <section className="pt-40 md:pt-48 pb-section px-gutter">
+    <section className="pt-44 md:pt-56 lg:pt-64 pb-section px-gutter">
       <div className="max-w-5xl mx-auto">
         <motion.div
           variants={staggerContainer}
@@ -79,7 +79,7 @@ function HeroSection() {
 
           <motion.p
             variants={staggerItem}
-            className="text-body-xl text-stone-500 max-w-xl mt-8 font-light leading-relaxed"
+            className="text-body-xl text-stone-400 max-w-xl mt-10 font-light leading-relaxed"
           >
             A dedicated space for photography, motion, and audiovisual
             experimentation. Where images move and atmospheres emerge.
@@ -108,11 +108,11 @@ function Gallery({
           return (
             <motion.button
               key={project.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{
                 duration: duration.slower,
-                delay: index * 0.06,
+                delay: index * 0.08,
                 ease: easing.expoOut,
               }}
               onClick={() => onProjectClick?.(project.id)}
@@ -152,23 +152,23 @@ function CTASection({ onContact }: { onContact?: () => void }) {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section ref={ref} className="py-section-lg px-gutter border-t border-stone-200">
+    <section ref={ref} className="py-section-lg px-gutter border-t border-stone-200/60">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: duration.slower, ease: easing.expoOut }}
         className="max-w-4xl mx-auto text-center"
       >
         <p className="label-caption mb-6">Collaboration</p>
-        <h2 className="font-serif text-display-xl mb-6">
+        <h2 className="font-serif text-display-xl mb-8">
           Interested in visual work?
         </h2>
-        <p className="text-body-lg text-stone-500 max-w-xl mx-auto mb-12 font-light">
+        <p className="text-body-lg text-stone-400 max-w-xl mx-auto mb-14 font-light">
           Open to collaborations on motion, photography,
           and audiovisual projects.
         </p>
         <button onClick={onContact} className="btn-primary">
-          Start a conversation
+          Get in touch
           <ArrowRight className="w-4 h-4" />
         </button>
       </motion.div>
