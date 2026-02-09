@@ -20,7 +20,7 @@ export function Logo({ onClick, className = '' }: LogoProps) {
       <img
         src={logoHorizontal}
         alt="Orange Beanie Design"
-        className="h-8 md:h-10 w-auto"
+        className="h-10 md:h-12 w-auto"
       />
     </motion.button>
   );
