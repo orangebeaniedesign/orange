@@ -52,9 +52,7 @@ function OpeningSection() {
           className="mt-14 md:mt-18 md:ml-[30%] max-w-lg"
         >
           <p className="text-body-xl text-stone-500 font-light leading-relaxed">
-            The name Orange Beanie Design comes from one unforgettable moment. After dreaming for 15 years of seeing my favorite band, McFly, I finally did — and ended up playing drums with them on stage. The bassist pointed me out in the crowd and said, “the girl with the orange beanie.” That moment captured everything I believe in as a creative: standing out, showing up, and turning passion into something real.
-
-
+            I’m a freelance graphic designer with a passion for creating bold, story-driven visuals that connect. My work spans branding, editorial, motion design, 3D, photography, and video — always guided by a love for meaningful design and strong visual identity.
           </p>
         </motion.div>
       </div>
@@ -97,7 +95,8 @@ function PortraitSection() {
             className="md:col-span-4 md:col-start-9 flex flex-col justify-end"
           >
             <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-              I’m a freelance graphic designer with a passion for creating bold, story-driven visuals that connect. My work spans branding, editorial, motion design, 3D, photography, and video — always guided by a love for meaningful design and strong visual identity.
+              The name Orange Beanie Design comes from one unforgettable moment. After dreaming for 15 years of seeing my favorite band, McFly, I finally did — and ended up playing drums with them on stage. The bassist pointed me out in the crowd and said, “the girl with the orange beanie.” That moment captured everything I believe in as a creative: standing out, showing up, and turning passion into something real.
+
             </p>
           </motion.div>
         </div>
