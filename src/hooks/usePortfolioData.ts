@@ -5,13 +5,17 @@ export type Project = {
   id: string;
   title: string;
   category: string;
+  image_url: string;
   year?: string | number | null;
-  role?: string | null;
+  client?: string | null;
   description?: string | null;
-  cover_image_url?: string | null;
-  slug?: string | null;
+  featured?: boolean | null;
   order_index?: number | null;
-  // add any other columns your table has
+  content?: string | null;
+  images?: unknown | null;
+  technologies?: unknown | null;
+  project_date?: string | null;
+  project_url?: string | null;
 };
 
 type UseProjectsResult = {
