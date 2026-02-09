@@ -141,15 +141,12 @@ function StatementSection() {
               className="space-y-8 max-w-xl"
             >
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                I work across motion design, web design, and branding — often blending
-                visual storytelling with systems thinking. I like work that feels precise,
-                human, and intentionally crafted.
+                My journey in design began with a background in Multimedia, where I first explored image, video, and visual communication. I later completed a degree in Audiovisual & Multimedia, expanding my focus into motion, branding, and digital design.
               </p>
 
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                My practice sits between strategy and aesthetics. Sometimes that means
-                building a brand identity from the ground up. Other times it’s shaping a
-                website experience, or giving a message rhythm through motion.
+                
+Through internships in 3D and graphic design, I gained early hands-on experience that shaped the way I approach creative work. I then moved into freelance projects with Dope Digital Agency, before joining A Cor Laranja, where I grew from intern to full-time designer and worked across branding, print, and visual communication.
               </p>
 
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
