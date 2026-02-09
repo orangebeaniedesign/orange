@@ -119,7 +119,7 @@ function StatementSection() {
               transition={{ duration: duration.slow, ease: easing.expoOut }}
               className="label-caption"
             >
-              The Practice
+              The Journey
             </motion.p>
           </div>
 
