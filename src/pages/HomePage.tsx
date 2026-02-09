@@ -51,7 +51,7 @@ function HeroSection() {
           poster="https://images.pexels.com/photos/3331094/pexels-photo-3331094.jpeg?auto=compress&cs=tinysrgb&w=1920"
           className="w-full h-full object-cover"
         >
-          <source src="/videos/hero.mp4" type="video/mp4" />
+          <source src="/home/project/public/dscf2906.jpg" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-charcoal/30" />
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal/40 via-transparent to-transparent" />
