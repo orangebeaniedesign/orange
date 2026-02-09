@@ -96,8 +96,7 @@ function PortraitSection() {
             className="md:col-span-4 md:col-start-9 flex flex-col justify-end"
           >
             <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-              Madeira Island freelance designer working across the world with motion design,
-              web design, branding, and creative development.
+              I’m a freelance graphic designer with a passion for creating bold, story-driven visuals that connect. My work spans branding, editorial, motion design, 3D, photography, and video — always guided by a love for meaningful design and strong visual identity.
             </p>
           </motion.div>
         </div>
