@@ -40,9 +40,9 @@ function OpeningSection() {
           transition={{ duration: 1.6, delay: 0.5, ease: easing.expoOut }}
           className="font-serif text-hero leading-[0.98] max-w-5xl"
         >
-          Design is an act
+          About me
           <br />
-          of <em className="italic">listening</em>
+          <em className="italic">Cláudia Brito</em>
         </motion.h1>
 
         <motion.div
