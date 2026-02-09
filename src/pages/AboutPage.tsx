@@ -52,8 +52,7 @@ function OpeningSection() {
           className="mt-14 md:mt-18 md:ml-[30%] max-w-lg"
         >
           <p className="text-body-xl text-stone-500 font-light leading-relaxed">
-            Before anything moves, there is a story.
-            Before anything is designed, there is intent.
+            The name Orange Beanie Design comes from one unforgettable moment. After dreaming for 15 years of seeing my favorite band, McFly, I finally did — and ended up playing drums with them on stage. The bassist pointed me out in the crowd and said, “the girl with the orange beanie.” That moment captured everything I believe in as a creative: standing out, showing up, and turning passion into something real.
           </p>
         </motion.div>
       </div>
