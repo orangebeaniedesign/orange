@@ -69,7 +69,7 @@ export default function CustomCursor() {
       case 'view': return 80;
       case 'zoom': return 60;
       case 'hidden': return 0;
-      default: return 12;
+      default: return 10;
     }
   };
 
@@ -100,9 +100,9 @@ export default function CustomCursor() {
           transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className={`
             rounded-full flex items-center justify-center
-            ${variant === 'default' ? 'bg-offwhite' : ''}
-            ${variant === 'pointer' ? 'border border-accent bg-transparent' : ''}
-            ${showLabel ? 'bg-accent' : ''}
+            ${variant === 'default' ? 'bg-charcoal' : ''}
+            ${variant === 'pointer' ? 'border border-stone-600 bg-transparent' : ''}
+            ${showLabel ? 'bg-charcoal' : ''}
           `}
         >
           {showLabel && (
@@ -110,7 +110,7 @@ export default function CustomCursor() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="text-[10px] text-offblack uppercase tracking-wider font-medium"
+              className="text-[10px] text-cream uppercase tracking-wider font-medium"
             >
               {variant === 'view' ? 'View' : 'Zoom'}
             </motion.span>

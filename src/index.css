@@ -1,60 +1,58 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Base typography */
 @layer base {
   html {
     font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: #f5f5f0;
-    color: #0a0a0a;
+    background-color: #F6F4EF;
+    color: #1A1A18;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 300;
   }
 
-  h1,
-  h2,
-  h3,
-  h4 {
-    font-family: Poppins, Inter, system-ui, sans-serif;
-    font-weight: 600;
+  h1, h2, h3, h4 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 400;
+  }
+
+  ::selection {
+    background-color: #D4CBC0;
+    color: #1A1A18;
   }
 }
 
-/* Components */
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center gap-3 px-8 py-4 bg-offblack text-offwhite text-body-sm font-medium tracking-wide
-      transition-all duration-300 ease-expo-out hover:bg-neutral-800 active:scale-[0.98];
+    @apply inline-flex items-center gap-3 px-8 py-4 bg-charcoal text-cream text-body-sm font-normal tracking-wide
+      transition-all duration-500 ease-expo-out hover:bg-stone-800 active:scale-[0.98];
   }
 
   .btn-outline {
-    @apply inline-flex items-center gap-3 px-8 py-4 border border-neutral-300 text-offblack text-body-sm font-medium tracking-wide
-      transition-all duration-300 ease-expo-out hover:border-offblack active:scale-[0.98];
+    @apply inline-flex items-center gap-3 px-8 py-4 border border-stone-300 text-charcoal text-body-sm font-normal tracking-wide
+      transition-all duration-500 ease-expo-out hover:border-charcoal active:scale-[0.98];
   }
 
-  .input-line {
-    @apply w-full bg-transparent border-b border-neutral-300 py-3 text-body-md text-offblack
-      placeholder:text-neutral-400 outline-none transition-colors duration-300
-      focus:border-offblack;
+  .input-field {
+    @apply w-full bg-transparent border-b border-stone-300 py-4 text-body-md text-charcoal font-light
+      placeholder:text-stone-400 outline-none transition-colors duration-500
+      focus:border-charcoal;
   }
 
   .label-caption {
-    @apply text-caption uppercase tracking-widest text-neutral-500;
-  }
-
-  .media-frame {
-    @apply overflow-hidden rounded-sm;
+    @apply text-caption uppercase tracking-widest text-stone-500 font-medium;
   }
 }
 
-/* Utilities */
 @layer utilities {
   .grain {
     background-image: radial-gradient(
-      rgba(0, 0, 0, 0.04) 1px,
+      rgba(0, 0, 0, 0.03) 1px,
       transparent 0
     );
-    background-size: 3px 3px;
+    background-size: 4px 4px;
   }
 }

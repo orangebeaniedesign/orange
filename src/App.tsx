@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
 import WorkPage from "./pages/WorkPage";
 import ProjectPage from "./pages/ProjectPage";
@@ -22,7 +23,7 @@ export default function App() {
   const [route, setRoute] = useState<Route>({ page: "home" });
 
   const navigate = useCallback((page: PageType, projectId?: string) => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'instant' });
     if (page === "project") {
       if (!projectId) return;
       setRoute({ page, projectId });
@@ -47,9 +48,7 @@ export default function App() {
       case "work":
         return (
           <WorkPage
-            onBack={() => navigate("home")}
             onProjectClick={(id) => navigate("project", id)}
-            onAbout={() => navigate("about")}
             onContact={() => navigate("contact")}
           />
         );
@@ -67,17 +66,21 @@ export default function App() {
       case "about":
         return (
           <AboutPage
-            onBack={() => navigate("home")}
             onContact={() => navigate("contact")}
             onWork={() => navigate("work")}
           />
         );
 
       case "contact":
-        return <ContactPage onBack={() => navigate("home")} />;
+        return <ContactPage />;
 
       case "visual":
-        return <VisualPage onBack={() => navigate("home")} />;
+        return (
+          <VisualPage
+            onProjectClick={(id) => navigate("project", id)}
+            onContact={() => navigate("contact")}
+          />
+        );
 
       default:
         return null;
@@ -88,6 +91,7 @@ export default function App() {
     <>
       <Header currentPage={route.page} onNavigate={navigate} />
       <main>{renderPage()}</main>
+      <Footer onNavigate={navigate} />
     </>
   );
 }

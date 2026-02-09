@@ -1,22 +1,33 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
 import { Logo } from './ui';
 import type { PageType } from '../App';
+import { easing } from '../lib/motion';
 
 interface HeaderProps {
   currentPage: PageType;
   onNavigate: (page: PageType) => void;
 }
 
+const navItems: { label: string; page: PageType }[] = [
+  { label: 'Work', page: 'work' },
+  { label: 'About', page: 'about' },
+  { label: 'Contact', page: 'contact' },
+];
+
 export default function Header({ currentPage, onNavigate }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
-    return () => {
-      document.body.style.overflow = '';
-    };
+    return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
   const handleNavigate = (page: PageType) => {
@@ -26,75 +37,92 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
 
   return (
     <>
-      {/* TOP BAR */}
-      <header className="fixed top-0 inset-x-0 z-50">
-        <div className="flex items-center justify-between px-gutter py-8 lg:py-10 bg-offwhite/80 backdrop-blur">
-          {/* LOGO (BIGGER) */}
-          <div className="scale-[1.4] origin-left">
-            <Logo onClick={() => handleNavigate('home')} />
-          </div>
+      <header
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-700 ease-expo-out ${
+          scrolled
+            ? 'bg-cream/90 backdrop-blur-md border-b border-stone-200/60'
+            : 'bg-transparent'
+        }`}
+      >
+        <div className="flex items-center justify-between px-gutter py-6 md:py-8">
+          <Logo onClick={() => handleNavigate('home')} />
+
+          <nav className="hidden md:flex items-center gap-10">
+            {navItems.map((item) => (
+              <button
+                key={item.page}
+                onClick={() => handleNavigate(item.page)}
+                className={`text-body-sm tracking-wide transition-colors duration-300 ${
+                  currentPage === item.page
+                    ? 'text-charcoal'
+                    : 'text-stone-500 hover:text-charcoal'
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
 
           <button
             onClick={() => setMenuOpen(true)}
-            className="text-caption uppercase tracking-widest text-offblack hover:text-neutral-500 transition-colors"
+            className="md:hidden text-caption uppercase tracking-widest text-charcoal hover:text-stone-500 transition-colors"
           >
             Menu
           </button>
         </div>
       </header>
 
-      {/* FULLSCREEN MENU */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[100] bg-offwhite"
+            transition={{ duration: 0.4, ease: easing.expoOut }}
+            className="fixed inset-0 z-[100] bg-cream"
           >
             <div className="flex flex-col h-full">
-              {/* MENU HEADER */}
-              <div className="flex items-center justify-between px-gutter py-8 border-b border-neutral-200">
-                {/* LOGO (BIGGER) */}
-                <div className="scale-[1.4] origin-left">
-                  <Logo onClick={() => handleNavigate('home')} />
-                </div>
-
+              <div className="flex items-center justify-between px-gutter py-6">
+                <Logo onClick={() => handleNavigate('home')} />
                 <button
                   onClick={() => setMenuOpen(false)}
-                  className="w-10 h-10 flex items-center justify-center border border-neutral-300 rounded-full"
+                  className="text-caption uppercase tracking-widest text-charcoal"
                 >
-                  <X className="w-4 h-4" />
+                  Close
                 </button>
               </div>
 
-              {/* MENU NAV */}
-              <nav className="flex-1 px-gutter py-24 max-w-6xl mx-auto w-full space-y-16">
-                {([
+              <nav className="flex-1 flex flex-col justify-center px-gutter">
+                {[
                   { label: 'Home', page: 'home' as PageType },
-                  { label: 'Work', page: 'work' as PageType },
+                  ...navItems,
                   { label: 'Visual', page: 'visual' as PageType },
-                  { label: 'About', page: 'about' as PageType },
-                  { label: 'Contact', page: 'contact' as PageType },
-                ]).map((item) => (
-                  <button
+                ].map((item, index) => (
+                  <motion.button
                     key={item.page}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 0.6,
+                      delay: index * 0.06,
+                      ease: easing.expoOut,
+                    }}
                     onClick={() => handleNavigate(item.page)}
-                    className={`block text-display-xl text-left transition-colors ${
+                    className={`block text-left py-4 font-serif text-display-2xl transition-colors duration-300 ${
                       currentPage === item.page
-                        ? 'text-neutral-400'
-                        : 'text-offblack hover:text-neutral-400'
+                        ? 'text-stone-400'
+                        : 'text-charcoal hover:text-stone-500'
                     }`}
                   >
                     {item.label}
-                  </button>
+                  </motion.button>
                 ))}
               </nav>
 
-              {/* MENU FOOTER */}
-              <div className="px-gutter py-10 border-t border-neutral-200 text-caption uppercase tracking-widest text-neutral-500">
-                hello@orangebeanie.design
+              <div className="px-gutter py-8 border-t border-stone-200">
+                <span className="text-body-sm text-stone-500">
+                  hello@orangebeanie.design
+                </span>
               </div>
             </div>
           </motion.div>

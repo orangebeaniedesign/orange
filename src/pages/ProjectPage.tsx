@@ -1,150 +1,218 @@
-import React, { useMemo, useState } from "react";
-import { useProjects, Project } from "../hooks/usePortfolioData";
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react';
+import { useProject, useProjects } from '../hooks/usePortfolioData';
+import { easing, duration, staggerContainer, staggerItem } from '../lib/motion';
 
-type Props = {
-  projectId?: string;
+interface ProjectPageProps {
+  projectId: string;
   onBack: () => void;
   onProjectClick: (id: string) => void;
-  onAbout?: () => void;
   onContact?: () => void;
-};
+}
 
-const filters = [
-  { label: "All", value: "all" },
-  { label: "Branding", value: "branding" },
-  { label: "Web", value: "web" },
-  { label: "Photography", value: "photography" },
-];
+export default function ProjectPage({
+  projectId,
+  onBack,
+  onProjectClick,
+  onContact,
+}: ProjectPageProps) {
+  const { project, loading, error } = useProject(projectId);
+  const { projects } = useProjects();
 
-export default function WorkPage({ onBack, onProjectClick, onAbout, onContact }: Props) {
-  const [active, setActive] = useState<string>("all");
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-cream flex items-center justify-center">
+        <div className="w-8 h-8 border border-stone-300 border-t-charcoal rounded-full animate-spin" />
+      </div>
+    );
+  }
 
-  // Map filter to either a string or string[] for useProjects
-  const activeMapping = useMemo<string | string[] | undefined>(() => {
-    if (active === "all") return undefined;
-    if (active === "photography") return ["photography"]; // you can expand later
-    return active;
-  }, [active]);
+  if (error || !project) {
+    return (
+      <div className="min-h-screen bg-cream flex items-center justify-center px-gutter">
+        <div className="text-center">
+          <h1 className="font-serif text-display-lg text-charcoal mb-4">Project not found</h1>
+          <p className="text-body-md text-stone-500 mb-8 font-light">
+            This project may have been removed or the link is incorrect.
+          </p>
+          <button onClick={onBack} className="btn-outline">
+            <ArrowLeft className="w-4 h-4" />
+            Back to work
+          </button>
+        </div>
+      </div>
+    );
+  }
 
-  const { projects, loading, error } = useProjects(activeMapping);
+  const currentIndex = projects.findIndex((p) => p.id === projectId);
+  const nextProject = currentIndex >= 0 && currentIndex < projects.length - 1
+    ? projects[currentIndex + 1]
+    : null;
+
+  const images = Array.isArray(project.images) ? (project.images as string[]) : [];
 
   return (
-    <main className="bg-offwhite min-h-screen">
-      <header className="px-gutter pt-10 pb-8">
-        <div className="max-w-7xl mx-auto flex items-end justify-between gap-6">
-          <div>
-            <button onClick={onBack} className="text-body-sm text-neutral-500 hover:text-offblack transition-colors">
-              ← Back
-            </button>
-            <h1 className="mt-4 font-display text-hero leading-none">
-              Work
-            </h1>
-            <p className="mt-4 text-body-lg text-neutral-500 max-w-2xl">
-              A curated selection. Minimal layouts, strong craft, and a little fun in the details.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3">
-            {onAbout && (
-              <button className="btn-outline" onClick={onAbout}>
-                About
-              </button>
-            )}
-            {onContact && (
-              <button className="btn-primary" onClick={onContact}>
-                Contact
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* ✅ Premium segmented pills */}
-        <div className="max-w-7xl mx-auto mt-10">
-          <div className="inline-flex flex-wrap gap-2 rounded-full border border-neutral-200 p-2 bg-white/60 backdrop-blur">
-            {filters.map((filter) => {
-              const isActive = active === filter.value;
-              return (
-                <button
-                  key={filter.value}
-                  onClick={() => setActive(filter.value)}
-                  className={[
-                    "px-4 py-2 rounded-full text-body-sm transition-all duration-300",
-                    isActive
-                      ? "bg-offblack text-offwhite"
-                      : "text-neutral-500 hover:text-offblack hover:bg-neutral-100",
-                  ].join(" ")}
-                >
-                  {filter.label}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </header>
-
-      <section className="px-gutter pb-section-lg">
+    <article className="min-h-screen bg-cream text-charcoal">
+      <section className="pt-32 md:pt-40 pb-8 px-gutter">
         <div className="max-w-7xl mx-auto">
-          {loading && (
-            <div className="py-20 text-neutral-500">Loading…</div>
-          )}
+          <button
+            onClick={onBack}
+            className="inline-flex items-center gap-2 text-body-sm text-stone-500 hover:text-charcoal transition-colors duration-300 mb-12"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            All projects
+          </button>
+        </div>
+      </section>
 
-          {!loading && error && (
-            <div className="py-20 text-neutral-500">
-              Couldn’t load projects: <span className="text-offblack">{error}</span>
+      <section className="px-gutter pb-12 md:pb-16">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.p variants={staggerItem} className="label-caption mb-6">
+              {project.category}
+              {project.year ? ` / ${project.year}` : ''}
+            </motion.p>
+
+            <motion.h1 variants={staggerItem} className="font-serif text-hero max-w-4xl">
+              {project.title}
+            </motion.h1>
+
+            {project.description && (
+              <motion.p
+                variants={staggerItem}
+                className="text-body-xl text-stone-600 max-w-2xl mt-8 font-light leading-relaxed"
+              >
+                {project.description}
+              </motion.p>
+            )}
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="px-gutter mb-section">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: duration.slower, delay: 0.3, ease: easing.expoOut }}
+        >
+          <img
+            src={project.image_url}
+            alt={project.title}
+            className="w-full max-w-7xl mx-auto aspect-[16/9] object-cover"
+          />
+        </motion.div>
+      </section>
+
+      <section className="px-gutter pb-section">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16">
+          <div className="md:col-span-1 space-y-8">
+            {project.client && (
+              <div>
+                <p className="label-caption mb-2">Client</p>
+                <p className="text-body-md">{project.client}</p>
+              </div>
+            )}
+            <div>
+              <p className="label-caption mb-2">Category</p>
+              <p className="text-body-md capitalize">{project.category}</p>
             </div>
-          )}
+            {project.year && (
+              <div>
+                <p className="label-caption mb-2">Year</p>
+                <p className="text-body-md">{project.year}</p>
+              </div>
+            )}
+            {project.project_url && (
+              <a
+                href={project.project_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-300"
+              >
+                View live project
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            )}
+          </div>
 
-          {!loading && !error && projects.length === 0 && (
-            <div className="py-20 text-neutral-500">No projects found.</div>
-          )}
-
-          {!loading && !error && projects.length > 0 && (
-            <div className="grid md:grid-cols-2 gap-10">
-              {projects.map((p) => (
-                <ProjectCard key={p.id} project={p} onClick={() => onProjectClick(p.id)} />
-              ))}
+          {project.content && (
+            <div className="md:col-span-2">
+              <p className="text-body-lg text-stone-700 font-light leading-relaxed whitespace-pre-line">
+                {project.content}
+              </p>
             </div>
           )}
         </div>
       </section>
-    </main>
+
+      {images.length > 0 && <ProjectGallery images={images} title={project.title} />}
+
+      <section className="py-section-lg px-gutter border-t border-stone-200">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+          {nextProject ? (
+            <button
+              onClick={() => onProjectClick(nextProject.id)}
+              className="group"
+            >
+              <p className="label-caption mb-3">Next project</p>
+              <h3 className="font-serif text-display-lg group-hover:text-stone-600 transition-colors duration-500">
+                {nextProject.title}
+              </h3>
+            </button>
+          ) : (
+            <button onClick={onBack} className="group">
+              <p className="label-caption mb-3">Back to</p>
+              <h3 className="font-serif text-display-lg group-hover:text-stone-600 transition-colors duration-500">
+                All projects
+              </h3>
+            </button>
+          )}
+
+          {onContact && (
+            <button onClick={onContact} className="btn-outline">
+              Start a project
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+      </section>
+    </article>
   );
 }
 
-function ProjectCard({ project, onClick }: { project: Project; onClick: () => void }) {
+function ProjectGallery({ images, title }: { images: string[]; title: string }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
+
   return (
-    <button
-      onClick={onClick}
-      className="group text-left"
-      aria-label={`Open project ${project.title}`}
-    >
-      <div className="media-frame">
-        {project.cover_image_url ? (
-          <img
-            src={project.cover_image_url}
-            alt={project.title}
-            className="w-full h-[360px] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-            loading="lazy"
-          />
-        ) : (
-          <div className="w-full h-[360px] bg-neutral-100" />
-        )}
+    <section ref={ref} className="px-gutter pb-section">
+      <div className="max-w-7xl mx-auto space-y-6">
+        {images.map((url, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{
+              duration: duration.slower,
+              delay: index * 0.1,
+              ease: easing.expoOut,
+            }}
+          >
+            <img
+              src={url}
+              alt={`${title} - ${index + 1}`}
+              loading="lazy"
+              className="w-full object-cover"
+              data-cursor="zoom"
+            />
+          </motion.div>
+        ))}
       </div>
-
-      <div className="mt-5 flex items-start justify-between gap-6">
-        <div>
-          <h3 className="font-display text-display-md leading-tight">
-            {project.title}
-          </h3>
-          <p className="mt-2 text-body-sm text-neutral-500">
-            {project.category}{project.year ? ` · ${project.year}` : ""}
-          </p>
-        </div>
-
-        <div className="shrink-0 w-12 h-12 rounded-full border border-neutral-300 flex items-center justify-center transition-all duration-300 group-hover:border-offblack group-hover:translate-x-0.5">
-          <span className="text-offblack transition-transform duration-300 group-hover:translate-x-0.5">→</span>
-        </div>
-      </div>
-    </button>
+    </section>
   );
 }
