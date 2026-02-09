@@ -52,8 +52,8 @@ function OpeningSection() {
           className="mt-14 md:mt-18 md:ml-[30%] max-w-lg"
         >
           <p className="text-body-xl text-stone-500 font-light leading-relaxed">
-            Before any line is drawn, there is a conversation.
-            Before any system takes shape, there is understanding.
+            Before anything moves, there is a story.
+            Before anything is designed, there is intent.
           </p>
         </motion.div>
       </div>
@@ -96,9 +96,9 @@ function PortraitSection() {
             className="md:col-span-4 md:col-start-9 flex flex-col justify-end"
           >
             <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-              Porto-based creative studio working across branding,
-              digital, and visual storytelling. Small by intention.
-              Thoughtful by nature.
+              Porto-based freelance designer working across motion design,
+              web design, branding, and creative development. Small by intention.
+              Focused by nature.
             </p>
           </motion.div>
         </div>
@@ -133,9 +133,8 @@ function StatementSection() {
               transition={{ duration: duration.slowest, ease: easing.expoOut }}
               className="font-serif text-display-xl leading-[1.2] mb-14"
             >
-              Every project begins with stillness -- a careful pause
-              to understand what already exists before imagining what
-              could be.
+              Every project begins with listening — a quiet pause
+              to understand what matters before designing what’s next.
             </motion.p>
 
             <motion.div
@@ -145,22 +144,21 @@ function StatementSection() {
               className="space-y-8 max-w-xl"
             >
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                I've never been drawn to loudness in design. The work I admire most
-                is the kind that feels inevitable -- as though it couldn't have been
-                any other way. That quiet confidence is what I chase in every brief.
+                I work across motion design, web design, and branding — often blending
+                visual storytelling with systems thinking. I like work that feels precise,
+                human, and intentionally crafted.
               </p>
 
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                My practice sits between strategy and aesthetics. I design
-                identities, digital experiences, and visual systems -- always
-                starting from the story a brand carries, even when it hasn't been
-                told yet.
+                My practice sits between strategy and aesthetics. Sometimes that means
+                building a brand identity from the ground up. Other times it’s shaping a
+                website experience, or giving a message rhythm through motion.
               </p>
 
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                I work closely with studios, cultural projects, and independent
-                businesses who share a belief that good design is not decoration.
-                It's clarity, made visible.
+                I collaborate with studios, cultural projects, and independent businesses
+                who believe design isn’t decoration — it’s clarity, feeling, and direction
+                made visible.
               </p>
             </motion.div>
           </div>
@@ -176,16 +174,16 @@ function ValuesSection() {
 
   const values = [
     {
-      heading: 'Restraint',
-      text: 'Knowing what to leave out is as important as knowing what to include. Every element earns its place.',
+      heading: 'Clarity',
+      text: 'Good design makes things easier to understand — visually, emotionally, and functionally.',
     },
     {
-      heading: 'Intention',
-      text: 'Nothing is arbitrary. Color, type, space -- each decision is a considered response to a real need.',
+      heading: 'Craft',
+      text: 'Details matter. Typography, pacing, and composition are where the work becomes believable.',
     },
     {
-      heading: 'Longevity',
-      text: 'Trends pass. The work that matters is built to endure -- rooted in meaning, not in the moment.',
+      heading: 'Motion',
+      text: 'Movement isn’t decoration — it’s communication. It guides attention and adds meaning over time.',
     },
   ];
 
@@ -211,8 +209,8 @@ function ValuesSection() {
               transition={{ duration: duration.slowest, ease: easing.expoOut }}
               className="font-serif text-display-2xl leading-[1.15]"
             >
-              Three principles that
-              shape everything.
+              A few principles that
+              shape the work.
             </motion.p>
           </div>
         </div>
@@ -263,27 +261,25 @@ function PerspectiveSection() {
             transition={{ duration: duration.slower, delay: 0.15, ease: easing.expoOut }}
             className="md:col-span-5 md:col-start-1 order-2 md:order-1"
           >
-            <p className="label-caption mb-10">Process</p>
+            <p className="label-caption mb-10">How I work</p>
 
             <div className="space-y-8">
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                The process is deliberately unhurried. I begin with conversation,
-                not mood boards. With questions, not assumptions. Understanding
-                the texture of a brand -- its voice, its audience, its quiet
-                ambitions -- takes time.
+                My process starts with conversation, not assumptions. I want to understand
+                the goal, the audience, the constraints — and what the brand should feel
+                like when people meet it.
               </p>
 
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                From that foundation, visual language emerges naturally.
-                Typography, color, spatial rhythm -- each element grows
-                from the same root, creating systems that feel whole
-                rather than assembled.
+                From there, I build a visual language that can live across formats:
+                identity, web, and motion. When it helps, I use code to bridge design and
+                implementation so things translate cleanly.
               </p>
 
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                I prefer lasting relationships over quick transactions.
-                The best outcomes happen when trust is built, and when
-                both sides care enough to get the details right.
+                I’m building my freelance practice with long-term collaboration in mind.
+                The best work happens when there’s trust, shared taste, and time to get
+                the details right.
               </p>
             </div>
           </motion.div>
@@ -331,13 +327,13 @@ function ClosingSection({
 
           <h2 className="font-serif text-display-2xl leading-[1.12] mb-10">
             If you value thoughtful work
-            and honest conversation --
-            I'd like to hear from you.
+            and clear communication —
+            I’d love to hear from you.
           </h2>
 
           <p className="text-body-lg text-stone-400 font-light leading-relaxed mb-16 max-w-md">
-            Whether it's a new identity, a digital presence,
-            or a visual system that needs rethinking.
+            Whether it’s motion for a campaign, a website refresh,
+            or a brand identity built with care.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-5">
