@@ -71,13 +71,13 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
 
               {/* MENU NAV */}
               <nav className="flex-1 px-gutter py-24 max-w-6xl mx-auto w-full space-y-16">
-                {[
-                  { label: 'Home', page: 'home' },
-                  { label: 'Work', page: 'work' },
-                  { label: 'Visual', page: 'visual' },
-                  { label: 'About', page: 'about' },
-                  { label: 'Contact', page: 'contact' },
-                ].map((item) => (
+                {([
+                  { label: 'Home', page: 'home' as PageType },
+                  { label: 'Work', page: 'work' as PageType },
+                  { label: 'Visual', page: 'visual' as PageType },
+                  { label: 'About', page: 'about' as PageType },
+                  { label: 'Contact', page: 'contact' as PageType },
+                ]).map((item) => (
                   <button
                     key={item.page}
                     onClick={() => handleNavigate(item.page)}
