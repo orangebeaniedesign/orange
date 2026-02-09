@@ -131,7 +131,7 @@ function StatementSection() {
               className="font-serif text-display-xl leading-[1.2] mb-14"
             >
               Design, for me, is just that, 
-              a way to turn ideas into moments that leave a mark.
+               <br />a way to turn ideas into moments that leave a mark.
             </motion.p>
 
             <motion.div
