@@ -45,7 +45,7 @@ function HeroSection() {
       >
         <img
           src="/public/dscf2906.jpg"
-          alt="Hero background"
+          alt="Hero"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-charcoal/30" />
