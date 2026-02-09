@@ -96,7 +96,6 @@ function PortraitSection() {
           >
             <p className="text-body-lg text-stone-600 font-light leading-relaxed">
               The name Orange Beanie Design comes from one unforgettable moment. After dreaming for 15 years of seeing my favorite band, McFly, I finally did — and ended up playing drums with them on stage. The bassist pointed me out in the crowd and said, “the girl with the orange beanie.” That moment captured everything I believe in as a creative: standing out, showing up, and turning passion into something real.
-
             </p>
           </motion.div>
         </div>
