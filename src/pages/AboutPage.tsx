@@ -96,9 +96,8 @@ function PortraitSection() {
             className="md:col-span-4 md:col-start-9 flex flex-col justify-end"
           >
             <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-              Porto-based freelance designer working across motion design,
-              web design, branding, and creative development. Small by intention.
-              Focused by nature.
+              Madeira Island freelance designer working across the world with motion design,
+              web design, branding, and creative development.
             </p>
           </motion.div>
         </div>
