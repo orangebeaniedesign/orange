@@ -5,7 +5,9 @@ import { useProjects } from '../hooks/usePortfolioData';
 type Pillar = 'all' | 'identity' | 'digital' | 'visual';
 
 interface WorkPageProps {
+  onBack?: () => void;
   onProjectClick: (id: string) => void;
+  onAbout?: () => void;
   onContact: () => void;
 }
 

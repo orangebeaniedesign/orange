@@ -2,12 +2,16 @@ import { ArrowRight } from "lucide-react";
 
 interface HomePageProps {
   onViewWork: () => void;
-  onContact: () => void;
+  onViewAbout?: () => void;
+  onViewContact?: () => void;
+  onViewVisual?: () => void;
+  onProjectClick?: (id: string) => void;
+  onContact?: () => void;
 }
 
 const BASE = import.meta.env.BASE_URL;
 
-export default function HomePage({ onViewWork, onContact }: HomePageProps) {
+export default function HomePage({ onViewWork, onViewContact, onContact }: HomePageProps) {
   return (
     <article className="bg-offwhite text-offblack">
       {/* HERO WITH SUBTLE VIDEO */}
@@ -106,7 +110,7 @@ export default function HomePage({ onViewWork, onContact }: HomePageProps) {
               View work
             </button>
 
-            <button onClick={onContact} className="btn-outline">
+            <button onClick={onViewContact ?? onContact} className="btn-outline">
               Start a project
             </button>
           </div>

@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { useProjects, Project } from "../hooks/usePortfolioData";
 
 type Props = {
+  projectId?: string;
   onBack: () => void;
   onProjectClick: (id: string) => void;
   onAbout?: () => void;

@@ -51,6 +51,12 @@ export function useProjects(category?: string | string[]): UseProjectsResult {
       setLoading(true);
       setError(null);
 
+      if (!supabase) {
+        setError("Database not configured");
+        setLoading(false);
+        return;
+      }
+
       let query = supabase
         .from("projects")
         .select("*")
@@ -111,11 +117,17 @@ export function useProject(projectId?: string): UseProjectResult {
       setLoading(true);
       setError(null);
 
+      if (!supabase) {
+        setError("Database not configured");
+        setLoading(false);
+        return;
+      }
+
       const { data, error: supaError } = await supabase
         .from("projects")
         .select("*")
         .eq("id", projectId)
-        .single();
+        .maybeSingle();
 
       if (cancelled) return;
 

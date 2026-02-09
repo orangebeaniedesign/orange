@@ -1,6 +1,7 @@
 import { ArrowRight } from 'lucide-react';
 
 interface AboutPageProps {
+  onBack?: () => void;
   onContact: () => void;
   onWork: () => void;
 }

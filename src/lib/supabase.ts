@@ -7,26 +7,26 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn(
-    '[Supabase] Missing environment variables. Check VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.'
-  );
-}
-
 /* -------------------------------------------
    CLIENT
 ------------------------------------------- */
 
-export const supabase = createClient(
-  supabaseUrl ?? '',
-  supabaseAnonKey ?? '',
-  {
+function createSupabaseClient() {
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.warn(
+      '[Supabase] Missing environment variables. Check VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.'
+    );
+    return null;
+  }
+  return createClient(supabaseUrl, supabaseAnonKey, {
     auth: {
       persistSession: true,
       autoRefreshToken: true,
     },
-  }
-);
+  });
+}
+
+export const supabase = createSupabaseClient();
 
 /* -------------------------------------------
    DOMAIN TYPES (DB SHAPE)

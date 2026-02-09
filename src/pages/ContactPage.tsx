@@ -11,7 +11,7 @@ interface FormData {
   message: string;
 }
 
-export default function ContactPage() {
+export default function ContactPage({ onBack }: { onBack?: () => void }) {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -26,6 +26,12 @@ export default function ContactPage() {
     e.preventDefault();
     setIsSubmitting(true);
     setError('');
+
+    if (!supabase) {
+      setError('Database not configured.');
+      setIsSubmitting(false);
+      return;
+    }
 
     const { error: submitError } = await supabase
       .from('contact_submissions')

@@ -21,6 +21,33 @@
   }
 }
 
+/* Components */
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-3 px-8 py-4 bg-offblack text-offwhite text-body-sm font-medium tracking-wide
+      transition-all duration-300 ease-expo-out hover:bg-neutral-800 active:scale-[0.98];
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-3 px-8 py-4 border border-neutral-300 text-offblack text-body-sm font-medium tracking-wide
+      transition-all duration-300 ease-expo-out hover:border-offblack active:scale-[0.98];
+  }
+
+  .input-line {
+    @apply w-full bg-transparent border-b border-neutral-300 py-3 text-body-md text-offblack
+      placeholder:text-neutral-400 outline-none transition-colors duration-300
+      focus:border-offblack;
+  }
+
+  .label-caption {
+    @apply text-caption uppercase tracking-widest text-neutral-500;
+  }
+
+  .media-frame {
+    @apply overflow-hidden rounded-sm;
+  }
+}
+
 /* Utilities */
 @layer utilities {
   .grain {

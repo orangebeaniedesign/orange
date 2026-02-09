@@ -5,8 +5,9 @@ import { useProjects } from '../hooks/usePortfolioData';
 import { easing, duration, staggerContainer, staggerItem } from '../lib/motion';
 
 interface VisualPageProps {
-  onProjectClick: (id: string) => void;
-  onContact: () => void;
+  onBack?: () => void;
+  onProjectClick?: (id: string) => void;
+  onContact?: () => void;
 }
 
 export default function VisualPage({ onProjectClick, onContact }: VisualPageProps) {
