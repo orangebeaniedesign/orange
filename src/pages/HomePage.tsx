@@ -44,7 +44,7 @@ function HeroSection() {
         className="absolute inset-0"
       >
         <img
-          src="/home/project/public/dscf2906.jpg"
+          src="//public/dscf2906.jpg"
           alt="Hero"
           className="w-full h-full object-cover"
         />
