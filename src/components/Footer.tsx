@@ -1,29 +1,29 @@
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { ArrowUpRight } from 'lucide-react';
-import type { PageType } from '../App';
-import { easing, duration } from '../lib/motion';
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { ArrowUpRight } from "lucide-react";
+import type { PageType } from "../App";
+import { easing, duration } from "../lib/motion";
 
 interface FooterProps {
   onNavigate: (page: PageType) => void;
 }
 
 const navLinks: { label: string; page: PageType }[] = [
-  { label: 'Work', page: 'work' },
-  { label: 'Visual', page: 'visual' },
-  { label: 'About', page: 'about' },
-  { label: 'Contact', page: 'contact' },
+  { label: "Work", page: "work" },
+  { label: "Visual", page: "visual" },
+  { label: "About", page: "about" },
+  { label: "Contact", page: "contact" },
 ];
 
 const socials = [
-  { label: 'Instagram', url: 'https://instagram.com/orangebeanie' },
-  { label: 'Vimeo', url: 'https://vimeo.com/orangebeanie' },
-  { label: 'Behance', url: 'https://behance.net/orangebeanie' },
+  { label: "Instagram", url: "https://instagram.com/orangebeanie" },
+  { label: "Vimeo", url: "https://vimeo.com/orangebeanie" },
+  { label: "Behance", url: "https://behance.net/orangebeanie" },
 ];
 
 export default function Footer({ onNavigate }: FooterProps) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
     <footer ref={ref} className="border-t border-stone-200 bg-cream">
@@ -38,13 +38,16 @@ export default function Footer({ onNavigate }: FooterProps) {
             <div>
               <p className="label-caption mb-7">Navigation</p>
               <nav className="space-y-4">
-                {navLinks.map((link) => (
+                {navLinks.map((link, i) => (
                   <button
                     key={link.page}
                     onClick={() => onNavigate(link.page)}
-                    className="block text-body-md text-stone-500 hover:text-charcoal transition-colors duration-500"
+                    className="group flex items-baseline gap-3 text-body-md text-stone-500 hover:text-charcoal transition-colors duration-500"
                   >
-                    {link.label}
+                    <span className="text-overline text-stone-400">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="underline-weird">{link.label}</span>
                   </button>
                 ))}
               </nav>
@@ -59,10 +62,10 @@ export default function Footer({ onNavigate }: FooterProps) {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-body-md text-stone-500 hover:text-charcoal transition-colors duration-500 group"
+                    className="group flex items-center justify-between text-body-md text-stone-500 hover:text-charcoal transition-colors duration-500"
                   >
-                    {social.label}
-                    <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <span className="underline-weird">{social.label}</span>
+                    <ArrowUpRight className="w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
                   </a>
                 ))}
               </div>
@@ -72,19 +75,36 @@ export default function Footer({ onNavigate }: FooterProps) {
               <p className="label-caption mb-7">Say hello</p>
               <a
                 href="mailto:hello@orangebeanie.design"
-                className="text-body-md text-stone-500 hover:text-charcoal transition-colors duration-500"
+                className="text-body-md text-stone-500 hover:text-charcoal transition-colors duration-500 underline-weird"
               >
                 hello@orangebeanie.design
               </a>
+
               <p className="text-body-sm text-stone-400 font-light mt-5">
-                Porto, Portugal
+                Madeira-based, working worldwide.
               </p>
+
+              {/* opcional: CV link mantém-se (mesmo sem PDF por agora, porque ainda não vais publicar) */}
+              <div className="mt-6">
+                <a
+                  href="/cv.pdf"
+                  className="text-body-sm text-stone-500 hover:text-charcoal transition-colors duration-500 underline-weird inline-flex items-center gap-2"
+                  download
+                >
+                  Download CV
+                  <ArrowUpRight className="w-4 h-4 opacity-60" />
+                </a>
+              </div>
             </div>
           </div>
 
-          <div className="pt-8 border-t border-stone-200/60">
+          <div className="pt-8 border-t border-stone-200/60 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <span className="text-body-xs text-stone-400 font-light">
-              {new Date().getFullYear()} OrangeBeanie Design
+              {new Date().getFullYear()} Orange Beanie
+            </span>
+
+            <span className="text-body-xs text-stone-400 font-light">
+              Design · Photography · Motion
             </span>
           </div>
         </motion.div>
