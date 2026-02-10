@@ -12,7 +12,7 @@
     font-weight: 300;
   }
 
-  /* headings com mais personalidade (menos “luxury serif”) */
+  /* Headings: modern, sem “luxury serif” */
   h1, h2, h3, h4 {
     font-family: "Space Grotesk", Inter, system-ui, sans-serif;
     font-weight: 600;
@@ -24,7 +24,6 @@
     color: #1A1A18;
   }
 
-  /* scrollbar subtil (opcional, mas dá vibe) */
   ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -37,7 +36,6 @@
 }
 
 @layer components {
-  /* Botões mais “graphic” e menos “agency premium” */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-3 px-8 py-4
       bg-charcoal text-cream text-body-sm font-medium tracking-[0.08em] uppercase
@@ -71,15 +69,14 @@
     background-size: 4px 4px;
   }
 
-  /* underline “weird” controlado (para links/CTAs) */
+  /* ✅ underline “weird” (agora com underline REAL — sem caixas/artefactos) */
   .underline-weird {
-    background-image: linear-gradient(currentColor, currentColor);
-    background-repeat: no-repeat;
-    background-size: 100% 1px;
-    background-position: 0 100%;
-    padding-bottom: 2px;
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.18em;
+    text-decoration-color: rgba(26, 26, 24, 0.45);
   }
   .underline-weird:hover {
-    background-size: 70% 1px;
+    text-decoration-color: rgba(26, 26, 24, 0.85);
   }
 }
