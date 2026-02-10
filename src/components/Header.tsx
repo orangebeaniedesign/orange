@@ -61,7 +61,6 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
         <div className="flex items-center justify-between px-gutter py-6 md:py-8">
           <div className="flex items-center gap-4">
             <Logo onClick={() => handleNavigate("home")} />
-            {/* detalhe minimal/weird: “status dot” */}
             <span
               className={[
                 "hidden md:inline-block h-2 w-2",
@@ -129,7 +128,6 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
                 </button>
               </div>
 
-              {/* detalhe weird: hairline + grid hint */}
               <div className="px-gutter">
                 <div className="h-px w-full bg-charcoal/10" />
                 <div className="mt-4 text-overline uppercase tracking-[0.16em] text-stone-500">
@@ -174,7 +172,9 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
                         className={[
                           "text-overline uppercase tracking-[0.16em]",
                           "transition-opacity duration-500",
-                          active ? "opacity-100 text-charcoal" : "opacity-0 group-hover:opacity-70 text-stone-500",
+                          active
+                            ? "opacity-100 text-charcoal"
+                            : "opacity-0 group-hover:opacity-70 text-stone-500",
                         ].join(" ")}
                       >
                         open
