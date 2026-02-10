@@ -42,7 +42,7 @@ function OpeningSection() {
         >
           I’m Orange Beanie —
           <br />
-          a multidisciplinary <em className="italic">visual maker</em>.
+          a multidisciplinary <span className="underline-weird">visual maker</span>.
         </motion.h1>
 
         <motion.div
@@ -58,15 +58,17 @@ function OpeningSection() {
           </p>
 
           <div className="mt-8 flex flex-wrap gap-2">
-            {["Branding", "Digital", "Motion", "3D", "Photography", "Video"].map((t) => (
-              <span
-                key={t}
-                className="text-overline uppercase tracking-[0.14em] px-3 py-1 border border-charcoal/10 text-charcoal/70"
-                style={{ borderRadius: 10 }}
-              >
-                {t}
-              </span>
-            ))}
+            {["Branding", "Digital", "Motion", "3D", "Photography", "Video"].map(
+              (t) => (
+                <span
+                  key={t}
+                  className="text-overline uppercase tracking-[0.14em] px-3 py-1 border border-charcoal/10 text-charcoal/70"
+                  style={{ borderRadius: 10 }}
+                >
+                  {t}
+                </span>
+              )
+            )}
           </div>
         </motion.div>
       </div>
@@ -247,7 +249,11 @@ function ValuesSection() {
               key={value.heading}
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: duration.slower, delay: 0.15 + index * 0.1, ease: easing.expoOut }}
+              transition={{
+                duration: duration.slower,
+                delay: 0.15 + index * 0.1,
+                ease: easing.expoOut,
+              }}
             >
               <div className="w-8 h-[1px] bg-stone-300 mb-8" />
               <h3 className="text-display-md mb-5">{value.heading}</h3>
@@ -278,7 +284,11 @@ function PerspectiveSection() {
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: duration.slower, delay: 0.12, ease: easing.expoOut }}
+            transition={{
+              duration: duration.slower,
+              delay: 0.12,
+              ease: easing.expoOut,
+            }}
             className="md:col-span-5 md:col-start-1 order-2 md:order-1"
           >
             <p className="label-caption mb-10">How I work</p>
@@ -343,7 +353,10 @@ function ClosingSection({
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="py-section-lg px-gutter border-t border-stone-200/60">
+    <section
+      ref={ref}
+      className="py-section-lg px-gutter border-t border-stone-200/60"
+    >
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
