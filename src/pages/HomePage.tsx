@@ -41,16 +41,25 @@ function HeroSection() {
   return (
     <section ref={ref} className="relative h-screen overflow-hidden">
       <motion.div style={{ scale }} className="absolute inset-0">
-        <img src="/dscf2906.jpg" alt="Hero" className="h-full w-full object-cover" />
+        <img
+          src="/dscf2906.jpg"
+          alt="Hero"
+          className="h-full w-full object-cover"
+        />
         <div className="absolute inset-0 bg-charcoal/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal/45 via-charcoal/10 to-transparent" />
+
+        {/* detalhe weird minimal: 2 linhas finas */}
         <div className="pointer-events-none absolute left-6 top-6 hidden md:block">
           <div className="h-px w-10 bg-cream/35" />
           <div className="mt-3 h-10 w-px bg-cream/25" />
         </div>
       </motion.div>
 
-      <motion.div style={{ y, opacity }} className="relative z-10 flex h-full flex-col justify-end">
+      <motion.div
+        style={{ y, opacity }}
+        className="relative z-10 flex h-full flex-col justify-end"
+      >
         <div className="px-gutter pb-16 md:pb-24 lg:pb-32">
           <div className="mx-auto max-w-7xl">
             <div className="md:ml-[8%] lg:ml-[12%] max-w-3xl">
@@ -76,7 +85,7 @@ function HeroSection() {
               >
                 I make things
                 <br />
-                <span className="italic">look</span> like you.
+                <span className="underline-weird">look</span> like you.
               </motion.h1>
 
               <motion.p
@@ -141,7 +150,11 @@ function IntroSection() {
             <motion.p
               initial={{ opacity: 0, y: 18 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: duration.slower, delay: 0.15, ease: easing.expoOut }}
+              transition={{
+                duration: duration.slower,
+                delay: 0.15,
+                ease: easing.expoOut,
+              }}
               className="text-body-lg text-stone-500 font-light leading-relaxed mt-10 max-w-xl"
             >
               Agency-trained, studio-tested, still curious. Focused on brands,
@@ -151,18 +164,24 @@ function IntroSection() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
-              transition={{ duration: duration.slow, delay: 0.25, ease: easing.expoOut }}
+              transition={{
+                duration: duration.slow,
+                delay: 0.25,
+                ease: easing.expoOut,
+              }}
               className="mt-10 flex flex-wrap gap-2"
             >
-              {["Branding", "Design Systems", "Web", "Photography", "Art Direction"].map((t) => (
-                <span
-                  key={t}
-                  className="text-overline uppercase tracking-[0.14em] px-3 py-1 border border-charcoal/10 text-charcoal/70"
-                  style={{ borderRadius: 8 }}
-                >
-                  {t}
-                </span>
-              ))}
+              {["Branding", "Design Systems", "Web", "Photography", "Art Direction"].map(
+                (t) => (
+                  <span
+                    key={t}
+                    className="text-overline uppercase tracking-[0.14em] px-3 py-1 border border-charcoal/10 text-charcoal/70"
+                    style={{ borderRadius: 8 }}
+                  >
+                    {t}
+                  </span>
+                )
+              )}
             </motion.div>
           </div>
         </div>
@@ -201,7 +220,11 @@ function SelectedWork({
           <motion.button
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
-            transition={{ duration: duration.slow, delay: 0.25, ease: easing.expoOut }}
+            transition={{
+              duration: duration.slow,
+              delay: 0.25,
+              ease: easing.expoOut,
+            }}
             onClick={onViewWork}
             className="hidden md:flex items-center gap-3 text-body-sm text-stone-500 hover:text-charcoal transition-colors duration-500 group"
           >
@@ -211,14 +234,20 @@ function SelectedWork({
         </div>
       </div>
 
-      {loading ? <LoadingSkeleton /> : display.length === 0 ? null : (
+      {loading ? (
+        <LoadingSkeleton />
+      ) : display.length === 0 ? null : (
         <ProjectGrid projects={display} onProjectClick={onProjectClick} />
       )}
 
       <motion.div
         initial={{ opacity: 0 }}
         animate={isInView ? { opacity: 1 } : {}}
-        transition={{ duration: duration.slow, delay: 0.35, ease: easing.expoOut }}
+        transition={{
+          duration: duration.slow,
+          delay: 0.35,
+          ease: easing.expoOut,
+        }}
         className="md:hidden px-gutter mt-12"
       >
         <button
@@ -325,7 +354,11 @@ function ProjectCard({
         ease: easing.expoOut,
       }}
     >
-      <button onClick={onClick} className="group relative block w-full overflow-hidden" data-cursor="view">
+      <button
+        onClick={onClick}
+        className="group relative block w-full overflow-hidden"
+        data-cursor="view"
+      >
         <div className={aspectClass}>
           <img
             src={project.image_url}
@@ -338,7 +371,10 @@ function ProjectCard({
         <div className="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/35 transition-all duration-700 ease-expo-out" />
 
         <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-          <div className="absolute inset-4 border border-cream/20" style={{ borderRadius: 10 }} />
+          <div
+            className="absolute inset-4 border border-cream/20"
+            style={{ borderRadius: 10 }}
+          />
         </div>
 
         <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-10">
@@ -359,10 +395,19 @@ function LoadingSkeleton() {
   return (
     <div className="space-y-4 md:space-y-6 px-gutter">
       <div className="mx-auto max-w-7xl space-y-4 md:space-y-6">
-        <div className="aspect-[2.2/1] bg-stone-100 animate-pulse" style={{ borderRadius: 10 }} />
+        <div
+          className="aspect-[2.2/1] bg-stone-100 animate-pulse"
+          style={{ borderRadius: 10 }}
+        />
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
-          <div className="md:col-span-7 aspect-[4/3] bg-stone-100 animate-pulse" style={{ borderRadius: 10 }} />
-          <div className="md:col-span-5 aspect-[4/3] bg-stone-100 animate-pulse" style={{ borderRadius: 10 }} />
+          <div
+            className="md:col-span-7 aspect-[4/3] bg-stone-100 animate-pulse"
+            style={{ borderRadius: 10 }}
+          />
+          <div
+            className="md:col-span-5 aspect-[4/3] bg-stone-100 animate-pulse"
+            style={{ borderRadius: 10 }}
+          />
         </div>
       </div>
     </div>
