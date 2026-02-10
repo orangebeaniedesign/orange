@@ -1,7 +1,7 @@
-import { useRef } from 'react';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import { easing, duration } from '../lib/motion';
+import { useRef } from "react";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import { easing, duration } from "../lib/motion";
 
 interface AboutPageProps {
   onContact: () => void;
@@ -28,32 +28,46 @@ function OpeningSection() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.3, ease: easing.expoOut }}
+          transition={{ duration: 1, delay: 0.25, ease: easing.expoOut }}
           className="label-caption mb-10 md:mb-14"
         >
           About
         </motion.p>
 
         <motion.h1
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.6, delay: 0.5, ease: easing.expoOut }}
-          className="font-serif text-hero leading-[0.98] max-w-5xl"
+          transition={{ duration: 1.5, delay: 0.45, ease: easing.expoOut }}
+          className="text-hero leading-[0.98] max-w-5xl"
         >
-          About me
+          I’m Orange Beanie —
           <br />
-          <em className="italic">Orange Beanie Design</em>
+          a multidisciplinary <em className="italic">visual maker</em>.
         </motion.h1>
 
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.9, ease: easing.expoOut }}
+          transition={{ duration: 1.15, delay: 0.85, ease: easing.expoOut }}
           className="mt-14 md:mt-18 md:ml-[30%] max-w-lg"
         >
-          <p className="text-body-xl text-stone-500 font-light leading-relaxed">
-            I’m a freelance graphic designer with a passion for creating bold, story-driven visuals that connect. My work spans branding, editorial, motion design, 3D, photography, and video — always guided by a love for meaningful design and strong visual identity.
+          <p className="text-body-xl text-stone-600 font-light leading-relaxed">
+            I design brands, build visuals, and shoot images — sometimes tidy,
+            sometimes weird. I’m into projects with taste, personality, and a
+            bit of risk (the good kind).
           </p>
+
+          <div className="mt-8 flex flex-wrap gap-2">
+            {["Branding", "Digital", "Motion", "3D", "Photography", "Video"].map((t) => (
+              <span
+                key={t}
+                className="text-overline uppercase tracking-[0.14em] px-3 py-1 border border-charcoal/10 text-charcoal/70"
+                style={{ borderRadius: 10 }}
+              >
+                {t}
+              </span>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>
@@ -62,19 +76,19 @@ function OpeningSection() {
 
 function PortraitSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ['start end', 'end start'],
+    offset: ["start end", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '6%']);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "6%"]);
 
   return (
     <section ref={ref} className="px-gutter pb-section-lg">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 22 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: duration.slowest, ease: easing.expoOut }}
             className="md:col-span-7 md:col-start-1 overflow-hidden"
@@ -89,14 +103,29 @@ function PortraitSection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: duration.slower, delay: 0.3, ease: easing.expoOut }}
+            transition={{
+              duration: duration.slower,
+              delay: 0.25,
+              ease: easing.expoOut,
+            }}
             className="md:col-span-4 md:col-start-9 flex flex-col justify-end"
           >
+            <p className="label-caption mb-6">Why “Orange Beanie”?</p>
+
             <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-              The name Orange Beanie Design comes from one unforgettable moment. After dreaming for 15 years of seeing my favorite band, McFly, I finally did — and ended up playing drums with them on stage. The bassist pointed me out in the crowd and said, “the girl with the orange beanie.” That moment captured everything I believe in as a creative: standing out, showing up, and turning passion into something real.
+              The name comes from one very specific moment: after 15 years of
+              dreaming about seeing McFly live, I finally did — and ended up
+              playing drums with them on stage. The bassist pointed at me and
+              said: “the girl with the orange beanie.”
+              <span className="block mt-6">
+                That’s the whole vibe: show up, stand out, and turn obsession
+                into something real.
+              </span>
             </p>
+
+            <div className="mt-10 w-12 h-px bg-stone-300" />
           </motion.div>
         </div>
       </div>
@@ -106,7 +135,7 @@ function PortraitSection() {
 
 function StatementSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-120px' });
+  const isInView = useInView(ref, { once: true, margin: "-120px" });
 
   return (
     <section ref={ref} className="py-section-lg px-gutter">
@@ -119,40 +148,51 @@ function StatementSection() {
               transition={{ duration: duration.slow, ease: easing.expoOut }}
               className="label-caption"
             >
-              The Journey
+              The journey
             </motion.p>
           </div>
 
           <div className="md:col-span-7">
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: duration.slowest, ease: easing.expoOut }}
-              className="font-serif text-display-xl leading-[1.2] mb-14"
+              className="text-display-xl leading-[1.18] mb-10"
             >
-              Design, for me, is just that, 
-               <br />a way to turn ideas into moments that leave a mark.
+              Design is how I translate ideas into things people actually feel.
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: duration.slower, delay: 0.2, ease: easing.expoOut }}
+              transition={{
+                duration: duration.slower,
+                delay: 0.15,
+                ease: easing.expoOut,
+              }}
               className="space-y-8 max-w-xl"
             >
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                My journey in design began with a background in Multimedia, where I first explored image, video, and visual communication. I later completed a degree in Audiovisual & Multimedia, expanding my focus into motion, branding, and digital design.
+                I started in Multimedia, playing with image, video, and visual
+                communication. Later I studied Audiovisual &amp; Multimedia and
+                got deeper into motion, branding, and digital design.
               </p>
 
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                
-Through internships in 3D and graphic design, I gained early hands-on experience that shaped the way I approach creative work. I then moved into freelance projects with Dope Digital Agency, before joining A Cor Laranja, where I grew from intern to full-time designer and worked across branding, print, and visual communication.
+                I did internships in 3D and graphic design, then freelanced with
+                Dope Digital Agency, and joined A Cor Laranja — growing from
+                intern to full-time designer working across branding, print, and
+                visual systems.
               </p>
 
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                I collaborate with studios, cultural projects, and independent businesses
-                who believe design isn’t decoration — it’s clarity, feeling, and direction
-                made visible.
+                Today I work mostly with brands (because that’s where I’ve got
+                the reps), but I’m actively building space for more experimental,
+                alternative collaborations too.
+              </p>
+
+              <p className="text-body-md text-stone-500 font-light leading-relaxed">
+                Madeira-based, working worldwide.
               </p>
             </motion.div>
           </div>
@@ -164,21 +204,12 @@ Through internships in 3D and graphic design, I gained early hands-on experience
 
 function ValuesSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const values = [
-    {
-      heading: 'Clarity',
-      text: 'Good design makes things easier to understand — visually, emotionally, and functionally.',
-    },
-    {
-      heading: 'Craft',
-      text: 'Details matter. Typography, pacing, and composition are where the work becomes believable.',
-    },
-    {
-      heading: 'Motion',
-      text: 'Movement isn’t decoration — it’s communication. It guides attention and adds meaning over time.',
-    },
+    { heading: "Clarity", text: "Make it understandable. Make it feel right. (Then make it look great.)" },
+    { heading: "Craft", text: "Typography, pacing, composition — the tiny choices are the whole thing." },
+    { heading: "Motion", text: "Movement isn’t decoration. It’s timing, tension and meaning over time." },
   ];
 
   return (
@@ -198,13 +229,14 @@ function ValuesSection() {
 
           <div className="md:col-span-7">
             <motion.p
-              initial={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: duration.slowest, ease: easing.expoOut }}
-              className="font-serif text-display-2xl leading-[1.15]"
+              className="text-display-2xl leading-[1.12]"
             >
-              A few principles that
-              shape the work.
+              A few rules I break
+              <br />
+              (and the ones I don’t).
             </motion.p>
           </div>
         </div>
@@ -213,18 +245,12 @@ function ValuesSection() {
           {values.map((value, index) => (
             <motion.div
               key={value.heading}
-              initial={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{
-                duration: duration.slower,
-                delay: 0.2 + index * 0.12,
-                ease: easing.expoOut,
-              }}
+              transition={{ duration: duration.slower, delay: 0.15 + index * 0.1, ease: easing.expoOut }}
             >
               <div className="w-8 h-[1px] bg-stone-300 mb-8" />
-              <h3 className="font-serif text-display-md mb-5">
-                {value.heading}
-              </h3>
+              <h3 className="text-display-md mb-5">{value.heading}</h3>
               <p className="text-body-md text-stone-500 font-light leading-relaxed">
                 {value.text}
               </p>
@@ -238,48 +264,56 @@ function ValuesSection() {
 
 function PerspectiveSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ['start end', 'end start'],
+    offset: ["start end", "end start"],
   });
-  const imgY = useTransform(scrollYProgress, [0, 1], ['0%', '8%']);
+  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
 
   return (
     <section ref={ref} className="py-section-lg px-gutter">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: duration.slower, delay: 0.15, ease: easing.expoOut }}
+            transition={{ duration: duration.slower, delay: 0.12, ease: easing.expoOut }}
             className="md:col-span-5 md:col-start-1 order-2 md:order-1"
           >
             <p className="label-caption mb-10">How I work</p>
 
             <div className="space-y-8">
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                My process starts with conversation, not assumptions. I want to understand
-                the goal, the audience, the constraints — and what the brand should feel
-                like when people meet it.
+                I start with a conversation — not assumptions. I want to know the
+                goal, the audience, the constraints, and what the project should
+                feel like when people meet it.
               </p>
 
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                From there, I build a visual language that can live across formats:
-                identity, web, and motion. When it helps, I use code to bridge design and
-                implementation so things translate cleanly.
+                Then I build a visual language that can live across formats:
+                identity, web, motion, and image. When it helps, I use code to
+                bridge design and implementation so details translate cleanly.
               </p>
 
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                I’m building my freelance practice with long-term collaboration in mind.
-                The best work happens when there’s trust, shared taste, and time to get
-                the details right.
+                I’m best in long-term collaborations — shared taste + trust + time.
+                That’s where the good stuff happens.
               </p>
+            </div>
+
+            <div className="mt-10">
+              <button
+                onClick={onWork}
+                className="text-body-sm text-stone-500 hover:text-charcoal transition-colors duration-500 underline-weird"
+              >
+                See projects
+              </button>
             </div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 22 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: duration.slowest, ease: easing.expoOut }}
             className="md:col-span-5 md:col-start-8 order-1 md:order-2 overflow-hidden"
@@ -306,28 +340,28 @@ function ClosingSection({
   onWork: () => void;
 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section ref={ref} className="py-section-lg px-gutter border-t border-stone-200/60">
       <div className="max-w-7xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: duration.slowest, ease: easing.expoOut }}
           className="md:ml-[16%] max-w-2xl"
         >
           <div className="w-10 h-[1px] bg-stone-300 mb-16" />
 
-          <h2 className="font-serif text-display-2xl leading-[1.12] mb-10">
-            If you value thoughtful work
-            and clear communication —
-            I’d love to hear from you.
+          <h2 className="text-display-2xl leading-[1.12] mb-8">
+            Want to build something
+            <br />
+            clean, bold, and a bit unexpected?
           </h2>
 
-          <p className="text-body-lg text-stone-400 font-light leading-relaxed mb-16 max-w-md">
-            Whether it’s motion for a campaign, a website refresh,
-            or a brand identity built with care.
+          <p className="text-body-lg text-stone-500 font-light leading-relaxed mb-14 max-w-md">
+            If you’ve got a brand, a project, or an idea that needs a visual
+            world — I’m in.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-5">
@@ -336,7 +370,7 @@ function ClosingSection({
               <ArrowRight className="w-4 h-4" />
             </button>
             <button onClick={onWork} className="btn-outline">
-              View the work
+              View work
             </button>
           </div>
         </motion.div>
