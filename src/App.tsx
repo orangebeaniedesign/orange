@@ -29,7 +29,6 @@ export default function App() {
   }, [route]);
 
   const navigate = useCallback((page: PageType, projectId?: string) => {
-    // "instant" não é standard; "auto" é o comportamento imediato.
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 
     if (page === "project") {
@@ -95,8 +94,6 @@ export default function App() {
     }
   }
 
-  // Transição minimal / “editorial”: um toque de deslocamento + fade.
-  // (fica com personalidade sem parecer template SaaS)
   const pageMotion = prefersReducedMotion
     ? {
         initial: { opacity: 1 },
