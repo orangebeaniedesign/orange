@@ -35,11 +35,11 @@ function HeroSection() {
   });
 
   const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "28%"]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.07]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.06]);
 
   return (
-    <section ref={ref} className="relative h-screen overflow-hidden">
+    <section ref={ref} className="relative min-h-screen overflow-hidden">
       <motion.div style={{ scale }} className="absolute inset-0">
         <img
           src="/dscf2906.jpg"
@@ -48,38 +48,33 @@ function HeroSection() {
         />
         <div className="absolute inset-0 bg-charcoal/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal/45 via-charcoal/10 to-transparent" />
-
-        {/* detalhe weird minimal: 2 linhas finas */}
-        <div className="pointer-events-none absolute left-6 top-6 hidden md:block">
-          <div className="h-px w-10 bg-cream/35" />
-          <div className="mt-3 h-10 w-px bg-cream/25" />
-        </div>
       </motion.div>
 
+      {/* ✅ safe area para header + título (resolve o “cortado”) */}
       <motion.div
         style={{ y, opacity }}
-        className="relative z-10 flex h-full flex-col justify-end"
+        className="relative z-10 min-h-screen flex flex-col justify-end"
       >
-        <div className="px-gutter pb-16 md:pb-24 lg:pb-32">
+        <div className="px-gutter pb-14 md:pb-20 lg:pb-24 pt-28 md:pt-32">
           <div className="mx-auto max-w-7xl">
             <div className="md:ml-[8%] lg:ml-[12%] max-w-3xl">
               <motion.p
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.35, ease: easing.expoOut }}
-                className="text-caption uppercase tracking-[0.22em] text-cream/70 mb-6 md:mb-8"
+                transition={{ duration: 1, delay: 0.3, ease: easing.expoOut }}
+                className="text-caption uppercase tracking-[0.22em] text-cream/75 mb-6 md:mb-7"
               >
-                Visual Artist / Designer / Photographer
+                Design / Photography / Visual Worlds
               </motion.p>
 
               <motion.h1
-                initial={{ opacity: 0, y: 18 }}
+                initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.35, delay: 0.55, ease: easing.expoOut }}
-                className="text-cream"
+                transition={{ duration: 1.25, delay: 0.5, ease: easing.expoOut }}
+                className="text-cream drop-shadow-[0_18px_40px_rgba(0,0,0,0.35)]"
                 style={{
-                  fontSize: "clamp(3.2rem, 9.2vw, 8.6rem)",
-                  lineHeight: "0.95",
+                  fontSize: "clamp(2.6rem, 7.4vw, 7.1rem)",
+                  lineHeight: "0.98",
                   letterSpacing: "-0.04em",
                 }}
               >
@@ -91,21 +86,21 @@ function HeroSection() {
               <motion.p
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.1, delay: 0.95, ease: easing.expoOut }}
-                className="text-body-lg md:text-body-xl text-cream/75 font-light leading-relaxed mt-8 md:mt-10 max-w-md"
+                transition={{ duration: 1.05, delay: 0.9, ease: easing.expoOut }}
+                className="text-body-lg md:text-body-xl text-cream/80 font-light leading-relaxed mt-7 md:mt-8 max-w-md"
               >
-                Design, photography and visual worlds for brands — and the odd
+                Design, photography and visual worlds for brands — plus the odd
                 experimental project in between.
               </motion.p>
 
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 1.45, ease: easing.expoOut }}
-                className="mt-10 md:mt-14 flex items-center gap-4"
+                transition={{ duration: 1, delay: 1.25, ease: easing.expoOut }}
+                className="mt-8 md:mt-10 flex items-center gap-4"
               >
                 <div className="w-10 h-[1px] bg-cream/35" />
-                <span className="text-overline uppercase tracking-[0.18em] text-cream/55">
+                <span className="text-overline uppercase tracking-[0.18em] text-cream/60">
                   Madeira-based, working worldwide.
                 </span>
               </motion.div>
@@ -354,11 +349,7 @@ function ProjectCard({
         ease: easing.expoOut,
       }}
     >
-      <button
-        onClick={onClick}
-        className="group relative block w-full overflow-hidden"
-        data-cursor="view"
-      >
+      <button onClick={onClick} className="group relative block w-full overflow-hidden" data-cursor="view">
         <div className={aspectClass}>
           <img
             src={project.image_url}
@@ -369,13 +360,6 @@ function ProjectCard({
         </div>
 
         <div className="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/35 transition-all duration-700 ease-expo-out" />
-
-        <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-          <div
-            className="absolute inset-4 border border-cream/20"
-            style={{ borderRadius: 10 }}
-          />
-        </div>
 
         <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-10">
           <div className="translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-600 ease-expo-out">
@@ -395,19 +379,10 @@ function LoadingSkeleton() {
   return (
     <div className="space-y-4 md:space-y-6 px-gutter">
       <div className="mx-auto max-w-7xl space-y-4 md:space-y-6">
-        <div
-          className="aspect-[2.2/1] bg-stone-100 animate-pulse"
-          style={{ borderRadius: 10 }}
-        />
+        <div className="aspect-[2.2/1] bg-stone-100 animate-pulse" style={{ borderRadius: 10 }} />
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
-          <div
-            className="md:col-span-7 aspect-[4/3] bg-stone-100 animate-pulse"
-            style={{ borderRadius: 10 }}
-          />
-          <div
-            className="md:col-span-5 aspect-[4/3] bg-stone-100 animate-pulse"
-            style={{ borderRadius: 10 }}
-          />
+          <div className="md:col-span-7 aspect-[4/3] bg-stone-100 animate-pulse" style={{ borderRadius: 10 }} />
+          <div className="md:col-span-5 aspect-[4/3] bg-stone-100 animate-pulse" style={{ borderRadius: 10 }} />
         </div>
       </div>
     </div>
