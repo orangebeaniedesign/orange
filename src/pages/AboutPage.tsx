@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { easing, duration } from "../lib/motion";
+import { easing, duration, staggerContainer, staggerItem } from "../lib/motion";
 
 interface AboutPageProps {
   onContact: () => void;
@@ -15,7 +15,7 @@ export default function AboutPage({ onContact, onWork }: AboutPageProps) {
       <PortraitSection />
       <StatementSection />
       <ValuesSection />
-      <PerspectiveSection />
+      <PerspectiveSection onWork={onWork} />
       <ClosingSection onContact={onContact} onWork={onWork} />
     </article>
   );
@@ -53,22 +53,20 @@ function OpeningSection() {
         >
           <p className="text-body-xl text-stone-600 font-light leading-relaxed">
             I design brands, build visuals, and shoot images — sometimes tidy,
-            sometimes weird. I’m into projects with taste, personality, and a
-            bit of risk (the good kind).
+            sometimes weird. I’m into projects with taste, personality, and a bit of
+            risk (the good kind).
           </p>
 
           <div className="mt-8 flex flex-wrap gap-2">
-            {["Branding", "Digital", "Motion", "3D", "Photography", "Video"].map(
-              (t) => (
-                <span
-                  key={t}
-                  className="text-overline uppercase tracking-[0.14em] px-3 py-1 border border-charcoal/10 text-charcoal/70"
-                  style={{ borderRadius: 10 }}
-                >
-                  {t}
-                </span>
-              )
-            )}
+            {["Branding", "Digital", "Motion", "3D", "Photography", "Video"].map((t) => (
+              <span
+                key={t}
+                className="text-overline uppercase tracking-[0.14em] px-3 py-1 border border-charcoal/10 text-charcoal/70"
+                style={{ borderRadius: 10 }}
+              >
+                {t}
+              </span>
+            ))}
           </div>
         </motion.div>
       </div>
@@ -79,10 +77,7 @@ function OpeningSection() {
 function PortraitSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "6%"]);
 
   return (
@@ -107,23 +102,19 @@ function PortraitSection() {
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{
-              duration: duration.slower,
-              delay: 0.25,
-              ease: easing.expoOut,
-            }}
+            transition={{ duration: duration.slower, delay: 0.25, ease: easing.expoOut }}
             className="md:col-span-4 md:col-start-9 flex flex-col justify-end"
           >
             <p className="label-caption mb-6">Why “Orange Beanie”?</p>
 
             <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-              The name comes from one very specific moment: after 15 years of
-              dreaming about seeing McFly live, I finally did — and ended up
-              playing drums with them on stage. The bassist pointed at me and
-              said: “the girl with the orange beanie.”
+              The name comes from one very specific moment: after 15 years of dreaming
+              about seeing McFly live, I finally did — and ended up playing drums with
+              them on stage. The bassist pointed at me and said: “the girl with the
+              orange beanie.”
               <span className="block mt-6">
-                That’s the whole vibe: show up, stand out, and turn obsession
-                into something real.
+                That’s the whole vibe: show up, stand out, and turn obsession into
+                something real.
               </span>
             </p>
 
@@ -167,29 +158,24 @@ function StatementSection() {
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{
-                duration: duration.slower,
-                delay: 0.15,
-                ease: easing.expoOut,
-              }}
+              transition={{ duration: duration.slower, delay: 0.15, ease: easing.expoOut }}
               className="space-y-8 max-w-xl"
             >
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
                 I started in Multimedia, playing with image, video, and visual
-                communication. Later I studied Audiovisual &amp; Multimedia and
-                got deeper into motion, branding, and digital design.
+                communication. Later I studied Audiovisual &amp; Multimedia and got
+                deeper into motion, branding, and digital design.
               </p>
 
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                I did internships in 3D and graphic design, then freelanced with
-                Dope Digital Agency, and joined A Cor Laranja — growing from
-                intern to full-time designer working across branding, print, and
-                visual systems.
+                I did internships in 3D and graphic design, then freelanced with Dope
+                Digital Agency, and joined A Cor Laranja — growing from intern to
+                full-time designer working across branding, print, and visual systems.
               </p>
 
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                Today I work mostly with brands (because that’s where I’ve got
-                the reps), but I’m actively building space for more experimental,
+                Today I work mostly with brands (because that’s where I’ve got the
+                reps), but I’m actively building space for more experimental,
                 alternative collaborations too.
               </p>
 
@@ -249,17 +235,11 @@ function ValuesSection() {
               key={value.heading}
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{
-                duration: duration.slower,
-                delay: 0.15 + index * 0.1,
-                ease: easing.expoOut,
-              }}
+              transition={{ duration: duration.slower, delay: 0.15 + index * 0.1, ease: easing.expoOut }}
             >
               <div className="w-8 h-[1px] bg-stone-300 mb-8" />
               <h3 className="text-display-md mb-5">{value.heading}</h3>
-              <p className="text-body-md text-stone-500 font-light leading-relaxed">
-                {value.text}
-              </p>
+              <p className="text-body-md text-stone-500 font-light leading-relaxed">{value.text}</p>
             </motion.div>
           ))}
         </div>
@@ -268,13 +248,10 @@ function ValuesSection() {
   );
 }
 
-function PerspectiveSection() {
+function PerspectiveSection({ onWork }: { onWork: () => void }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
 
   return (
@@ -284,26 +261,22 @@ function PerspectiveSection() {
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{
-              duration: duration.slower,
-              delay: 0.12,
-              ease: easing.expoOut,
-            }}
+            transition={{ duration: duration.slower, delay: 0.12, ease: easing.expoOut }}
             className="md:col-span-5 md:col-start-1 order-2 md:order-1"
           >
             <p className="label-caption mb-10">How I work</p>
 
             <div className="space-y-8">
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                I start with a conversation — not assumptions. I want to know the
-                goal, the audience, the constraints, and what the project should
-                feel like when people meet it.
+                I start with a conversation — not assumptions. I want to know the goal,
+                the audience, the constraints, and what the project should feel like
+                when people meet it.
               </p>
 
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                Then I build a visual language that can live across formats:
-                identity, web, motion, and image. When it helps, I use code to
-                bridge design and implementation so details translate cleanly.
+                Then I build a visual language that can live across formats: identity,
+                web, motion, and image. When it helps, I use code to bridge design and
+                implementation so details translate cleanly.
               </p>
 
               <p className="text-body-lg text-stone-600 font-light leading-relaxed">
@@ -342,21 +315,12 @@ function PerspectiveSection() {
   );
 }
 
-function ClosingSection({
-  onContact,
-  onWork,
-}: {
-  onContact: () => void;
-  onWork: () => void;
-}) {
+function ClosingSection({ onContact, onWork }: { onContact: () => void; onWork: () => void }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section
-      ref={ref}
-      className="py-section-lg px-gutter border-t border-stone-200/60"
-    >
+    <section ref={ref} className="py-section-lg px-gutter border-t border-stone-200/60">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
@@ -373,8 +337,7 @@ function ClosingSection({
           </h2>
 
           <p className="text-body-lg text-stone-500 font-light leading-relaxed mb-14 max-w-md">
-            If you’ve got a brand, a project, or an idea that needs a visual
-            world — I’m in.
+            If you’ve got a brand, a project, or an idea that needs a visual world — I’m in.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-5">
