@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 import { useProject, useProjects } from "../hooks/usePortfolioData";
 import { easing, duration, staggerContainer, staggerItem } from "../lib/motion";
@@ -35,7 +35,19 @@ export default function ProjectPage({
 
   return (
     <article className="min-h-screen bg-cream text-charcoal">
-      <HeroImage src={project.image_url} alt={project.title} onBack={onBack} />
+
+      {/* BOTÃO BACK */}
+      <div className="pt-28 md:pt-36 px-gutter">
+        <div className="max-w-7xl mx-auto">
+          <button
+            onClick={onBack}
+            className="inline-flex items-center gap-2.5 text-body-sm uppercase tracking-[0.14em] text-stone-500 hover:text-charcoal transition-colors duration-300 group"
+          >
+            <ArrowLeft className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" />
+            All projects
+          </button>
+        </div>
+      </div>
 
       <TitleBlock title={project.title} description={project.description} />
 
@@ -62,52 +74,6 @@ export default function ProjectPage({
   );
 }
 
-function HeroImage({
-  src,
-  alt,
-  onBack,
-}: {
-  src: string;
-  alt: string;
-  onBack: () => void;
-}) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.45]);
-
-  return (
-    <section ref={ref} className="relative w-full h-[68vh] md:h-[82vh] overflow-hidden">
-      <motion.img
-        src={src}
-        alt={alt}
-        style={{ y, opacity }}
-        initial={{ scale: 1.05 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 2.2, ease: easing.expoOut }}
-        className="absolute inset-0 w-full h-full object-cover"
-      />
-
-      <div className="absolute inset-0 bg-gradient-to-b from-charcoal/35 via-transparent to-cream/25" />
-
-      <div className="absolute top-0 left-0 right-0 pt-28 md:pt-36 px-gutter z-10">
-        <div className="max-w-7xl mx-auto">
-          <button
-            onClick={onBack}
-            className="inline-flex items-center gap-2.5 text-body-sm uppercase tracking-[0.14em] text-cream/80 hover:text-cream transition-colors duration-300 group"
-          >
-            <ArrowLeft className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" />
-            All projects
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function TitleBlock({
   title,
   description,
@@ -116,7 +82,7 @@ function TitleBlock({
   description?: string | null;
 }) {
   return (
-    <section className="px-gutter pt-18 md:pt-22 pb-12 md:pb-16">
+    <section className="px-gutter pt-12 md:pt-16 pb-12 md:pb-16">
       <div className="max-w-7xl mx-auto">
         <motion.div variants={staggerContainer} initial="hidden" animate="visible">
           <motion.h1 variants={staggerItem} className="text-hero max-w-5xl">
@@ -160,7 +126,7 @@ function MetadataStrip({
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: duration.slow, delay: 0.35, ease: easing.expoOut }}
+          transition={{ duration: duration.slow, delay: 0.2, ease: easing.expoOut }}
           className="border-t border-stone-200/60 pt-10"
         >
           <div className="flex flex-wrap items-start gap-x-16 gap-y-6">
@@ -215,13 +181,11 @@ function NarrativeBlock({ text }: { text: string }) {
   );
 }
 
-/** ✅ Galeria automática: cada imagem usa o ratio real */
 function AutoGallery({ images, title }: { images: string[]; title: string }) {
   return (
     <section className="pb-section-lg">
       <div className="px-gutter">
         <div className="max-w-7xl mx-auto">
-          {/* grid responsivo, sem cortar ratios */}
           <div className="grid grid-cols-1 gap-8 md:gap-10">
             {images.map((url, index) => (
               <AutoGalleryItem
@@ -250,7 +214,6 @@ function AutoGalleryItem({
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
-  // ✅ variação automática “weird” mas subtil (alinhamento alternado)
   const align =
     index % 3 === 1
       ? "md:w-[78%]"
