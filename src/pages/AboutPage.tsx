@@ -303,7 +303,7 @@ function PerspectiveSection({ onWork }: { onWork: () => void }) {
           >
             <motion.div style={{ y: imgY }} className="will-change-transform">
               <img
-                src="/home/project/public/about/about.jpg"
+                src="/about/about.jpg"
                 alt="Studio detail"
                 className="w-full aspect-[3/4] object-cover"
               />
