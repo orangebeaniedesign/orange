@@ -363,8 +363,7 @@ function EditorialSingle({
       </div>
     </div>
   );
-}
-({
+}({
   src,
   alt,
   index,
