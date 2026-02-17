@@ -181,24 +181,190 @@ function NarrativeBlock({ text }: { text: string }) {
 }
 
 /** ✅ Galeria editorial: full-bleed + alternância esquerda/direita + ritmos */
+/** ✅ Galeria editorial:
+ * - imagens wide podem formar pares lado a lado (desktop)
+ * - sem round corners (flat)
+ */
 function EditorialGallery({ images, title }: { images: string[]; title: string }) {
   return (
     <section className="pb-section-lg">
       <div className="space-y-10 md:space-y-14">
-        {images.map((url, index) => (
-          <EditorialItem
-            key={`${url}-${index}`}
-            src={url}
-            alt={`${title} - ${index + 1}`}
-            index={index}
-          />
-        ))}
+        <EditorialFlow images={images} title={title} />
       </div>
     </section>
   );
 }
 
-function EditorialItem({
+type RatioInfo = { src: string; ratio: number | null };
+
+function EditorialFlow({ images, title }: { images: string[]; title: string }) {
+  // medimos ratios para decidir pares (client-side)
+  const [info, setInfo] = React.useState<RatioInfo[]>(
+    images.map((src) => ({ src, ratio: null }))
+  );
+
+  React.useEffect(() => {
+    let cancelled = false;
+
+    async function run() {
+      const results: RatioInfo[] = await Promise.all(
+        images.map(
+          (src) =>
+            new Promise<RatioInfo>((resolve) => {
+              const img = new Image();
+              img.onload = () => {
+                const r = img.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : null;
+                resolve({ src, ratio: r });
+              };
+              img.onerror = () => resolve({ src, ratio: null });
+              img.src = src;
+            })
+        )
+      );
+
+      if (!cancelled) setInfo(results);
+    }
+
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, [images]);
+
+  // regra: "wide" = landscape forte (bom candidato a mockup/macro)
+  const isWide = (r: number | null) => (r ?? 0) >= 1.25;
+
+  // construir layout: pares de wide seguidos -> row 2-col (desktop)
+  const nodes: React.ReactNode[] = [];
+  let i = 0;
+
+  while (i < info.length) {
+    const a = info[i];
+    const b = info[i + 1];
+
+    if (b && isWide(a.ratio) && isWide(b.ratio)) {
+      nodes.push(
+        <EditorialPairRow
+          key={`${a.src}__${b.src}__pair`}
+          a={{ src: a.src, alt: `${title} - ${i + 1}` }}
+          b={{ src: b.src, alt: `${title} - ${i + 2}` }}
+          index={i}
+        />
+      );
+      i += 2;
+      continue;
+    }
+
+    nodes.push(
+      <EditorialSingle
+        key={`${a.src}__single`}
+        src={a.src}
+        alt={`${title} - ${i + 1}`}
+        index={i}
+      />
+    );
+    i += 1;
+  }
+
+  return <>{nodes}</>;
+}
+
+function EditorialPairRow({
+  a,
+  b,
+  index,
+}: {
+  a: { src: string; alt: string };
+  b: { src: string; alt: string };
+  index: number;
+}) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-90px" });
+
+  return (
+    <div ref={ref} className="px-gutter">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{
+            duration: duration.slowest,
+            delay: Math.min(index * 0.04, 0.25),
+            ease: easing.expoOut,
+          }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
+        >
+          <AutoAspectImage
+            src={a.src}
+            alt={a.alt}
+            radius={0} // ✅ flat
+            animateIn={isInView}
+            className=""
+          />
+          <AutoAspectImage
+            src={b.src}
+            alt={b.alt}
+            radius={0} // ✅ flat
+            animateIn={isInView}
+            className=""
+          />
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
+function EditorialSingle({
+  src,
+  alt,
+  index,
+}: {
+  src: string;
+  alt: string;
+  index: number;
+}) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-90px" });
+
+  // ritmo editorial (mantém o teu vibe)
+  const mode = index % 5;
+
+  const wrapClass = mode === 0 || mode === 3 ? "px-0" : "px-gutter";
+
+  const innerClass =
+    mode === 0 || mode === 3
+      ? "w-full"
+      : mode === 1
+      ? "max-w-7xl mx-auto md:w-[74%] md:mr-auto"
+      : mode === 2
+      ? "max-w-7xl mx-auto md:w-[82%] md:ml-auto"
+      : "max-w-7xl mx-auto md:w-[70%]";
+
+  return (
+    <div ref={ref} className={wrapClass}>
+      <div className={innerClass}>
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{
+            duration: duration.slowest,
+            delay: Math.min(index * 0.04, 0.25),
+            ease: easing.expoOut,
+          }}
+        >
+          <AutoAspectImage
+            src={src}
+            alt={alt}
+            radius={0} // ✅ flat sempre
+            animateIn={isInView}
+            className=""
+          />
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+({
   src,
   alt,
   index,
