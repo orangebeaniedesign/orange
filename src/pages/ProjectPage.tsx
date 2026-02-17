@@ -35,8 +35,7 @@ export default function ProjectPage({
 
   return (
     <article className="min-h-screen bg-cream text-charcoal">
-
-      {/* BOTÃO BACK */}
+      {/* Top nav/back (sem hero) */}
       <div className="pt-28 md:pt-36 px-gutter">
         <div className="max-w-7xl mx-auto">
           <button
@@ -61,7 +60,7 @@ export default function ProjectPage({
       {project.content && <NarrativeBlock text={project.content} />}
 
       {images.length > 0 && (
-        <AutoGallery images={images} title={project.title} />
+        <EditorialGallery images={images} title={project.title} />
       )}
 
       <ProjectNavigation
@@ -181,28 +180,25 @@ function NarrativeBlock({ text }: { text: string }) {
   );
 }
 
-function AutoGallery({ images, title }: { images: string[]; title: string }) {
+/** ✅ Galeria editorial: full-bleed + alternância esquerda/direita + ritmos */
+function EditorialGallery({ images, title }: { images: string[]; title: string }) {
   return (
     <section className="pb-section-lg">
-      <div className="px-gutter">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 gap-8 md:gap-10">
-            {images.map((url, index) => (
-              <AutoGalleryItem
-                key={`${url}-${index}`}
-                src={url}
-                alt={`${title} - ${index + 1}`}
-                index={index}
-              />
-            ))}
-          </div>
-        </div>
+      <div className="space-y-10 md:space-y-14">
+        {images.map((url, index) => (
+          <EditorialItem
+            key={`${url}-${index}`}
+            src={url}
+            alt={`${title} - ${index + 1}`}
+            index={index}
+          />
+        ))}
       </div>
     </section>
   );
 }
 
-function AutoGalleryItem({
+function EditorialItem({
   src,
   alt,
   index,
@@ -212,34 +208,57 @@ function AutoGalleryItem({
   index: number;
 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-90px" });
 
-  const align =
-    index % 3 === 1
-      ? "md:w-[78%]"
-      : index % 3 === 2
-      ? "md:w-[86%] md:ml-auto"
-      : "";
+  // Padrões:
+  // 0: full-bleed
+  // 1: left tight
+  // 2: right medium
+  // 3: full-bleed
+  // 4: center tight
+  const mode = index % 5;
+
+  const wrapClass =
+    mode === 0 || mode === 3
+      ? "px-0" // full bleed
+      : "px-gutter";
+
+  const innerClass =
+    mode === 0 || mode === 3
+      ? "w-full"
+      : mode === 1
+      ? "max-w-7xl mx-auto md:w-[74%] md:mr-auto"
+      : mode === 2
+      ? "max-w-7xl mx-auto md:w-[82%] md:ml-auto"
+      : "max-w-7xl mx-auto md:w-[70%]";
+
+  const radius = mode === 0 || mode === 3 ? 0 : 10;
 
   return (
-    <div ref={ref} className={align}>
-      <motion.div
-        initial={{ opacity: 0, y: 18 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{
-          duration: duration.slowest,
-          delay: Math.min(index * 0.05, 0.35),
-          ease: easing.expoOut,
-        }}
-      >
-        <AutoAspectImage
-          src={src}
-          alt={alt}
-          radius={10}
-          animateIn={isInView}
-          className="shadow-[0_10px_30px_rgba(0,0,0,0.06)]"
-        />
-      </motion.div>
+    <div ref={ref} className={wrapClass}>
+      <div className={innerClass}>
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{
+            duration: duration.slowest,
+            delay: Math.min(index * 0.04, 0.25),
+            ease: easing.expoOut,
+          }}
+        >
+          <AutoAspectImage
+            src={src}
+            alt={alt}
+            radius={radius}
+            animateIn={isInView}
+            className={
+              mode === 0 || mode === 3
+                ? ""
+                : "shadow-[0_10px_30px_rgba(0,0,0,0.06)]"
+            }
+          />
+        </motion.div>
+      </div>
     </div>
   );
 }
