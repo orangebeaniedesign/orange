@@ -1,4 +1,5 @@
-import { useRef } from "react";
+// src/pages/ProjectPage.tsx
+import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 import { useProject, useProjects } from "../hooks/usePortfolioData";
@@ -59,9 +60,7 @@ export default function ProjectPage({
 
       {project.content && <NarrativeBlock text={project.content} />}
 
-      {images.length > 0 && (
-        <EditorialGallery images={images} title={project.title} />
-      )}
+      {images.length > 0 && <EditorialGallery images={images} title={project.title} />}
 
       <ProjectNavigation
         next={nextProject}
@@ -180,10 +179,10 @@ function NarrativeBlock({ text }: { text: string }) {
   );
 }
 
-/** ✅ Galeria editorial: full-bleed + alternância esquerda/direita + ritmos */
 /** ✅ Galeria editorial:
- * - imagens wide podem formar pares lado a lado (desktop)
- * - sem round corners (flat)
+ * - 2 imagens "wide" seguidas ficam lado a lado (desktop)
+ * - flat (sem round corners)
+ * - resto mantém ritmo editorial (full-bleed / left / right / center)
  */
 function EditorialGallery({ images, title }: { images: string[]; title: string }) {
   return (
@@ -198,7 +197,6 @@ function EditorialGallery({ images, title }: { images: string[]; title: string }
 type RatioInfo = { src: string; ratio: number | null };
 
 function EditorialFlow({ images, title }: { images: string[]; title: string }) {
-  // medimos ratios para decidir pares (client-side)
   const [info, setInfo] = React.useState<RatioInfo[]>(
     images.map((src) => ({ src, ratio: null }))
   );
@@ -213,7 +211,10 @@ function EditorialFlow({ images, title }: { images: string[]; title: string }) {
             new Promise<RatioInfo>((resolve) => {
               const img = new Image();
               img.onload = () => {
-                const r = img.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : null;
+                const r =
+                  img.naturalWidth && img.naturalHeight
+                    ? img.naturalWidth / img.naturalHeight
+                    : null;
                 resolve({ src, ratio: r });
               };
               img.onerror = () => resolve({ src, ratio: null });
@@ -231,10 +232,8 @@ function EditorialFlow({ images, title }: { images: string[]; title: string }) {
     };
   }, [images]);
 
-  // regra: "wide" = landscape forte (bom candidato a mockup/macro)
   const isWide = (r: number | null) => (r ?? 0) >= 1.25;
 
-  // construir layout: pares de wide seguidos -> row 2-col (desktop)
   const nodes: React.ReactNode[] = [];
   let i = 0;
 
@@ -294,20 +293,8 @@ function EditorialPairRow({
           }}
           className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
         >
-          <AutoAspectImage
-            src={a.src}
-            alt={a.alt}
-            radius={0} // ✅ flat
-            animateIn={isInView}
-            className=""
-          />
-          <AutoAspectImage
-            src={b.src}
-            alt={b.alt}
-            radius={0} // ✅ flat
-            animateIn={isInView}
-            className=""
-          />
+          <AutoAspectImage src={a.src} alt={a.alt} radius={0} animateIn={isInView} />
+          <AutoAspectImage src={b.src} alt={b.alt} radius={0} animateIn={isInView} />
         </motion.div>
       </div>
     </div>
@@ -326,7 +313,6 @@ function EditorialSingle({
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-90px" });
 
-  // ritmo editorial (mantém o teu vibe)
   const mode = index % 5;
 
   const wrapClass = mode === 0 || mode === 3 ? "px-0" : "px-gutter";
@@ -352,76 +338,7 @@ function EditorialSingle({
             ease: easing.expoOut,
           }}
         >
-          <AutoAspectImage
-            src={src}
-            alt={alt}
-            radius={0} // ✅ flat sempre
-            animateIn={isInView}
-            className=""
-          />
-        </motion.div>
-      </div>
-    </div>
-  );
-}({
-  src,
-  alt,
-  index,
-}: {
-  src: string;
-  alt: string;
-  index: number;
-}) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-90px" });
-
-  // Padrões:
-  // 0: full-bleed
-  // 1: left tight
-  // 2: right medium
-  // 3: full-bleed
-  // 4: center tight
-  const mode = index % 5;
-
-  const wrapClass =
-    mode === 0 || mode === 3
-      ? "px-0" // full bleed
-      : "px-gutter";
-
-  const innerClass =
-    mode === 0 || mode === 3
-      ? "w-full"
-      : mode === 1
-      ? "max-w-7xl mx-auto md:w-[74%] md:mr-auto"
-      : mode === 2
-      ? "max-w-7xl mx-auto md:w-[82%] md:ml-auto"
-      : "max-w-7xl mx-auto md:w-[70%]";
-
-  const radius = mode === 0 || mode === 3 ? 0 : 10;
-
-  return (
-    <div ref={ref} className={wrapClass}>
-      <div className={innerClass}>
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{
-            duration: duration.slowest,
-            delay: Math.min(index * 0.04, 0.25),
-            ease: easing.expoOut,
-          }}
-        >
-          <AutoAspectImage
-            src={src}
-            alt={alt}
-            radius={radius}
-            animateIn={isInView}
-            className={
-              mode === 0 || mode === 3
-                ? ""
-                : "shadow-[0_10px_30px_rgba(0,0,0,0.06)]"
-            }
-          />
+          <AutoAspectImage src={src} alt={alt} radius={0} animateIn={isInView} />
         </motion.div>
       </div>
     </div>
