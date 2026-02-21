@@ -17,7 +17,7 @@ const navLinks: { label: string; page: PageType }[] = [
 
 const socials = [
   { label: "Instagram", url: "https://www.instagram.com/imtheorangebeanie/" },
-  { label: "Vimeo", url: "https://vimeo.com/orangebeanie" },
+  { label: "Vimeo", url: "" },
   { label: "Behance", url: "https://www.behance.net/claudianbrito" },
 ];
 
