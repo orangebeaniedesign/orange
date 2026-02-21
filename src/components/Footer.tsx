@@ -18,7 +18,7 @@ const navLinks: { label: string; page: PageType }[] = [
 const socials = [
   { label: "Instagram", url: "https://instagram.com/orangebeanie" },
   { label: "Vimeo", url: "https://vimeo.com/orangebeanie" },
-  { label: "Behance", url: "https://behance.net/orangebeanie" },
+  { label: "Behance", url: "https://www.behance.net/claudianbrito?tracking_source=search_projects%7Cclaudianbrito" },
 ];
 
 export default function Footer({ onNavigate }: FooterProps) {
