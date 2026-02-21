@@ -9,7 +9,7 @@ const LOCATION = 'Porto, Portugal';
 
 const socials = [
   { label: 'Instagram', url: 'https://instagram.com/orangebeanie' },
-  { label: 'Vimeo', url: 'https://vimeo.com/orangebeanie' },
+  { label: 'Vimeo', url: '' },
   { label: 'Behance', url: 'https://www.behance.net/claudianbrito' },
 ];
 
