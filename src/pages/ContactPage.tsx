@@ -8,7 +8,7 @@ const EMAIL = 'orangebeaniedesign@gmail.com';
 const LOCATION = 'Porto, Portugal';
 
 const socials = [
-  { label: 'Instagram', url: 'https://instagram.com/orangebeanie' },
+  { label: 'Instagram', url: 'https://www.instagram.com/imtheorangebeanie/' },
   { label: 'Vimeo', url: '' },
   { label: 'Behance', url: 'https://www.behance.net/claudianbrito' },
 ];
