@@ -74,7 +74,7 @@ export default function Footer({ onNavigate }: FooterProps) {
             <div>
               <p className="label-caption mb-7">Say hello</p>
               <a
-                href="mailto:hello@orangebeanie.design"
+                href="mailto:orangebeaniedesign@gmail.com"
                 className="text-body-md text-stone-500 hover:text-charcoal transition-colors duration-500 underline-weird"
               >
                 hello@orangebeanie.design
