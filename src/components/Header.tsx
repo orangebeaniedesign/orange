@@ -194,7 +194,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
                   href="mailto:hello@orangebeanie.design"
                   className="text-body-sm text-stone-500 hover:text-charcoal transition-colors duration-300 underline-weird"
                 >
-                  hello@orangebeanie.design
+                  orangebeaniedesign@gmail.com
                 </a>
               </div>
             </div>
