@@ -4,7 +4,7 @@ import { ArrowUpRight, Copy, Check } from 'lucide-react';
 import { useState } from 'react';
 import { easing, duration, staggerContainer, staggerItem } from '../lib/motion';
 
-const EMAIL = 'hello@orangebeanie.design';
+const EMAIL = 'orangebeaniedesign@gmail.com';
 const LOCATION = 'Porto, Portugal';
 
 const socials = [
