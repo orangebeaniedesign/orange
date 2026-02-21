@@ -77,7 +77,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 href="mailto:orangebeaniedesign@gmail.com"
                 className="text-body-md text-stone-500 hover:text-charcoal transition-colors duration-500 underline-weird"
               >
-                hello@orangebeanie.design
+                orangebeaniedesign@gmail.com
               </a>
 
               <p className="text-body-sm text-stone-400 font-light mt-5">
