@@ -191,7 +191,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
 
               <div className="px-gutter py-10 border-t border-stone-200/60">
                 <a
-                  href="mailto:hello@orangebeanie.design"
+                  href="mailto:orangebeaniedesign@gmail.com"
                   className="text-body-sm text-stone-500 hover:text-charcoal transition-colors duration-300 underline-weird"
                 >
                   orangebeaniedesign@gmail.com
