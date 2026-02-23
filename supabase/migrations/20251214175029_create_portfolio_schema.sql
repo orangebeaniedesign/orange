@@ -139,7 +139,7 @@ INSERT INTO projects (title, description, category, image_url, featured, order_i
 ('Motion Graphics', 'Animated brand storytelling for social media', 'motion', 'https://images.pexels.com/photos/1714340/pexels-photo-1714340.jpeg?auto=compress&cs=tinysrgb&w=800', true, 3),
 ('UI/UX Design', 'Mobile app interface design and prototyping', 'uiux', 'https://images.pexels.com/photos/196645/pexels-photo-196645.jpeg?auto=compress&cs=tinysrgb&w=800', false, 4),
 ('Editorial Design', 'Magazine layout and typography design', 'branding', 'https://images.pexels.com/photos/1939485/pexels-photo-1939485.jpeg?auto=compress&cs=tinysrgb&w=800', true, 5),
-('Fashion Photography', 'Creative fashion editorial shoot', 'photography', 'https://images.pexels.com/photos/3585089/pexels-photo-3585089.jpeg?auto=compress&cs=tinysrgb&w=800', false, 6);
+('3D Modeling', '3D Modeling', '3D', 'https://images.pexels.com/photos/3585089/pexels-photo-3585089.jpeg?auto=compress&cs=tinysrgb&w=800', false, 6);
 
 -- Insert sample data for experience
 INSERT INTO experience (company, role, start_date, end_date, order_index) VALUES
