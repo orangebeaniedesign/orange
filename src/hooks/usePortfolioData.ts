@@ -12,7 +12,10 @@ export type Project = {
   featured?: boolean | null;
   order_index?: number | null;
   content?: string | null;
-  images?: unknown | null;
+
+  // ✅ corrigido: tipo correto
+  images?: string[] | null;
+
   technologies?: unknown | null;
   project_date?: string | null;
   project_url?: string | null;
@@ -30,17 +33,38 @@ type UseProjectResult = {
   error: string | null;
 };
 
-/**
- * ✅ Supports:
- * - undefined => all
- * - "all" => all
- * - "branding" => eq category
- * - ["branding","web"] => in category
- * - special "photography" example => in ['photography']
- */
+//
+// ✅ helper seguro para converter images
+//
+function parseImages(images: unknown): string[] | null {
+  if (!images) return null;
+
+  // já é array
+  if (Array.isArray(images)) {
+    return images.filter((img) => typeof img === "string");
+  }
+
+  // é string JSON
+  if (typeof images === "string") {
+    try {
+      const parsed = JSON.parse(images);
+      if (Array.isArray(parsed)) {
+        return parsed.filter((img) => typeof img === "string");
+      }
+    } catch {
+      return null;
+    }
+  }
+
+  return null;
+}
+
+//
+// ✅ useProjects
+//
 export function useProjects(category?: string | string[]): UseProjectsResult {
   const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const key = useMemo(() => {
@@ -67,13 +91,9 @@ export function useProjects(category?: string | string[]): UseProjectsResult {
         .order("order_index", { ascending: true });
 
       if (Array.isArray(category) && category.length > 0) {
-        query = query.in("category", category as any);
+        query = query.in("category", category);
       } else if (typeof category === "string" && category !== "all") {
-        if (category === "photography") {
-          query = query.in("category", ["photography"] as any);
-        } else {
-          query = query.eq("category", category as any);
-        }
+        query = query.eq("category", category);
       }
 
       const { data, error: supaError } = await query;
@@ -85,7 +105,12 @@ export function useProjects(category?: string | string[]): UseProjectsResult {
         setError(supaError.message);
         setProjects([]);
       } else {
-        setProjects((data as Project[]) || []);
+        const parsed = (data || []).map((project) => ({
+          ...project,
+          images: parseImages(project.images),
+        })) as Project[];
+
+        setProjects(parsed);
       }
 
       setLoading(false);
@@ -96,15 +121,17 @@ export function useProjects(category?: string | string[]): UseProjectsResult {
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
 
   return { projects, loading, error };
 }
 
+//
+// ✅ useProject
+//
 export function useProject(projectId?: string): UseProjectResult {
   const [project, setProject] = useState<Project | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -114,7 +141,6 @@ export function useProject(projectId?: string): UseProjectResult {
       if (!projectId) {
         setProject(null);
         setLoading(false);
-        setError(null);
         return;
       }
 
@@ -139,8 +165,13 @@ export function useProject(projectId?: string): UseProjectResult {
         console.error("Error fetching project:", supaError);
         setError(supaError.message);
         setProject(null);
+      } else if (data) {
+        setProject({
+          ...data,
+          images: parseImages(data.images),
+        } as Project);
       } else {
-        setProject((data as Project) || null);
+        setProject(null);
       }
 
       setLoading(false);
