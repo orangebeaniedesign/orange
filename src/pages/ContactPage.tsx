@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { easing, duration, staggerContainer, staggerItem } from '../lib/motion';
 
 const EMAIL = 'orangebeaniedesign@gmail.com';
-const LOCATION = 'Porto, Portugal';
+const LOCATION = 'Madeira, Portugal';
 
 const socials = [
   { label: 'Instagram', url: 'https://www.instagram.com/imtheorangebeanie/' },
