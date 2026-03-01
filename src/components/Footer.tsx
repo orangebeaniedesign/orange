@@ -35,20 +35,20 @@ export default function Footer({ onNavigate }: FooterProps) {
           transition={{ duration: duration.slower, ease: easing.expoOut }}
           className="max-w-7xl mx-auto"
         >
-          <div className="flex flex-col md:flex-row md:items-start gap-12 md:gap-20 mb-12">
+          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-12 md:gap-8 mb-12">
             <div className="flex-shrink-0">
               <Logo onClick={() => onNavigate("home")} className="h-6 md:h-8" />
             </div>
 
-            <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+            <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8 text-right">
               <div>
-                <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-4">Navigation</p>
+                <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-3">Work</p>
                 <nav className="flex flex-col gap-2">
                   {navLinks.map((link) => (
                     <button
                       key={link.page}
                       onClick={() => onNavigate(link.page)}
-                      className="text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-500 text-left"
+                      className="text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-500 text-right"
                     >
                       {link.label}
                     </button>
@@ -57,15 +57,15 @@ export default function Footer({ onNavigate }: FooterProps) {
               </div>
 
               <div>
-                <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-4">Social</p>
-                <div className="flex flex-col gap-2">
+                <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-3">Connect</p>
+                <div className="flex flex-col gap-2 items-end">
                   {socials.map((social) => (
                     <a
                       key={social.label}
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group inline-flex items-center gap-1 text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-500"
+                      className="group inline-flex items-center gap-1 text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-500 text-right"
                     >
                       {social.label}
                       <ArrowUpRight className="w-3 h-3 opacity-40 group-hover:opacity-100 transition-opacity duration-500" />
@@ -75,8 +75,8 @@ export default function Footer({ onNavigate }: FooterProps) {
               </div>
 
               <div className="col-span-2 md:col-span-1">
-                <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-4">Contact</p>
-                <div className="flex flex-col gap-2">
+                <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-3">Contact</p>
+                <div className="flex flex-col gap-2 text-right">
                   <a
                     href="mailto:orangebeaniedesign@gmail.com"
                     className="text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-500"
@@ -88,12 +88,19 @@ export default function Footer({ onNavigate }: FooterProps) {
                   </p>
                   <a
                     href="/cv.pdf"
-                    className="group inline-flex items-center gap-1 text-body-xs text-stone-600 hover:text-charcoal transition-colors duration-500 mt-1"
+                    className="group inline-flex items-center gap-1 text-body-xs text-stone-600 hover:text-charcoal transition-colors duration-500 mt-1 justify-end"
                     download
                   >
                     Download CV
                     <ArrowUpRight className="w-3 h-3 opacity-40 group-hover:opacity-100 transition-opacity duration-500" />
                   </a>
+                </div>
+              </div>
+
+              <div className="col-span-2 md:col-span-1">
+                <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-3">Details</p>
+                <div className="flex flex-col gap-2 text-right">
+                  <p className="text-body-xs text-stone-600">Design · Photography · Motion</p>
                 </div>
               </div>
             </div>
