@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 import type { PageType } from "../App";
 import { easing, duration } from "../lib/motion";
+import { Logo } from "./ui/Logo";
 
 interface FooterProps {
   onNavigate: (page: PageType) => void;
@@ -34,70 +35,76 @@ export default function Footer({ onNavigate }: FooterProps) {
           transition={{ duration: duration.slower, ease: easing.expoOut }}
           className="max-w-7xl mx-auto"
         >
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-12 md:gap-16 mb-10">
-            <div>
-              <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-4">Navigation</p>
-              <nav className="flex flex-col gap-3">
-                {navLinks.map((link) => (
-                  <button
-                    key={link.page}
-                    onClick={() => onNavigate(link.page)}
-                    className="text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-500 text-left"
-                  >
-                    {link.label}
-                  </button>
-                ))}
-              </nav>
+          <div className="flex flex-col md:flex-row md:items-start gap-12 md:gap-20 mb-12">
+            <div className="flex-shrink-0">
+              <Logo onClick={() => onNavigate("home")} className="h-6 md:h-8" />
             </div>
 
-            <div>
-              <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-4">Social</p>
-              <div className="flex flex-col gap-3">
-                {socials.map((social) => (
+            <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+              <div>
+                <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-4">Navigation</p>
+                <nav className="flex flex-col gap-2">
+                  {navLinks.map((link) => (
+                    <button
+                      key={link.page}
+                      onClick={() => onNavigate(link.page)}
+                      className="text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-500 text-left"
+                    >
+                      {link.label}
+                    </button>
+                  ))}
+                </nav>
+              </div>
+
+              <div>
+                <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-4">Social</p>
+                <div className="flex flex-col gap-2">
+                  {socials.map((social) => (
+                    <a
+                      key={social.label}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center gap-1 text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-500"
+                    >
+                      {social.label}
+                      <ArrowUpRight className="w-3 h-3 opacity-40 group-hover:opacity-100 transition-opacity duration-500" />
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              <div className="col-span-2 md:col-span-1">
+                <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-4">Contact</p>
+                <div className="flex flex-col gap-2">
                   <a
-                    key={social.label}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-2 text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-500"
+                    href="mailto:orangebeaniedesign@gmail.com"
+                    className="text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-500"
                   >
-                    {social.label}
+                    orangebeaniedesign@gmail.com
+                  </a>
+                  <p className="text-body-xs text-stone-500 font-light">
+                    Madeira-based,<br />working worldwide.
+                  </p>
+                  <a
+                    href="/cv.pdf"
+                    className="group inline-flex items-center gap-1 text-body-xs text-stone-600 hover:text-charcoal transition-colors duration-500 mt-1"
+                    download
+                  >
+                    Download CV
                     <ArrowUpRight className="w-3 h-3 opacity-40 group-hover:opacity-100 transition-opacity duration-500" />
                   </a>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-4">Contact</p>
-              <div className="flex flex-col gap-3">
-                <a
-                  href="mailto:orangebeaniedesign@gmail.com"
-                  className="text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-500"
-                >
-                  orangebeaniedesign@gmail.com
-                </a>
-                <p className="text-body-xs text-stone-500 font-light leading-relaxed">
-                  Madeira-based,<br />working worldwide.
-                </p>
-                <a
-                  href="/cv.pdf"
-                  className="group inline-flex items-center gap-2 text-body-xs text-stone-600 hover:text-charcoal transition-colors duration-500 mt-2"
-                  download
-                >
-                  Download CV
-                  <ArrowUpRight className="w-3 h-3 opacity-40 group-hover:opacity-100 transition-opacity duration-500" />
-                </a>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="pt-8 border-t border-stone-200/60 flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
-            <span className="text-body-xs text-stone-400 font-light">
+          <div className="pt-8 border-t border-stone-200/60 flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4 text-body-xs text-stone-400 font-light">
+            <span>
               {new Date().getFullYear()} Orange Beanie
             </span>
 
-            <span className="text-body-xs text-stone-400 font-light">
+            <span>
               Design · Photography · Motion
             </span>
           </div>
