@@ -27,78 +27,72 @@ export default function Footer({ onNavigate }: FooterProps) {
 
   return (
     <footer ref={ref} className="border-t border-stone-200 bg-cream">
-      <div className="px-gutter py-section">
+      <div className="px-gutter py-12 md:py-16">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: duration.slower, ease: easing.expoOut }}
           className="max-w-7xl mx-auto"
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-10 mb-24">
+          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-12 md:gap-16 mb-10">
             <div>
-              <p className="label-caption mb-7">Navigation</p>
-              <nav className="space-y-4">
-                {navLinks.map((link, i) => (
+              <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-4">Navigation</p>
+              <nav className="flex flex-col gap-3">
+                {navLinks.map((link) => (
                   <button
                     key={link.page}
                     onClick={() => onNavigate(link.page)}
-                    className="group flex items-baseline gap-3 text-body-md text-stone-500 hover:text-charcoal transition-colors duration-500"
+                    className="text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-500 text-left"
                   >
-                    <span className="text-overline text-stone-400">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="underline-weird">{link.label}</span>
+                    {link.label}
                   </button>
                 ))}
               </nav>
             </div>
 
             <div>
-              <p className="label-caption mb-7">Elsewhere</p>
-              <div className="space-y-4">
+              <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-4">Social</p>
+              <div className="flex flex-col gap-3">
                 {socials.map((social) => (
                   <a
                     key={social.label}
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center justify-between text-body-md text-stone-500 hover:text-charcoal transition-colors duration-500"
+                    className="group inline-flex items-center gap-2 text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-500"
                   >
-                    <span className="underline-weird">{social.label}</span>
-                    <ArrowUpRight className="w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
+                    {social.label}
+                    <ArrowUpRight className="w-3 h-3 opacity-40 group-hover:opacity-100 transition-opacity duration-500" />
                   </a>
                 ))}
               </div>
             </div>
 
             <div>
-              <p className="label-caption mb-7">Say hello</p>
-              <a
-                href="mailto:orangebeaniedesign@gmail.com"
-                className="text-body-md text-stone-500 hover:text-charcoal transition-colors duration-500 underline-weird"
-              >
-                orangebeaniedesign@gmail.com
-              </a>
-
-              <p className="text-body-sm text-stone-400 font-light mt-5">
-                Madeira-based, working worldwide.
-              </p>
-
-              {/* opcional: CV link mantém-se (mesmo sem PDF por agora, porque ainda não vais publicar) */}
-              <div className="mt-6">
+              <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-4">Contact</p>
+              <div className="flex flex-col gap-3">
+                <a
+                  href="mailto:orangebeaniedesign@gmail.com"
+                  className="text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-500"
+                >
+                  orangebeaniedesign@gmail.com
+                </a>
+                <p className="text-body-xs text-stone-500 font-light leading-relaxed">
+                  Madeira-based,<br />working worldwide.
+                </p>
                 <a
                   href="/cv.pdf"
-                  className="text-body-sm text-stone-500 hover:text-charcoal transition-colors duration-500 underline-weird inline-flex items-center gap-2"
+                  className="group inline-flex items-center gap-2 text-body-xs text-stone-600 hover:text-charcoal transition-colors duration-500 mt-2"
                   download
                 >
                   Download CV
-                  <ArrowUpRight className="w-4 h-4 opacity-60" />
+                  <ArrowUpRight className="w-3 h-3 opacity-40 group-hover:opacity-100 transition-opacity duration-500" />
                 </a>
               </div>
             </div>
           </div>
 
-          <div className="pt-8 border-t border-stone-200/60 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="pt-8 border-t border-stone-200/60 flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
             <span className="text-body-xs text-stone-400 font-light">
               {new Date().getFullYear()} Orange Beanie
             </span>
