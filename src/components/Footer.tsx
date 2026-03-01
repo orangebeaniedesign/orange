@@ -100,7 +100,7 @@ export default function Footer({ onNavigate }: FooterProps) {
               <div className="col-span-2 md:col-span-1">
                 <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-3">Details</p>
                 <div className="flex flex-col gap-2 text-right">
-                  <p className="text-body-xs text-stone-600">Design · Photography · Motion</p>
+                  <p className="text-body-xs text-stone-600">Design / Photography / Motion</p>
                 </div>
               </div>
             </div>
@@ -112,7 +112,7 @@ export default function Footer({ onNavigate }: FooterProps) {
             </span>
 
             <span>
-              Design · Photography · Motion
+              Design / Photography / Motion
             </span>
           </div>
         </motion.div>

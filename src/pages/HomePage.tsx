@@ -64,7 +64,7 @@ function HeroSection() {
                 transition={{ duration: 1, delay: 0.3, ease: easing.expoOut }}
                 className="text-caption uppercase tracking-[0.22em] text-cream/75 mb-6 md:mb-7"
               >
-                Design / Photography / Visual Worlds
+                Design - Photography - Visual Worlds
               </motion.p>
 
               <motion.h1
