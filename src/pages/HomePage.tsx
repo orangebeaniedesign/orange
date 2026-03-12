@@ -55,7 +55,7 @@ function HeroSection({
     <section
       id="hey"
       ref={ref}
-      className="relative min-h-[100svh] px-5 pb-16 pt-28 md:px-8 md:pb-24 md:pt-32 lg:px-10"
+      className="relative min-h-[100svh] px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-36 lg:px-10"
     >
       <motion.div
         style={{ y: heroY, opacity: heroOpacity }}
@@ -63,43 +63,6 @@ function HeroSection({
       >
         <div className="grid grid-cols-12 gap-y-10 md:gap-x-8">
           <div className="col-span-12">
-            <div className="mb-8 flex flex-wrap items-center justify-between gap-4 text-[11px] uppercase tracking-[0.16em] text-[#111111]/70">
-              <span>01/Hey</span>
-
-              <div className="hidden items-center gap-6 md:flex">
-                <button
-                  onClick={() =>
-                    document
-                      .getElementById("about")
-                      ?.scrollIntoView({ behavior: "smooth", block: "start" })
-                  }
-                  className="transition-opacity duration-300 hover:opacity-60"
-                >
-                  02/About
-                </button>
-                <button
-                  onClick={() =>
-                    document
-                      .getElementById("work")
-                      ?.scrollIntoView({ behavior: "smooth", block: "start" })
-                  }
-                  className="transition-opacity duration-300 hover:opacity-60"
-                >
-                  03/Work
-                </button>
-                <button
-                  onClick={() =>
-                    document
-                      .getElementById("contact")
-                      ?.scrollIntoView({ behavior: "smooth", block: "start" })
-                  }
-                  className="transition-opacity duration-300 hover:opacity-60"
-                >
-                  04/Contact
-                </button>
-              </div>
-            </div>
-
             <motion.h1
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
@@ -147,33 +110,14 @@ function HeroSection({
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.85, delay: 0.42, ease }}
-                className="flex flex-col gap-3 text-[11px] uppercase tracking-[0.16em] text-[#111111]/68"
+                className="flex flex-col gap-3"
               >
                 <button
-                  onClick={() =>
-                    document
-                      .getElementById("about")
-                      ?.scrollIntoView({ behavior: "smooth", block: "start" })
-                  }
-                  className="text-left transition-opacity duration-300 hover:opacity-60"
-                >
-                  Go to about
-                </button>
-                <button
                   onClick={onViewWork}
-                  className="text-left transition-opacity duration-300 hover:opacity-60"
+                  className="inline-flex items-center gap-2 text-[13px] underline underline-offset-[0.18em] transition-opacity duration-300 hover:opacity-60"
                 >
-                  Go to work
-                </button>
-                <button
-                  onClick={() =>
-                    document
-                      .getElementById("contact")
-                      ?.scrollIntoView({ behavior: "smooth", block: "start" })
-                  }
-                  className="text-left transition-opacity duration-300 hover:opacity-60"
-                >
-                  Reach out
+                  View work
+                  <ArrowUpRight className="h-3.5 w-3.5" />
                 </button>
               </motion.div>
             </div>
