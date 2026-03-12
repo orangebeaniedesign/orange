@@ -143,9 +143,7 @@ function ProjectHeader({
               transition={{ duration: 0.82, delay: 0.14, ease }}
               className="grid grid-cols-2 gap-x-6 gap-y-6 border-t border-black/12 pt-5"
             >
-              {year ? (
-                <MetaItem label="Year" value={String(year)} />
-              ) : null}
+              {year ? <MetaItem label="Year" value={String(year)} /> : null}
               {client ? <MetaItem label="Client" value={client} /> : null}
               <MetaItem label="Type" value={category} />
               {url ? (
@@ -269,9 +267,7 @@ function EditorialFlow({ images, title }: { images: string[]; title: string }) {
         )
       );
 
-      if (!cancelled) {
-        setInfo(results);
-      }
+      if (!cancelled) setInfo(results);
     }
 
     load();
@@ -334,11 +330,7 @@ function ImagePair({
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{
-            duration: 0.78,
-            delay: Math.min(index * 0.04, 0.22),
-            ease,
-          }}
+          transition={{ duration: 0.78, delay: Math.min(index * 0.04, 0.22), ease }}
           className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6"
         >
           <AutoAspectImage src={a.src} alt={a.alt} radius={0} animateIn={isInView} />
@@ -381,11 +373,7 @@ function ImageSingle({
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{
-            duration: 0.78,
-            delay: Math.min(index * 0.04, 0.22),
-            ease,
-          }}
+          transition={{ duration: 0.78, delay: Math.min(index * 0.04, 0.22), ease }}
         >
           <AutoAspectImage src={src} alt={alt} radius={0} animateIn={isInView} />
         </motion.div>
@@ -427,10 +415,7 @@ function BottomNav({
                   Next project
                 </div>
 
-                <button
-                  onClick={() => onProjectClick(next.id)}
-                  className="group text-left"
-                >
+                <button onClick={() => onProjectClick(next.id)} className="group text-left">
                   <h2
                     className="text-[clamp(34px,6vw,92px)] font-semibold leading-[0.92] tracking-[-0.06em] transition-opacity duration-300 group-hover:opacity-60"
                     style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
@@ -445,10 +430,7 @@ function BottomNav({
                   Return
                 </div>
 
-                <button
-                  onClick={onBack}
-                  className="group text-left"
-                >
+                <button onClick={onBack} className="group text-left">
                   <h2
                     className="text-[clamp(34px,6vw,92px)] font-semibold leading-[0.92] tracking-[-0.06em] transition-opacity duration-300 group-hover:opacity-60"
                     style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
@@ -483,7 +465,7 @@ function BottomNav({
                   onClick={onContact}
                   className="text-left transition-opacity duration-300 hover:opacity-60"
                 >
-                  Contact
+                  Back to landing
                 </button>
               ) : null}
             </div>
