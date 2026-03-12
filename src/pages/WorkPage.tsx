@@ -299,7 +299,7 @@ function CTASection({ onContact }: { onContact: () => void }) {
               onClick={onContact}
               className="mt-8 inline-flex items-center gap-2 text-[13px] underline underline-offset-[0.18em] transition-opacity duration-300 hover:opacity-60"
             >
-              Open contact page
+              Back to landing
               <ArrowUpRight className="h-3.5 w-3.5" />
             </button>
           </div>
