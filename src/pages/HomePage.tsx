@@ -11,9 +11,6 @@ import { useProjects } from "../hooks/usePortfolioData";
 
 interface HomePageProps {
   onViewWork: () => void;
-  onViewAbout?: () => void;
-  onViewContact?: () => void;
-  onViewVisual?: () => void;
   onProjectClick?: (id: string) => void;
 }
 
@@ -21,33 +18,23 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function HomePage({
   onViewWork,
-  onViewAbout,
-  onViewContact,
   onProjectClick,
 }: HomePageProps) {
   return (
     <article className="relative overflow-hidden bg-[#f6f4ef] text-[#111111]">
       <FloatingSmiles />
-      <HeroSection
-        onViewAbout={onViewAbout}
-        onViewWork={onViewWork}
-        onViewContact={onViewContact}
-      />
-      <AboutSection onViewAbout={onViewAbout} />
+      <HeroSection onViewWork={onViewWork} />
+      <AboutSection />
       <WorkSection onProjectClick={onProjectClick} onViewWork={onViewWork} />
-      <ContactSection onViewContact={onViewContact} />
+      <ContactSection />
     </article>
   );
 }
 
 function HeroSection({
-  onViewAbout,
   onViewWork,
-  onViewContact,
 }: {
-  onViewAbout?: () => void;
   onViewWork: () => void;
-  onViewContact?: () => void;
 }) {
   const ref = useRef<HTMLElement | null>(null);
   const prefersReducedMotion = useReducedMotion();
@@ -77,12 +64,7 @@ function HeroSection({
         <div className="grid grid-cols-12 gap-y-10 md:gap-x-8">
           <div className="col-span-12">
             <div className="mb-8 flex flex-wrap items-center justify-between gap-4 text-[11px] uppercase tracking-[0.16em] text-[#111111]/70">
-              <button
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                className="transition-opacity duration-300 hover:opacity-60"
-              >
-                01/Hey
-              </button>
+              <span>01/Hey</span>
 
               <div className="hidden items-center gap-6 md:flex">
                 <button
@@ -168,34 +150,27 @@ function HeroSection({
                 className="flex flex-col gap-3 text-[11px] uppercase tracking-[0.16em] text-[#111111]/68"
               >
                 <button
-                  onClick={() => {
+                  onClick={() =>
                     document
                       .getElementById("about")
-                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
-                    onViewAbout?.();
-                  }}
+                      ?.scrollIntoView({ behavior: "smooth", block: "start" })
+                  }
                   className="text-left transition-opacity duration-300 hover:opacity-60"
                 >
                   Go to about
                 </button>
                 <button
-                  onClick={() => {
-                    document
-                      .getElementById("work")
-                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
-                    onViewWork();
-                  }}
+                  onClick={onViewWork}
                   className="text-left transition-opacity duration-300 hover:opacity-60"
                 >
                   Go to work
                 </button>
                 <button
-                  onClick={() => {
+                  onClick={() =>
                     document
                       .getElementById("contact")
-                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
-                    onViewContact?.();
-                  }}
+                      ?.scrollIntoView({ behavior: "smooth", block: "start" })
+                  }
                   className="text-left transition-opacity duration-300 hover:opacity-60"
                 >
                   Reach out
@@ -209,7 +184,7 @@ function HeroSection({
   );
 }
 
-function AboutSection({ onViewAbout }: { onViewAbout?: () => void }) {
+function AboutSection() {
   const ref = useRef<HTMLElement | null>(null);
   const isInView = useInView(ref, { once: true, margin: "-120px" });
 
@@ -240,19 +215,10 @@ function AboutSection({ onViewAbout }: { onViewAbout?: () => void }) {
               </p>
 
               <p className="mt-8 max-w-[26ch] text-[14px] leading-6 text-[#111111]/72">
-                I like graphic systems with tension, motion with intention, and
-                layouts that feel clean without feeling generic.
+                I work across branding, photography, web design, art direction,
+                and motion. I like graphic systems with tension and layouts that
+                feel clean without feeling generic.
               </p>
-
-              {onViewAbout && (
-                <button
-                  onClick={onViewAbout}
-                  className="mt-8 inline-flex items-center gap-2 text-[13px] text-[#111111] underline underline-offset-[0.2em] transition-opacity duration-300 hover:opacity-60"
-                >
-                  Open full about
-                  <ArrowUpRight className="h-3.5 w-3.5" />
-                </button>
-              )}
             </motion.div>
           </div>
 
@@ -263,10 +229,9 @@ function AboutSection({ onViewAbout }: { onViewAbout?: () => void }) {
               transition={{ duration: 0.9, delay: 0.08, ease }}
               className="text-[13px] leading-6 text-[#111111]/70"
             >
-              I work across branding, photography, web design, art direction,
-              and motion. Some projects are polished and structured; some are a
-              bit more experimental. The important part is that they still feel
-              honest and alive.
+              Orange Beanie comes from a personal moment that stuck — a strange,
+              memorable detail that ended up feeling like the right name for a
+              practice built on personality, instinct, and craft.
             </motion.p>
           </div>
 
@@ -419,11 +384,7 @@ function WorkSkeleton() {
   );
 }
 
-function ContactSection({
-  onViewContact,
-}: {
-  onViewContact?: () => void;
-}) {
+function ContactSection() {
   const ref = useRef<HTMLElement | null>(null);
   const isInView = useInView(ref, { once: true, margin: "-120px" });
 
@@ -478,12 +439,6 @@ function ContactSection({
               >
                 Behance
               </a>
-              <button
-                onClick={onViewContact}
-                className="transition-opacity duration-300 hover:opacity-60"
-              >
-                Contact page
-              </button>
             </div>
           </div>
         </motion.div>
@@ -502,8 +457,7 @@ function FloatingSmiles() {
       top: "4%",
       rotate: -12,
       duration: 12,
-      colors:
-        "from-[#66b84d]/80 via-[#f0efe8]/70 to-[#d7cfc1]/85",
+      colors: "from-[#66b84d]/80 via-[#f0efe8]/70 to-[#d7cfc1]/85",
       inner: "from-white/70 to-white/15",
     },
     {
@@ -512,8 +466,7 @@ function FloatingSmiles() {
       top: "6%",
       rotate: 10,
       duration: 11,
-      colors:
-        "from-[#5a66ff]/85 via-[#ff39cf]/85 to-[#ff68b6]/85",
+      colors: "from-[#5a66ff]/85 via-[#ff39cf]/85 to-[#ff68b6]/85",
       inner: "from-white/40 to-white/10",
     },
     {
@@ -522,8 +475,7 @@ function FloatingSmiles() {
       top: "7%",
       rotate: 16,
       duration: 13,
-      colors:
-        "from-[#f4ecff]/88 via-[#dbcfe2]/78 to-[#efe8f3]/88",
+      colors: "from-[#f4ecff]/88 via-[#dbcfe2]/78 to-[#efe8f3]/88",
       inner: "from-white/50 to-white/10",
     },
     {
@@ -532,8 +484,7 @@ function FloatingSmiles() {
       top: "78%",
       rotate: -16,
       duration: 10,
-      colors:
-        "from-[#ff4329]/82 via-[#f7a327]/80 to-[#ff55c8]/78",
+      colors: "from-[#ff4329]/82 via-[#f7a327]/80 to-[#ff55c8]/78",
       inner: "from-white/38 to-white/12",
     },
     {
@@ -542,8 +493,7 @@ function FloatingSmiles() {
       top: "6%",
       rotate: 12,
       duration: 10,
-      colors:
-        "from-[#7a5110]/88 via-[#d99e25]/82 to-[#8b5f13]/84",
+      colors: "from-[#7a5110]/88 via-[#d99e25]/82 to-[#8b5f13]/84",
       inner: "from-white/35 to-white/10",
     },
   ];
@@ -597,12 +547,8 @@ function FloatingSmiles() {
                   "inset 0 0 0 2px rgba(255,255,255,0.25), 0 0 0 1px rgba(0,0,0,0.04)",
               }}
             />
-
-            <div className="absolute left-1/2 top-1/2 h-[54%] w-[54%] -translate-x-1/2 -translate-y-1/2 rounded-full border-[10px] border-transparent" />
-
-            <div className="absolute left-[28%] top-[34%] h-[7%] w-[7%] rounded-full bg-white/80 blur-[0.2px]" />
-            <div className="absolute right-[28%] top-[34%] h-[7%] w-[7%] rounded-full bg-white/80 blur-[0.2px]" />
-
+            <div className="absolute left-[28%] top-[34%] h-[7%] w-[7%] rounded-full bg-white/80" />
+            <div className="absolute right-[28%] top-[34%] h-[7%] w-[7%] rounded-full bg-white/80" />
             <div
               className="absolute left-1/2 top-[56%] h-[20%] w-[36%] -translate-x-1/2 rounded-b-[999px] border-b-[9px] border-white/78"
               style={{
@@ -610,13 +556,9 @@ function FloatingSmiles() {
                 borderRight: "9px solid transparent",
               }}
             />
-
-            <div className="absolute inset-[7%] rounded-full bg-white/[0.04] blur-md" />
           </div>
         </motion.div>
       ))}
-
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.22),transparent_22%),radial-gradient(circle_at_70%_40%,rgba(255,255,255,0.09),transparent_18%)]" />
     </div>
   );
 }
