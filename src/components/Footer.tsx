@@ -12,11 +12,6 @@ const socialLinks = [
   { label: "Behance", url: "https://www.behance.net/claudianbrito" },
 ];
 
-const navLinks: { label: string; page: PageType; index: string }[] = [
-  { label: "Hey", page: "home", index: "01" },
-  { label: "Work", page: "work", index: "02" },
-];
-
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Footer({ onNavigate }: FooterProps) {
@@ -63,25 +58,6 @@ export default function Footer({ onNavigate }: FooterProps) {
             </div>
 
             <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-1">
-              <div>
-                <div className="mb-4 text-[11px] uppercase tracking-[0.16em] text-[#7b7b74]">
-                  Navigate
-                </div>
-
-                <div className="space-y-3">
-                  {navLinks.map((link) => (
-                    <button
-                      key={link.page}
-                      onClick={() => onNavigate(link.page)}
-                      className="group flex items-center gap-2 text-left text-[14px] text-[#111111]/78 transition-colors duration-300 hover:text-[#111111]"
-                    >
-                      <span className="text-[#7b7b74]">{link.index}/</span>
-                      <span>{link.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
               <div>
                 <div className="mb-4 text-[11px] uppercase tracking-[0.16em] text-[#7b7b74]">
                   Elsewhere
