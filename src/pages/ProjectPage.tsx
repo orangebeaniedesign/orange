@@ -39,7 +39,8 @@ export default function ProjectPage({
   return (
     <article className="min-h-screen bg-[#f6f4ef] text-[#111111]">
       <BackBar onBack={onBack} />
-      <ProjectHeader
+
+      <ProjectIntro
         title={project.title}
         description={project.description}
         year={project.year}
@@ -48,12 +49,17 @@ export default function ProjectPage({
         url={project.project_url}
       />
 
-      {project.content ? <NarrativeBlock text={project.content} /> : null}
+      {project.image_url ? (
+        <HeroImage src={project.image_url} alt={project.title} />
+      ) : null}
+
+      <OverviewSection
+        description={project.description}
+        content={project.content}
+      />
 
       {images.length > 0 ? (
         <EditorialGallery images={images} title={project.title} />
-      ) : project.image_url ? (
-        <SingleHeroImage src={project.image_url} alt={project.title} />
       ) : null}
 
       <BottomNav
@@ -68,24 +74,24 @@ export default function ProjectPage({
 
 function BackBar({ onBack }: { onBack: () => void }) {
   return (
-    <section className="px-5 pt-28 md:px-8 md:pt-34 lg:px-10 lg:pt-36">
-      <div className="mx-auto max-w-[1600px]">
+    <section className="px-3 pt-24 md:px-6 md:pt-28 lg:px-8 lg:pt-30">
+      <div className="mx-auto max-w-[1500px]">
         <motion.button
           onClick={onBack}
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, ease }}
-          className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.16em] text-[#111111]/62 transition-opacity duration-300 hover:opacity-60"
+          transition={{ duration: 0.45, ease }}
+          className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.16em] text-[#111111]/58 transition-opacity duration-300 hover:opacity-60"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
-          Back to work
+          All work
         </motion.button>
       </div>
     </section>
   );
 }
 
-function ProjectHeader({
+function ProjectIntro({
   title,
   description,
   year,
@@ -101,127 +107,98 @@ function ProjectHeader({
   url?: string | null;
 }) {
   return (
-    <section className="px-5 pb-12 pt-8 md:px-8 md:pb-16 md:pt-10 lg:px-10 lg:pb-18">
-      <div className="mx-auto max-w-[1600px]">
-        <div className="grid grid-cols-12 gap-y-10 md:gap-x-8">
-          <div className="col-span-12">
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
+    <section className="px-3 pb-8 pt-8 md:px-6 md:pb-10 md:pt-10 lg:px-8 lg:pb-12">
+      <div className="mx-auto max-w-[1500px]">
+        <div className="grid grid-cols-12 gap-y-6 md:gap-x-6">
+          <div className="col-span-12 md:col-span-9">
+            <motion.h1
+              initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease }}
+              transition={{ duration: 0.65, ease }}
+              className="text-[clamp(28px,5vw,54px)] font-semibold leading-[0.95] tracking-[-0.05em]"
+              style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
             >
-              <div className="mb-5 text-[11px] uppercase tracking-[0.16em] text-[#111111]/62">
-                Project
-              </div>
-
-              <h1
-                className="max-w-[9ch] text-[16vw] font-semibold leading-[0.84] tracking-[-0.08em] md:text-[98px] lg:text-[138px]"
-                style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
-              >
-                {title}
-              </h1>
-            </motion.div>
+              {title}
+            </motion.h1>
           </div>
 
-          <div className="col-span-12 md:col-span-6 lg:col-span-5">
-            {description ? (
-              <motion.p
-                initial={{ opacity: 0, y: 18 }}
+          <div className="col-span-12 md:col-span-3 md:text-right">
+            {url ? (
+              <motion.a
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.82, delay: 0.08, ease }}
-                className="max-w-[36ch] text-[16px] leading-7 text-[#111111]/72"
+                transition={{ duration: 0.55, delay: 0.08, ease }}
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] text-[#111111]/66 underline underline-offset-[0.2em] transition-opacity duration-300 hover:opacity-60"
               >
-                {description}
-              </motion.p>
+                Website
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </motion.a>
             ) : null}
           </div>
-
-          <div className="col-span-12 md:col-span-5 md:col-start-8 lg:col-span-4 lg:col-start-9">
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.82, delay: 0.14, ease }}
-              className="grid grid-cols-2 gap-x-6 gap-y-6 border-t border-black/12 pt-5"
-            >
-              {year ? <MetaItem label="Year" value={String(year)} /> : null}
-              {client ? <MetaItem label="Client" value={client} /> : null}
-              <MetaItem label="Type" value={category} />
-              {url ? (
-                <div>
-                  <div className="mb-2 text-[11px] uppercase tracking-[0.16em] text-[#111111]/50">
-                    Link
-                  </div>
-                  <a
-                    href={url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 text-[14px] text-[#111111] underline underline-offset-[0.18em] transition-opacity duration-300 hover:opacity-60"
-                  >
-                    View live
-                    <ArrowUpRight className="h-3.5 w-3.5" />
-                  </a>
-                </div>
-              ) : null}
-            </motion.div>
-          </div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: 0.12, ease }}
+          className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-black/12 pt-4 md:grid-cols-4"
+        >
+          <MetaCell label="Creative Direction" value={client || "—"} />
+          <MetaCell label="Visual" value={category} />
+          <MetaCell label="Motion" value={year ? String(year) : "—"} />
+          <MetaCell label="See Project" value={url ? "↗" : "—"} alignRight />
+        </motion.div>
+
+        {description ? (
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.18, ease }}
+            className="mt-8 max-w-[60ch] text-[14px] leading-6 text-[#111111]/68"
+          >
+            {description}
+          </motion.p>
+        ) : null}
       </div>
     </section>
   );
 }
 
-function MetaItem({ label, value }: { label: string; value: string }) {
+function MetaCell({
+  label,
+  value,
+  alignRight = false,
+}: {
+  label: string;
+  value: string;
+  alignRight?: boolean;
+}) {
   return (
-    <div>
-      <div className="mb-2 text-[11px] uppercase tracking-[0.16em] text-[#111111]/50">
+    <div className={alignRight ? "md:text-right" : ""}>
+      <div className="mb-1.5 text-[10px] uppercase tracking-[0.14em] text-[#111111]/44">
         {label}
       </div>
-      <div className="text-[14px] leading-6 text-[#111111]/78">{value}</div>
+      <div className="text-[11px] uppercase tracking-[0.12em] text-[#111111]/68">
+        {value}
+      </div>
     </div>
   );
 }
 
-function NarrativeBlock({ text }: { text: string }) {
-  const ref = useRef<HTMLElement | null>(null);
-  const isInView = useInView(ref, { once: true, margin: "-120px" });
-
-  return (
-    <section ref={ref} className="px-5 pb-16 md:px-8 md:pb-24 lg:px-10 lg:pb-28">
-      <div className="mx-auto max-w-[1600px]">
-        <motion.div
-          initial={{ opacity: 0, y: 22 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease }}
-          className="grid grid-cols-12 gap-y-8 md:gap-x-8"
-        >
-          <div className="col-span-12 md:col-span-2">
-            <div className="text-[11px] uppercase tracking-[0.16em] text-[#111111]/50">
-              Notes
-            </div>
-          </div>
-
-          <div className="col-span-12 md:col-span-7 lg:col-span-6">
-            <p className="whitespace-pre-line text-[clamp(22px,2.4vw,34px)] leading-[1.5] tracking-[-0.02em] text-[#111111]/78">
-              {text}
-            </p>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-function SingleHeroImage({ src, alt }: { src: string; alt: string }) {
+function HeroImage({ src, alt }: { src: string; alt: string }) {
   const ref = useRef<HTMLElement | null>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} className="pb-16 md:pb-24 lg:pb-28">
-      <div className="w-full">
+    <section ref={ref} className="px-3 pb-12 md:px-6 md:pb-16 lg:px-8 lg:pb-20">
+      <div className="mx-auto max-w-[1500px]">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease }}
+          transition={{ duration: 0.7, ease }}
         >
           <AutoAspectImage src={src} alt={alt} radius={0} animateIn={isInView} />
         </motion.div>
@@ -230,9 +207,67 @@ function SingleHeroImage({ src, alt }: { src: string; alt: string }) {
   );
 }
 
+function OverviewSection({
+  description,
+  content,
+}: {
+  description?: string | null;
+  content?: string | null;
+}) {
+  const ref = useRef<HTMLElement | null>(null);
+  const isInView = useInView(ref, { once: true, margin: "-120px" });
+
+  if (!description && !content) return null;
+
+  return (
+    <section ref={ref} className="px-3 pb-14 md:px-6 md:pb-18 lg:px-8 lg:pb-24">
+      <div className="mx-auto max-w-[1500px]">
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, ease }}
+          className="grid grid-cols-12 gap-y-8 md:gap-x-8"
+        >
+          <div className="col-span-12 md:col-span-3">
+            <h2
+              className="text-[clamp(22px,2.4vw,34px)] font-semibold leading-[0.98] tracking-[-0.04em]"
+              style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
+            >
+              Project
+              <br />
+              overview
+            </h2>
+          </div>
+
+          <div className="col-span-12 md:col-span-3">
+            <p className="text-[13px] leading-6 text-[#111111]/68">
+              {description ||
+                "This project focused on crafting a visual world with clarity, mood, and a strong digital presence."}
+            </p>
+          </div>
+
+          <div className="col-span-12 md:col-span-3">
+            <p className="text-[13px] leading-6 text-[#111111]/68">
+              {content
+                ? trimText(content, 230)
+                : "The system was designed to feel immersive, structured, and expressive across multiple touchpoints."}
+            </p>
+          </div>
+
+          <div className="col-span-12 md:col-span-3">
+            <p className="text-[13px] leading-6 text-[#111111]/68">
+              The result is a cleaner, more editorial project page where the images do more of the talking.
+            </p>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 function EditorialGallery({ images, title }: { images: string[]; title: string }) {
   return (
-    <section className="pb-16 md:pb-24 lg:pb-28">
+    <section className="pb-14 md:pb-20 lg:pb-24">
       <EditorialFlow images={images} title={title} />
     </section>
   );
@@ -325,12 +360,12 @@ function ImagePair({
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <div ref={ref} className="px-5 pb-4 md:px-8 md:pb-6 lg:px-10">
-      <div className="mx-auto max-w-[1600px]">
+    <div ref={ref} className="px-3 pb-4 md:px-6 md:pb-6 lg:px-8">
+      <div className="mx-auto max-w-[1500px]">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.78, delay: Math.min(index * 0.04, 0.22), ease }}
+          transition={{ duration: 0.65, delay: Math.min(index * 0.04, 0.22), ease }}
           className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6"
         >
           <AutoAspectImage src={a.src} alt={a.alt} radius={0} animateIn={isInView} />
@@ -353,27 +388,27 @@ function ImageSingle({
   const ref = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const mode = index % 5;
+  const mode = index % 4;
 
   const wrapClass =
-    mode === 0 || mode === 3 ? "px-0 pb-4 md:pb-6" : "px-5 pb-4 md:px-8 md:pb-6 lg:px-10";
+    mode === 0 ? "px-3 pb-4 md:px-6 md:pb-6 lg:px-8" : "px-3 pb-4 md:px-6 md:pb-6 lg:px-8";
 
   const innerClass =
-    mode === 0 || mode === 3
-      ? "w-full"
+    mode === 0
+      ? "mx-auto max-w-[1500px]"
       : mode === 1
-      ? "mx-auto max-w-[1600px] md:w-[74%] md:mr-auto"
+      ? "mx-auto max-w-[1500px] md:w-[92%]"
       : mode === 2
-      ? "mx-auto max-w-[1600px] md:w-[82%] md:ml-auto"
-      : "mx-auto max-w-[1600px] md:w-[70%]";
+      ? "mx-auto max-w-[1500px] md:w-[78%]"
+      : "mx-auto max-w-[1500px] md:w-[86%] md:ml-auto";
 
   return (
     <div ref={ref} className={wrapClass}>
       <div className={innerClass}>
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.78, delay: Math.min(index * 0.04, 0.22), ease }}
+          transition={{ duration: 0.65, delay: Math.min(index * 0.04, 0.22), ease }}
         >
           <AutoAspectImage src={src} alt={alt} radius={0} animateIn={isInView} />
         </motion.div>
@@ -399,56 +434,40 @@ function BottomNav({
   return (
     <section
       ref={ref}
-      className="border-t border-black/12 px-5 py-14 md:px-8 md:py-18 lg:px-10 lg:py-20"
+      className="border-t border-black/12 px-3 py-14 md:px-6 md:py-18 lg:px-8 lg:py-22"
     >
-      <div className="mx-auto max-w-[1600px]">
+      <div className="mx-auto max-w-[1500px]">
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.75, ease }}
-          className="grid grid-cols-12 gap-y-10 md:gap-x-8"
+          transition={{ duration: 0.65, ease }}
+          className="grid grid-cols-12 gap-y-8 md:gap-x-8"
         >
-          <div className="col-span-12 md:col-span-7">
-            {next ? (
-              <>
-                <div className="mb-4 text-[11px] uppercase tracking-[0.16em] text-[#111111]/50">
-                  Next project
-                </div>
+          <div className="col-span-12 md:col-span-8">
+            <div className="mb-3 text-[10px] uppercase tracking-[0.14em] text-[#111111]/46">
+              {next ? "Next Project" : "Return"}
+            </div>
 
-                <button onClick={() => onProjectClick(next.id)} className="group text-left">
-                  <h2
-                    className="text-[clamp(34px,6vw,92px)] font-semibold leading-[0.92] tracking-[-0.06em] transition-opacity duration-300 group-hover:opacity-60"
-                    style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
-                  >
-                    {next.title}
-                  </h2>
-                </button>
-              </>
-            ) : (
-              <>
-                <div className="mb-4 text-[11px] uppercase tracking-[0.16em] text-[#111111]/50">
-                  Return
-                </div>
-
-                <button onClick={onBack} className="group text-left">
-                  <h2
-                    className="text-[clamp(34px,6vw,92px)] font-semibold leading-[0.92] tracking-[-0.06em] transition-opacity duration-300 group-hover:opacity-60"
-                    style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
-                  >
-                    All projects
-                  </h2>
-                </button>
-              </>
-            )}
+            <button
+              onClick={() => (next ? onProjectClick(next.id) : onBack())}
+              className="group text-left"
+            >
+              <h2
+                className="text-[clamp(36px,8vw,82px)] font-semibold leading-[0.9] tracking-[-0.06em] transition-opacity duration-300 group-hover:opacity-60"
+                style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
+              >
+                {next ? next.title : "Back to Work"}
+              </h2>
+            </button>
           </div>
 
-          <div className="col-span-12 md:col-span-4 md:col-start-9 md:pt-2">
-            <div className="flex flex-col gap-4 text-[11px] uppercase tracking-[0.16em] text-[#111111]/62">
+          <div className="col-span-12 md:col-span-3 md:col-start-10 md:pt-2">
+            <div className="flex flex-col gap-3 text-[10px] uppercase tracking-[0.14em] text-[#111111]/58">
               <button
                 onClick={onBack}
                 className="text-left transition-opacity duration-300 hover:opacity-60"
               >
-                Back to work
+                All work
               </button>
 
               {next ? (
@@ -456,7 +475,7 @@ function BottomNav({
                   onClick={() => onProjectClick(next.id)}
                   className="text-left transition-opacity duration-300 hover:opacity-60"
                 >
-                  Open next project
+                  Open next
                 </button>
               ) : null}
 
@@ -465,7 +484,7 @@ function BottomNav({
                   onClick={onContact}
                   className="text-left transition-opacity duration-300 hover:opacity-60"
                 >
-                  Back to landing
+                  Landing page
                 </button>
               ) : null}
             </div>
@@ -486,18 +505,18 @@ function LoadingState() {
 
 function ErrorState({ onBack }: { onBack: () => void }) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#f6f4ef] px-5 md:px-8 lg:px-10">
+    <div className="flex min-h-screen items-center justify-center bg-[#f6f4ef] px-5">
       <div className="max-w-[520px] text-left">
-        <div className="mb-4 text-[11px] uppercase tracking-[0.16em] text-[#111111]/50">
+        <div className="mb-4 text-[10px] uppercase tracking-[0.14em] text-[#111111]/46">
           Error
         </div>
         <h1
-          className="text-[clamp(36px,6vw,84px)] font-semibold leading-[0.92] tracking-[-0.07em]"
+          className="text-[clamp(32px,6vw,64px)] font-semibold leading-[0.94] tracking-[-0.06em]"
           style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
         >
           Project not found.
         </h1>
-        <p className="mt-5 max-w-[32ch] text-[14px] leading-6 text-[#111111]/66">
+        <p className="mt-4 max-w-[32ch] text-[14px] leading-6 text-[#111111]/66">
           This project may have been removed, renamed, or the link is no longer valid.
         </p>
         <button
@@ -521,4 +540,9 @@ function getCategoryLabel(category: string): string {
   };
 
   return map[category] || category;
+}
+
+function trimText(text: string, maxLength: number) {
+  if (text.length <= maxLength) return text;
+  return `${text.slice(0, maxLength).trim()}…`;
 }
