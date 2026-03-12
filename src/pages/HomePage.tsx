@@ -146,10 +146,6 @@ function AboutSection() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, ease }}
             >
-              <div className="mb-5 text-[11px] uppercase tracking-[0.16em] text-[#111111]/64">
-                02/About
-              </div>
-
               <p className="max-w-[11ch] text-[clamp(34px,4.5vw,64px)] font-semibold leading-[0.96] tracking-[-0.05em]">
                 Playful,
                 <br />
@@ -219,9 +215,6 @@ function WorkSection({
       <div className="mx-auto max-w-[1600px]">
         <div className="mb-10 flex items-end justify-between gap-6">
           <div>
-            <div className="mb-3 text-[11px] uppercase tracking-[0.16em] text-[#111111]/64">
-              03/Work
-            </div>
             <h2
               className="text-[clamp(32px,6vw,88px)] font-semibold leading-[0.92] tracking-[-0.06em]"
               style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
@@ -344,10 +337,6 @@ function ContactSection() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.85, ease }}
         >
-          <div className="mb-5 text-[11px] uppercase tracking-[0.16em] text-[#111111]/64">
-            04/Contact
-          </div>
-
           <h2
             className="max-w-[7.5ch] text-[18vw] font-semibold leading-[0.84] tracking-[-0.08em] md:text-[110px] lg:text-[150px]"
             style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
