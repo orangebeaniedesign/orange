@@ -22,19 +22,19 @@ export default function Footer({ onNavigate }: FooterProps) {
     <footer ref={ref} className="bg-[#f6f4ef] border-t border-black/10">
       <div className="px-5 md:px-8 lg:px-10 py-16 md:py-24 lg:py-28">
         <motion.div
-          initial={{ opacity: 0, y: 28 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease }}
           className="mx-auto max-w-[1600px]"
         >
-          <div className="grid grid-cols-1 gap-16 lg:grid-cols-[1.4fr_0.8fr] lg:gap-10">
-            <div>
-              <div className="mb-6 text-[11px] uppercase tracking-[0.16em] text-[#7b7b74]">
+          <div className="grid grid-cols-1 gap-14 md:grid-cols-12 md:gap-8">
+            <div className="md:col-span-7">
+              <div className="mb-5 text-[10px] uppercase tracking-[0.16em] text-[#111111]/42">
                 Contact
               </div>
 
               <h2
-                className="max-w-[10ch] text-[17vw] leading-[0.88] tracking-[-0.07em] text-[#111111] md:text-[96px] lg:text-[140px]"
+                className="max-w-[8ch] text-[clamp(54px,9vw,140px)] font-semibold leading-[0.9] tracking-[-0.07em] text-[#111111]"
                 style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
               >
                 Let’s make
@@ -45,53 +45,56 @@ export default function Footer({ onNavigate }: FooterProps) {
               <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
                 <a
                   href="mailto:orangebeaniedesign@gmail.com"
-                  className="group inline-flex items-center gap-2 text-[15px] text-[#111111] transition-opacity duration-300 hover:opacity-70"
+                  className="inline-flex items-center gap-2 text-[14px] text-[#111111]/85 transition-opacity duration-300 hover:opacity-60"
                 >
                   orangebeaniedesign@gmail.com
-                  <ArrowUpRight className="h-4 w-4" />
+                  <ArrowUpRight className="h-3.5 w-3.5" />
                 </a>
 
-                <span className="text-[13px] text-[#111111]/55">
+                <span className="text-[13px] text-[#111111]/45">
                   Madeira-based, working worldwide.
                 </span>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-1">
-              <div>
-                <div className="mb-4 text-[11px] uppercase tracking-[0.16em] text-[#7b7b74]">
-                  Elsewhere
+            <div className="md:col-span-4 md:col-start-9">
+              <div className="space-y-10">
+                <div>
+                  <div className="mb-4 text-[10px] uppercase tracking-[0.16em] text-[#111111]/42">
+                    Elsewhere
+                  </div>
+
+                  <div className="flex flex-wrap gap-x-4 gap-y-3 text-[13px] text-[#111111]/75">
+                    {socialLinks.map((social) => (
+                      <a
+                        key={social.label}
+                        href={social.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 transition-opacity duration-300 hover:opacity-60"
+                      >
+                        {social.label}
+                        <ArrowUpRight className="h-3 w-3" />
+                      </a>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="space-y-3">
-                  {socialLinks.map((social) => (
-                    <a
-                      key={social.label}
-                      href={social.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="group inline-flex items-center gap-2 text-[14px] text-[#111111]/78 transition-colors duration-300 hover:text-[#111111]"
-                    >
-                      <span>{social.label}</span>
-                      <ArrowUpRight className="h-3.5 w-3.5" />
-                    </a>
-                  ))}
-                </div>
-              </div>
+                <div>
+                  <div className="mb-4 text-[10px] uppercase tracking-[0.16em] text-[#111111]/42">
+                    Practice
+                  </div>
 
-              <div>
-                <div className="mb-4 text-[11px] uppercase tracking-[0.16em] text-[#7b7b74]">
-                  Practice
+                  <p className="max-w-[24ch] text-[13px] leading-6 text-[#111111]/48">
+                    Branding, motion graphics, photography, visual design, and
+                    playful digital experiences.
+                  </p>
                 </div>
-
-                <p className="max-w-[28ch] text-[14px] leading-6 text-[#111111]/65">
-                  Branding, motion graphics, photography, visual design, and playful digital experiences.
-                </p>
               </div>
             </div>
           </div>
 
-          <div className="mt-14 border-t border-black/10 pt-5 flex flex-col gap-2 text-[11px] uppercase tracking-[0.14em] text-[#7b7b74] md:flex-row md:items-center md:justify-between">
+          <div className="mt-14 border-t border-black/10 pt-5 flex flex-col gap-2 text-[10px] uppercase tracking-[0.14em] text-[#111111]/38 md:flex-row md:items-center md:justify-between">
             <span>© {new Date().getFullYear()} Orange Beanie</span>
             <span>Design / Motion / Photography</span>
           </div>
