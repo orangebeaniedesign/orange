@@ -28,92 +28,85 @@ export default function Footer({ onNavigate }: FooterProps) {
 
   return (
     <footer ref={ref} className="border-t border-stone-200 bg-cream">
-      <div className="px-gutter py-12 md:py-16">
+      <div className="px-gutter py-16 md:py-20">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: duration.slower, ease: easing.expoOut }}
           className="max-w-7xl mx-auto"
         >
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-12 md:gap-8 mb-12">
-            <div className="flex-shrink-0">
-              <Logo onClick={() => onNavigate("home")} className="h-6 md:h-8" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-16 mb-12">
+            <div>
+              <div onClick={() => onNavigate("home")} className="cursor-pointer mb-4">
+                <Logo className="h-5 md:h-6" />
+              </div>
+              <p className="text-body-xs text-stone-400 font-light">
+                {new Date().getFullYear()} Orange Beanie
+              </p>
             </div>
 
-            <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8 text-right">
-              <div>
-                <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-3">Work</p>
-                <nav className="flex flex-col gap-2">
-                  {navLinks.map((link) => (
-                    <button
-                      key={link.page}
-                      onClick={() => onNavigate(link.page)}
-                      className="text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-500 text-right"
-                    >
-                      {link.label}
-                    </button>
-                  ))}
-                </nav>
-              </div>
-
-              <div>
-                <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-3">Connect</p>
-                <div className="flex flex-col gap-2 items-end">
-                  {socials.map((social) => (
-                    <a
-                      key={social.label}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group inline-flex items-center gap-1 text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-500 text-right"
-                    >
-                      {social.label}
-                      <ArrowUpRight className="w-3 h-3 opacity-40 group-hover:opacity-100 transition-opacity duration-500" />
-                    </a>
-                  ))}
-                </div>
-              </div>
-
-              <div className="col-span-2 md:col-span-1">
-                <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-3">Contact</p>
-                <div className="flex flex-col gap-2 text-right">
-                  <a
-                    href="mailto:orangebeaniedesign@gmail.com"
-                    className="text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-500"
+            <div>
+              <h3 className="text-body-xs font-medium uppercase tracking-wide text-charcoal mb-4">
+                Navigation
+              </h3>
+              <nav className="flex flex-col gap-3">
+                {navLinks.map((link) => (
+                  <button
+                    key={link.page}
+                    onClick={() => onNavigate(link.page)}
+                    className="text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-300 text-left"
                   >
-                    orangebeaniedesign@gmail.com
-                  </a>
-                  <p className="text-body-xs text-stone-500 font-light">
-                    Madeira-based,<br />working worldwide.
-                  </p>
-                  <a
-                    href="/cv.pdf"
-                    className="group inline-flex items-center gap-1 text-body-xs text-stone-600 hover:text-charcoal transition-colors duration-500 mt-1 justify-end"
-                    download
-                  >
-                    Download CV
-                    <ArrowUpRight className="w-3 h-3 opacity-40 group-hover:opacity-100 transition-opacity duration-500" />
-                  </a>
-                </div>
-              </div>
+                    {link.label}
+                  </button>
+                ))}
+              </nav>
+            </div>
 
-              <div className="col-span-2 md:col-span-1">
-                <p className="text-body-xs uppercase tracking-wide text-stone-400 mb-3">Details</p>
-                <div className="flex flex-col gap-2 text-right">
-                  <p className="text-body-xs text-stone-600">Design / Photography / Motion</p>
-                </div>
+            <div>
+              <h3 className="text-body-xs font-medium uppercase tracking-wide text-charcoal mb-4">
+                Social
+              </h3>
+              <div className="flex flex-col gap-3">
+                {socials.map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-300 text-left"
+                  >
+                    {social.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-body-xs font-medium uppercase tracking-wide text-charcoal mb-4">
+                Contact
+              </h3>
+              <div className="flex flex-col gap-3">
+                <a
+                  href="mailto:orangebeaniedesign@gmail.com"
+                  className="text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-300 text-left"
+                >
+                  orangebeaniedesign@gmail.com
+                </a>
+                <a
+                  href="/cv.pdf"
+                  className="text-body-sm text-stone-600 hover:text-charcoal transition-colors duration-300 text-left"
+                  download
+                >
+                  Download CV
+                </a>
               </div>
             </div>
           </div>
 
-          <div className="pt-8 border-t border-stone-200/60 flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4 text-body-xs text-stone-400 font-light">
-            <span>
-              {new Date().getFullYear()} Orange Beanie
-            </span>
-
-            <span>
-              Design / Photography / Motion
-            </span>
+          <div className="pt-8 border-t border-stone-200/60">
+            <p className="text-body-xs text-stone-400 font-light">
+              Design - Photography - Motion
+            </p>
           </div>
         </motion.div>
       </div>
