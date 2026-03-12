@@ -1,9 +1,7 @@
-// src/pages/ProjectPage.tsx
-import React, { useRef } from "react";
+import React, { useMemo, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { useProject, useProjects } from "../hooks/usePortfolioData";
-import { easing, duration, staggerContainer, staggerItem } from "../lib/motion";
 import AutoAspectImage from "../components/AutoAspectImage";
 
 interface ProjectPageProps {
@@ -12,6 +10,8 @@ interface ProjectPageProps {
   onProjectClick: (id: string) => void;
   onContact?: () => void;
 }
+
+const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function ProjectPage({
   projectId,
@@ -22,47 +22,41 @@ export default function ProjectPage({
   const { project, loading, error } = useProject(projectId);
   const { projects } = useProjects();
 
+  const nextProject = useMemo(() => {
+    const currentIndex = projects.findIndex((p) => p.id === projectId);
+    if (currentIndex >= 0 && currentIndex < projects.length - 1) {
+      return projects[currentIndex + 1];
+    }
+    return null;
+  }, [projects, projectId]);
+
   if (loading) return <LoadingState />;
   if (error || !project) return <ErrorState onBack={onBack} />;
-
-  const currentIndex = projects.findIndex((p) => p.id === projectId);
-  const nextProject =
-    currentIndex >= 0 && currentIndex < projects.length - 1
-      ? projects[currentIndex + 1]
-      : null;
 
   const images = Array.isArray(project.images) ? (project.images as string[]) : [];
   const categoryLabel = getCategoryLabel(project.category);
 
   return (
-    <article className="min-h-screen bg-cream text-charcoal">
-      {/* Top nav/back (sem hero) */}
-      <div className="pt-28 md:pt-36 px-gutter">
-        <div className="max-w-7xl mx-auto">
-          <button
-            onClick={onBack}
-            className="inline-flex items-center gap-2.5 text-body-sm uppercase tracking-[0.14em] text-stone-500 hover:text-charcoal transition-colors duration-300 group"
-          >
-            <ArrowLeft className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" />
-            All projects
-          </button>
-        </div>
-      </div>
-
-      <TitleBlock title={project.title} description={project.description} />
-
-      <MetadataStrip
+    <article className="min-h-screen bg-[#f6f4ef] text-[#111111]">
+      <BackBar onBack={onBack} />
+      <ProjectHeader
+        title={project.title}
+        description={project.description}
         year={project.year}
         client={project.client}
         category={categoryLabel}
         url={project.project_url}
       />
 
-      {project.content && <NarrativeBlock text={project.content} />}
+      {project.content ? <NarrativeBlock text={project.content} /> : null}
 
-      {images.length > 0 && <EditorialGallery images={images} title={project.title} />}
+      {images.length > 0 ? (
+        <EditorialGallery images={images} title={project.title} />
+      ) : project.image_url ? (
+        <SingleHeroImage src={project.image_url} alt={project.title} />
+      ) : null}
 
-      <ProjectNavigation
+      <BottomNav
         next={nextProject}
         onBack={onBack}
         onProjectClick={onProjectClick}
@@ -72,83 +66,146 @@ export default function ProjectPage({
   );
 }
 
-function TitleBlock({
-  title,
-  description,
-}: {
-  title: string;
-  description?: string | null;
-}) {
+function BackBar({ onBack }: { onBack: () => void }) {
   return (
-    <section className="px-gutter pt-12 md:pt-16 pb-12 md:pb-16">
-      <div className="max-w-7xl mx-auto">
-        <motion.div variants={staggerContainer} initial="hidden" animate="visible">
-          <motion.h1 variants={staggerItem} className="text-hero max-w-5xl">
-            {title}
-          </motion.h1>
-
-          {description && (
-            <motion.p
-              variants={staggerItem}
-              className="text-body-xl md:text-display-md text-stone-600 max-w-2xl mt-7 md:mt-8 font-light leading-relaxed"
-            >
-              {description}
-            </motion.p>
-          )}
-        </motion.div>
+    <section className="px-5 pt-28 md:px-8 md:pt-34 lg:px-10 lg:pt-36">
+      <div className="mx-auto max-w-[1600px]">
+        <motion.button
+          onClick={onBack}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, ease }}
+          className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.16em] text-[#111111]/62 transition-opacity duration-300 hover:opacity-60"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" />
+          Back to work
+        </motion.button>
       </div>
     </section>
   );
 }
 
-function MetadataStrip({
+function ProjectHeader({
+  title,
+  description,
   year,
   client,
   category,
   url,
 }: {
+  title: string;
+  description?: string | null;
   year?: string | number | null;
   client?: string | null;
   category: string;
   url?: string | null;
 }) {
-  const items = [
-    { label: "Year", value: year },
-    { label: "Client", value: client },
-    { label: "Medium", value: category },
-  ].filter((item) => item.value);
+  return (
+    <section className="px-5 pb-12 pt-8 md:px-8 md:pb-16 md:pt-10 lg:px-10 lg:pb-18">
+      <div className="mx-auto max-w-[1600px]">
+        <div className="grid grid-cols-12 gap-y-10 md:gap-x-8">
+          <div className="col-span-12">
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease }}
+            >
+              <div className="mb-5 text-[11px] uppercase tracking-[0.16em] text-[#111111]/62">
+                Project
+              </div>
+
+              <h1
+                className="max-w-[9ch] text-[16vw] font-semibold leading-[0.84] tracking-[-0.08em] md:text-[98px] lg:text-[138px]"
+                style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
+              >
+                {title}
+              </h1>
+            </motion.div>
+          </div>
+
+          <div className="col-span-12 md:col-span-6 lg:col-span-5">
+            {description ? (
+              <motion.p
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.82, delay: 0.08, ease }}
+                className="max-w-[36ch] text-[16px] leading-7 text-[#111111]/72"
+              >
+                {description}
+              </motion.p>
+            ) : null}
+          </div>
+
+          <div className="col-span-12 md:col-span-5 md:col-start-8 lg:col-span-4 lg:col-start-9">
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.82, delay: 0.14, ease }}
+              className="grid grid-cols-2 gap-x-6 gap-y-6 border-t border-black/12 pt-5"
+            >
+              {year ? (
+                <MetaItem label="Year" value={String(year)} />
+              ) : null}
+              {client ? <MetaItem label="Client" value={client} /> : null}
+              <MetaItem label="Type" value={category} />
+              {url ? (
+                <div>
+                  <div className="mb-2 text-[11px] uppercase tracking-[0.16em] text-[#111111]/50">
+                    Link
+                  </div>
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 text-[14px] text-[#111111] underline underline-offset-[0.18em] transition-opacity duration-300 hover:opacity-60"
+                  >
+                    View live
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </a>
+                </div>
+              ) : null}
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function MetaItem({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <div className="mb-2 text-[11px] uppercase tracking-[0.16em] text-[#111111]/50">
+        {label}
+      </div>
+      <div className="text-[14px] leading-6 text-[#111111]/78">{value}</div>
+    </div>
+  );
+}
+
+function NarrativeBlock({ text }: { text: string }) {
+  const ref = useRef<HTMLElement | null>(null);
+  const isInView = useInView(ref, { once: true, margin: "-120px" });
 
   return (
-    <section className="px-gutter pb-18 md:pb-24">
-      <div className="max-w-7xl mx-auto">
+    <section ref={ref} className="px-5 pb-16 md:px-8 md:pb-24 lg:px-10 lg:pb-28">
+      <div className="mx-auto max-w-[1600px]">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: duration.slow, delay: 0.2, ease: easing.expoOut }}
-          className="border-t border-stone-200/60 pt-10"
+          initial={{ opacity: 0, y: 22 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease }}
+          className="grid grid-cols-12 gap-y-8 md:gap-x-8"
         >
-          <div className="flex flex-wrap items-start gap-x-16 gap-y-6">
-            {items.map((item) => (
-              <div key={item.label}>
-                <p className="label-caption mb-2">{item.label}</p>
-                <p className="text-body-md font-light">{String(item.value)}</p>
-              </div>
-            ))}
+          <div className="col-span-12 md:col-span-2">
+            <div className="text-[11px] uppercase tracking-[0.16em] text-[#111111]/50">
+              Notes
+            </div>
+          </div>
 
-            {url && (
-              <div>
-                <p className="label-caption mb-2">Link</p>
-                <a
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-body-md font-light text-charcoal hover:text-stone-600 transition-colors duration-300 underline-weird"
-                >
-                  View live
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-              </div>
-            )}
+          <div className="col-span-12 md:col-span-7 lg:col-span-6">
+            <p className="whitespace-pre-line text-[clamp(22px,2.4vw,34px)] leading-[1.5] tracking-[-0.02em] text-[#111111]/78">
+              {text}
+            </p>
           </div>
         </motion.div>
       </div>
@@ -156,40 +213,29 @@ function MetadataStrip({
   );
 }
 
-function NarrativeBlock({ text }: { text: string }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+function SingleHeroImage({ src, alt }: { src: string; alt: string }) {
+  const ref = useRef<HTMLElement | null>(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} className="px-gutter pb-section">
-      <div className="max-w-7xl mx-auto">
+    <section ref={ref} className="pb-16 md:pb-24 lg:pb-28">
+      <div className="w-full">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: duration.slowest, ease: easing.expoOut }}
-          className="md:ml-[16%] max-w-2xl"
+          transition={{ duration: 0.8, ease }}
         >
-          <div className="w-10 h-[1px] bg-stone-300 mb-14" />
-          <p className="text-body-xl md:text-display-sm text-stone-700 font-light leading-[1.85] whitespace-pre-line">
-            {text}
-          </p>
+          <AutoAspectImage src={src} alt={alt} radius={0} animateIn={isInView} />
         </motion.div>
       </div>
     </section>
   );
 }
 
-/** ✅ Galeria editorial:
- * - 2 imagens "wide" seguidas ficam lado a lado (desktop)
- * - flat (sem round corners)
- * - resto mantém ritmo editorial (full-bleed / left / right / center)
- */
 function EditorialGallery({ images, title }: { images: string[]; title: string }) {
   return (
-    <section className="pb-section-lg">
-      <div className="space-y-10 md:space-y-14">
-        <EditorialFlow images={images} title={title} />
-      </div>
+    <section className="pb-16 md:pb-24 lg:pb-28">
+      <EditorialFlow images={images} title={title} />
     </section>
   );
 }
@@ -204,18 +250,18 @@ function EditorialFlow({ images, title }: { images: string[]; title: string }) {
   React.useEffect(() => {
     let cancelled = false;
 
-    async function run() {
-      const results: RatioInfo[] = await Promise.all(
+    async function load() {
+      const results = await Promise.all(
         images.map(
           (src) =>
             new Promise<RatioInfo>((resolve) => {
               const img = new Image();
               img.onload = () => {
-                const r =
+                const ratio =
                   img.naturalWidth && img.naturalHeight
                     ? img.naturalWidth / img.naturalHeight
                     : null;
-                resolve({ src, ratio: r });
+                resolve({ src, ratio });
               };
               img.onerror = () => resolve({ src, ratio: null });
               img.src = src;
@@ -223,16 +269,18 @@ function EditorialFlow({ images, title }: { images: string[]; title: string }) {
         )
       );
 
-      if (!cancelled) setInfo(results);
+      if (!cancelled) {
+        setInfo(results);
+      }
     }
 
-    run();
+    load();
     return () => {
       cancelled = true;
     };
   }, [images]);
 
-  const isWide = (r: number | null) => (r ?? 0) >= 1.25;
+  const isWide = (ratio: number | null) => (ratio ?? 0) >= 1.25;
 
   const nodes: React.ReactNode[] = [];
   let i = 0;
@@ -243,10 +291,10 @@ function EditorialFlow({ images, title }: { images: string[]; title: string }) {
 
     if (b && isWide(a.ratio) && isWide(b.ratio)) {
       nodes.push(
-        <EditorialPairRow
-          key={`${a.src}__${b.src}__pair`}
-          a={{ src: a.src, alt: `${title} - ${i + 1}` }}
-          b={{ src: b.src, alt: `${title} - ${i + 2}` }}
+        <ImagePair
+          key={`${a.src}-${b.src}-pair`}
+          a={{ src: a.src, alt: `${title} ${i + 1}` }}
+          b={{ src: b.src, alt: `${title} ${i + 2}` }}
           index={i}
         />
       );
@@ -255,10 +303,10 @@ function EditorialFlow({ images, title }: { images: string[]; title: string }) {
     }
 
     nodes.push(
-      <EditorialSingle
-        key={`${a.src}__single`}
+      <ImageSingle
+        key={`${a.src}-single`}
         src={a.src}
-        alt={`${title} - ${i + 1}`}
+        alt={`${title} ${i + 1}`}
         index={i}
       />
     );
@@ -268,7 +316,7 @@ function EditorialFlow({ images, title }: { images: string[]; title: string }) {
   return <>{nodes}</>;
 }
 
-function EditorialPairRow({
+function ImagePair({
   a,
   b,
   index,
@@ -277,21 +325,21 @@ function EditorialPairRow({
   b: { src: string; alt: string };
   index: number;
 }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-90px" });
+  const ref = useRef<HTMLDivElement | null>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <div ref={ref} className="px-gutter">
-      <div className="max-w-7xl mx-auto">
+    <div ref={ref} className="px-5 pb-4 md:px-8 md:pb-6 lg:px-10">
+      <div className="mx-auto max-w-[1600px]">
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{
-            duration: duration.slowest,
-            delay: Math.min(index * 0.04, 0.25),
-            ease: easing.expoOut,
+            duration: 0.78,
+            delay: Math.min(index * 0.04, 0.22),
+            ease,
           }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
+          className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6"
         >
           <AutoAspectImage src={a.src} alt={a.alt} radius={0} animateIn={isInView} />
           <AutoAspectImage src={b.src} alt={b.alt} radius={0} animateIn={isInView} />
@@ -301,7 +349,7 @@ function EditorialPairRow({
   );
 }
 
-function EditorialSingle({
+function ImageSingle({
   src,
   alt,
   index,
@@ -310,32 +358,33 @@ function EditorialSingle({
   alt: string;
   index: number;
 }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-90px" });
+  const ref = useRef<HTMLDivElement | null>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const mode = index % 5;
 
-  const wrapClass = mode === 0 || mode === 3 ? "px-0" : "px-gutter";
+  const wrapClass =
+    mode === 0 || mode === 3 ? "px-0 pb-4 md:pb-6" : "px-5 pb-4 md:px-8 md:pb-6 lg:px-10";
 
   const innerClass =
     mode === 0 || mode === 3
       ? "w-full"
       : mode === 1
-      ? "max-w-7xl mx-auto md:w-[74%] md:mr-auto"
+      ? "mx-auto max-w-[1600px] md:w-[74%] md:mr-auto"
       : mode === 2
-      ? "max-w-7xl mx-auto md:w-[82%] md:ml-auto"
-      : "max-w-7xl mx-auto md:w-[70%]";
+      ? "mx-auto max-w-[1600px] md:w-[82%] md:ml-auto"
+      : "mx-auto max-w-[1600px] md:w-[70%]";
 
   return (
     <div ref={ref} className={wrapClass}>
       <div className={innerClass}>
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{
-            duration: duration.slowest,
-            delay: Math.min(index * 0.04, 0.25),
-            ease: easing.expoOut,
+            duration: 0.78,
+            delay: Math.min(index * 0.04, 0.22),
+            ease,
           }}
         >
           <AutoAspectImage src={src} alt={alt} radius={0} animateIn={isInView} />
@@ -345,104 +394,135 @@ function EditorialSingle({
   );
 }
 
-function ProjectNavigation({
+function BottomNav({
   next,
   onBack,
   onProjectClick,
   onContact,
 }: {
-  next: { id: string; title: string; image_url: string } | null;
+  next: { id: string; title: string } | null;
   onBack: () => void;
   onProjectClick: (id: string) => void;
   onContact?: () => void;
 }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const ref = useRef<HTMLElement | null>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="border-t border-stone-200/60">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: 1 } : {}}
-        transition={{ duration: duration.slower, ease: easing.expoOut }}
-      >
-        {next ? (
-          <NextProjectTeaser project={next} onClick={() => onProjectClick(next.id)} />
-        ) : (
-          <div className="py-section px-gutter">
-            <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-              <button onClick={onBack} className="group">
-                <p className="label-caption mb-3">Return to</p>
-                <h3 className="text-display-lg group-hover:text-stone-600 transition-colors duration-300">
-                  All projects
-                </h3>
+    <section
+      ref={ref}
+      className="border-t border-black/12 px-5 py-14 md:px-8 md:py-18 lg:px-10 lg:py-20"
+    >
+      <div className="mx-auto max-w-[1600px]">
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.75, ease }}
+          className="grid grid-cols-12 gap-y-10 md:gap-x-8"
+        >
+          <div className="col-span-12 md:col-span-7">
+            {next ? (
+              <>
+                <div className="mb-4 text-[11px] uppercase tracking-[0.16em] text-[#111111]/50">
+                  Next project
+                </div>
+
+                <button
+                  onClick={() => onProjectClick(next.id)}
+                  className="group text-left"
+                >
+                  <h2
+                    className="text-[clamp(34px,6vw,92px)] font-semibold leading-[0.92] tracking-[-0.06em] transition-opacity duration-300 group-hover:opacity-60"
+                    style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
+                  >
+                    {next.title}
+                  </h2>
+                </button>
+              </>
+            ) : (
+              <>
+                <div className="mb-4 text-[11px] uppercase tracking-[0.16em] text-[#111111]/50">
+                  Return
+                </div>
+
+                <button
+                  onClick={onBack}
+                  className="group text-left"
+                >
+                  <h2
+                    className="text-[clamp(34px,6vw,92px)] font-semibold leading-[0.92] tracking-[-0.06em] transition-opacity duration-300 group-hover:opacity-60"
+                    style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
+                  >
+                    All projects
+                  </h2>
+                </button>
+              </>
+            )}
+          </div>
+
+          <div className="col-span-12 md:col-span-4 md:col-start-9 md:pt-2">
+            <div className="flex flex-col gap-4 text-[11px] uppercase tracking-[0.16em] text-[#111111]/62">
+              <button
+                onClick={onBack}
+                className="text-left transition-opacity duration-300 hover:opacity-60"
+              >
+                Back to work
               </button>
 
-              {onContact && (
-                <button onClick={onContact} className="btn-outline">
-                  Get in touch
-                  <ArrowRight className="w-4 h-4" />
+              {next ? (
+                <button
+                  onClick={() => onProjectClick(next.id)}
+                  className="text-left transition-opacity duration-300 hover:opacity-60"
+                >
+                  Open next project
                 </button>
-              )}
+              ) : null}
+
+              {onContact ? (
+                <button
+                  onClick={onContact}
+                  className="text-left transition-opacity duration-300 hover:opacity-60"
+                >
+                  Contact
+                </button>
+              ) : null}
             </div>
           </div>
-        )}
-      </motion.div>
+        </motion.div>
+      </div>
     </section>
-  );
-}
-
-function NextProjectTeaser({
-  project,
-  onClick,
-}: {
-  project: { id: string; title: string; image_url: string };
-  onClick: () => void;
-}) {
-  return (
-    <button onClick={onClick} className="group w-full text-left" data-cursor="next">
-      <div className="py-12 md:py-16 px-gutter">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div>
-            <p className="label-caption mb-3">Next project</p>
-            <h3 className="text-display-xl md:text-display-2xl group-hover:text-stone-600 transition-colors duration-300">
-              {project.title}
-            </h3>
-          </div>
-          <ArrowRight className="w-5 h-5 text-stone-400 group-hover:text-charcoal group-hover:translate-x-1 transition-all duration-300" />
-        </div>
-      </div>
-
-      <div className="relative w-full h-[40vh] md:h-[50vh] overflow-hidden">
-        <img
-          src={project.image_url}
-          alt={project.title}
-          className="w-full h-full object-cover transition-transform duration-[1.2s] ease-expo-out group-hover:scale-[1.03]"
-        />
-        <div className="absolute inset-0 bg-charcoal/10 group-hover:bg-charcoal/0 transition-colors duration-600" />
-      </div>
-    </button>
   );
 }
 
 function LoadingState() {
   return (
-    <div className="min-h-screen bg-cream flex items-center justify-center">
-      <div className="w-8 h-8 border border-stone-300 border-t-charcoal rounded-full animate-spin" />
+    <div className="flex min-h-screen items-center justify-center bg-[#f6f4ef]">
+      <div className="h-8 w-8 animate-spin rounded-full border border-black/18 border-t-black/70" />
     </div>
   );
 }
 
 function ErrorState({ onBack }: { onBack: () => void }) {
   return (
-    <div className="min-h-screen bg-cream flex items-center justify-center px-gutter">
-      <div className="text-center">
-        <h1 className="text-display-lg text-charcoal mb-4">Project not found</h1>
-        <p className="text-body-md text-stone-500 mb-8 font-light">
-          This project may have been removed or the link is incorrect.
+    <div className="flex min-h-screen items-center justify-center bg-[#f6f4ef] px-5 md:px-8 lg:px-10">
+      <div className="max-w-[520px] text-left">
+        <div className="mb-4 text-[11px] uppercase tracking-[0.16em] text-[#111111]/50">
+          Error
+        </div>
+        <h1
+          className="text-[clamp(36px,6vw,84px)] font-semibold leading-[0.92] tracking-[-0.07em]"
+          style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
+        >
+          Project not found.
+        </h1>
+        <p className="mt-5 max-w-[32ch] text-[14px] leading-6 text-[#111111]/66">
+          This project may have been removed, renamed, or the link is no longer valid.
         </p>
-        <button onClick={onBack} className="btn-outline">
-          <ArrowLeft className="w-4 h-4" />
+        <button
+          onClick={onBack}
+          className="mt-8 inline-flex items-center gap-2 text-[13px] underline underline-offset-[0.18em] transition-opacity duration-300 hover:opacity-60"
+        >
+          <ArrowLeft className="h-4 w-4" />
           Back to work
         </button>
       </div>
@@ -455,7 +535,8 @@ function getCategoryLabel(category: string): string {
     branding: "Brand Identity",
     motion: "Motion Design",
     photography: "Photography",
-    uiux: "UI/UX Design",
+    uiux: "Digital Design",
   };
+
   return map[category] || category;
 }
