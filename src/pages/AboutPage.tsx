@@ -1,187 +1,203 @@
 import { useRef } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { ArrowRight } from "lucide-react";
-import { easing, duration, staggerContainer, staggerItem } from "../lib/motion";
+import { motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 
 interface AboutPageProps {
   onContact: () => void;
   onWork: () => void;
 }
 
+const ease = [0.22, 1, 0.36, 1] as const;
+
 export default function AboutPage({ onContact, onWork }: AboutPageProps) {
   return (
-    <article className="bg-cream text-charcoal">
-      <OpeningSection />
-      <PortraitSection />
-      <StatementSection />
-      <ValuesSection />
-      <PerspectiveSection onWork={onWork} />
+    <article className="bg-[#f6f4ef] text-[#111111]">
+      <IntroSection />
+      <ImageStorySection />
+      <ExperienceSection />
+      <MethodSection onWork={onWork} />
       <ClosingSection onContact={onContact} onWork={onWork} />
     </article>
   );
 }
 
-function OpeningSection() {
+function IntroSection() {
   return (
-    <section className="pt-44 md:pt-56 lg:pt-64 pb-section px-gutter">
-      <div className="max-w-7xl mx-auto">
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.25, ease: easing.expoOut }}
-          className="label-caption mb-10 md:mb-14"
-        >
-          About
-        </motion.p>
+    <section className="px-5 pb-14 pt-32 md:px-8 md:pb-18 md:pt-40 lg:px-10 lg:pb-20 lg:pt-44">
+      <div className="mx-auto max-w-[1600px]">
+        <div className="grid grid-cols-12 gap-y-10 md:gap-x-8">
+          <div className="col-span-12">
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.85, ease }}
+            >
+              <div className="mb-5 text-[11px] uppercase tracking-[0.16em] text-[#111111]/62">
+                02/About
+              </div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 22 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.5, delay: 0.45, ease: easing.expoOut }}
-          className="text-hero leading-[0.98] max-w-5xl"
-        >
-          I’m Orange Beanie —
-          <br />
-          a multidisciplinary <span className="underline-weird">visual maker</span>.
-        </motion.h1>
-
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.15, delay: 0.85, ease: easing.expoOut }}
-          className="mt-14 md:mt-18 md:ml-[30%] max-w-lg"
-        >
-          <p className="text-body-xl text-stone-600 font-light leading-relaxed">
-            I design brands, build visuals, and shoot images — sometimes tidy,
-            sometimes weird. I’m into projects with taste, personality, and a bit of
-            risk (the good kind).
-          </p>
-
-          <div className="mt-8 flex flex-wrap gap-2">
-            {["Branding", "Digital", "Motion", "3D", "Photography", "Video"].map((t) => (
-              <span
-                key={t}
-                className="text-overline uppercase tracking-[0.14em] px-3 py-1 border border-charcoal/10 text-charcoal/70"
-                style={{ borderRadius: 10 }}
+              <h1
+                className="max-w-[9ch] text-[18vw] font-semibold leading-[0.84] tracking-[-0.08em] md:text-[108px] lg:text-[148px]"
+                style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
               >
-                {t}
-              </span>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-function PortraitSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "6%"]);
-
-  return (
-    <section ref={ref} className="px-gutter pb-section-lg">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-          <motion.div
-            initial={{ opacity: 0, y: 22 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: duration.slowest, ease: easing.expoOut }}
-            className="md:col-span-7 md:col-start-1 overflow-hidden"
-          >
-            <motion.div style={{ y }} className="will-change-transform">
-              <img
-                src="https://images.pexels.com/photos/2387793/pexels-photo-2387793.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                alt="Atmospheric landscape"
-                className="w-full aspect-[4/5] md:aspect-[3/4] object-cover"
-              />
+                Playful,
+                <br />
+                sharp,
+                <br />
+                human.
+              </h1>
             </motion.div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: duration.slower, delay: 0.25, ease: easing.expoOut }}
-            className="md:col-span-4 md:col-start-9 flex flex-col justify-end"
-          >
-            <p className="label-caption mb-6">Why “Orange Beanie”?</p>
+          <div className="col-span-12 md:col-span-5 lg:col-span-4">
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.82, delay: 0.08, ease }}
+              className="max-w-[34ch] text-[16px] leading-7 text-[#111111]/72"
+            >
+              I’m Claudia Brito, the person behind Orange Beanie — a Madeira-based
+              designer and photographer working across branding, digital design,
+              motion, image-making, and visual systems with personality.
+            </motion.p>
+          </div>
 
-            <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-              The name comes from one very specific moment: after 15 years of dreaming
-              about seeing McFly live, I finally did — and ended up playing drums with
-              them on stage. The bassist pointed at me and said: “the girl with the
-              orange beanie.”
-              <span className="block mt-6">
-                That’s the whole vibe: show up, stand out, and turn obsession into
-                something real.
-              </span>
-            </p>
-
-            <div className="mt-10 w-12 h-px bg-stone-300" />
-          </motion.div>
+          <div className="col-span-12 md:col-span-4 md:col-start-8 lg:col-span-3 lg:col-start-10">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.82, delay: 0.16, ease }}
+              className="flex flex-col gap-3 text-[11px] uppercase tracking-[0.16em] text-[#111111]/62"
+            >
+              <span>Branding</span>
+              <span>Digital</span>
+              <span>Photography</span>
+              <span>Motion</span>
+              <span>Visual direction</span>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function StatementSection() {
-  const ref = useRef(null);
+function ImageStorySection() {
+  const ref = useRef<HTMLElement | null>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const prefersReducedMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+
+  const imageY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["0%", prefersReducedMotion ? "0%" : "8%"]
+  );
+
+  return (
+    <section ref={ref} className="px-5 pb-16 md:px-8 md:pb-24 lg:px-10 lg:pb-28">
+      <div className="mx-auto max-w-[1600px]">
+        <div className="grid grid-cols-12 gap-y-10 md:gap-x-8">
+          <div className="col-span-12 md:col-span-7">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.82, ease }}
+              className="overflow-hidden"
+            >
+              <motion.div style={{ y: imageY }} className="will-change-transform">
+                <img
+                  src="/about/about.jpg"
+                  alt="Orange Beanie portrait"
+                  className="aspect-[4/5] w-full object-cover grayscale"
+                />
+              </motion.div>
+            </motion.div>
+          </div>
+
+          <div className="col-span-12 md:col-span-4 md:col-start-9">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.1, ease }}
+            >
+              <div className="mb-5 text-[11px] uppercase tracking-[0.16em] text-[#111111]/50">
+                Orange Beanie
+              </div>
+
+              <p className="text-[15px] leading-7 text-[#111111]/74">
+                The name comes from one very specific memory: after years of wanting
+                to see McFly live, I finally did — and ended up on stage playing
+                drums with them. The bassist pointed at me and said,
+                <span className="italic"> “the girl with the orange beanie.”</span>
+              </p>
+
+              <p className="mt-6 text-[15px] leading-7 text-[#111111]/74">
+                It stuck because it felt right. A bit odd, easy to remember,
+                personal, and full of energy.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ExperienceSection() {
+  const ref = useRef<HTMLElement | null>(null);
   const isInView = useInView(ref, { once: true, margin: "-120px" });
 
   return (
-    <section ref={ref} className="py-section-lg px-gutter">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
-          <div className="md:col-span-3">
-            <motion.p
+    <section ref={ref} className="px-5 pb-16 md:px-8 md:pb-24 lg:px-10 lg:pb-28">
+      <div className="mx-auto max-w-[1600px]">
+        <div className="grid grid-cols-12 gap-y-10 md:gap-x-8">
+          <div className="col-span-12 md:col-span-2">
+            <motion.div
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
-              transition={{ duration: duration.slow, ease: easing.expoOut }}
-              className="label-caption"
+              transition={{ duration: 0.6, ease }}
+              className="text-[11px] uppercase tracking-[0.16em] text-[#111111]/50"
             >
-              The journey
+              Background
+            </motion.div>
+          </div>
+
+          <div className="col-span-12 md:col-span-7 lg:col-span-6">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.82, ease }}
+              className="text-[clamp(24px,2.8vw,40px)] leading-[1.45] tracking-[-0.025em] text-[#111111]/82"
+            >
+              I started in multimedia, then moved deeper into branding, motion,
+              digital design, and visual communication. Over time I worked through
+              internships, freelance collaborations, agency projects, and studio work
+              — building a practice that moves between systems and instinct.
             </motion.p>
           </div>
 
-          <div className="md:col-span-7">
-            <motion.p
-              initial={{ opacity: 0, y: 18 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: duration.slowest, ease: easing.expoOut }}
-              className="text-display-xl leading-[1.18] mb-10"
-            >
-              Design is how I translate ideas into things people actually feel.
-            </motion.p>
-
+          <div className="col-span-12 md:col-span-3 lg:col-span-3 lg:col-start-10">
             <motion.div
-              initial={{ opacity: 0, y: 14 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: duration.slower, delay: 0.15, ease: easing.expoOut }}
-              className="space-y-8 max-w-xl"
+              transition={{ duration: 0.8, delay: 0.08, ease }}
+              className="space-y-5 text-[14px] leading-6 text-[#111111]/66"
             >
-              <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                I started in Multimedia, playing with image, video, and visual
-                communication. Later I studied Audiovisual &amp; Multimedia and got
-                deeper into motion, branding, and digital design.
+              <p>
+                I’ve worked with brands, campaigns, print, motion, web, and image-led
+                systems — always trying to make the work feel clear and alive at the
+                same time.
               </p>
-
-              <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                I did internships in 3D and graphic design, then freelanced with Dope
-                Digital Agency, and joined A Cor Laranja — growing from intern to
-                full-time designer working across branding, print, and visual systems.
+              <p>
+                Today I’m especially interested in long-term collaborations and
+                projects with a bit of edge, warmth, or cultural texture.
               </p>
-
-              <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                Today I work mostly with brands (because that’s where I’ve got the
-                reps), but I’m actively building space for more experimental,
-                alternative collaborations too.
-              </p>
-
-              <p className="text-body-md text-stone-500 font-light leading-relaxed">
-                Madeira-based, working worldwide.
-              </p>
+              <p>Madeira-based, working worldwide.</p>
             </motion.div>
           </div>
         </div>
@@ -190,164 +206,142 @@ function StatementSection() {
   );
 }
 
-function ValuesSection() {
-  const ref = useRef(null);
+function MethodSection({ onWork }: { onWork: () => void }) {
+  const ref = useRef<HTMLElement | null>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const values = [
-    { heading: "Clarity", text: "Make it understandable. Make it feel right. (Then make it look great.)" },
-    { heading: "Craft", text: "Typography, pacing, composition — the tiny choices are the whole thing." },
-    { heading: "Motion", text: "Movement isn’t decoration. It’s timing, tension and meaning over time." },
+    {
+      title: "Clarity",
+      text: "Make the idea understandable without flattening its personality.",
+    },
+    {
+      title: "Tension",
+      text: "The interesting part usually lives between polished and a little strange.",
+    },
+    {
+      title: "Craft",
+      text: "Typography, image rhythm, motion, spacing — the details are the work.",
+    },
   ];
 
   return (
-    <section ref={ref} className="py-section-lg px-gutter">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 mb-24 md:mb-32">
-          <div className="md:col-span-3">
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ duration: duration.slow, ease: easing.expoOut }}
-              className="label-caption"
-            >
-              Values
-            </motion.p>
+    <section ref={ref} className="px-5 pb-16 md:px-8 md:pb-24 lg:px-10 lg:pb-28">
+      <div className="mx-auto max-w-[1600px]">
+        <div className="mb-12 grid grid-cols-12 gap-y-8 md:gap-x-8">
+          <div className="col-span-12 md:col-span-2">
+            <div className="text-[11px] uppercase tracking-[0.16em] text-[#111111]/50">
+              Method
+            </div>
           </div>
 
-          <div className="md:col-span-7">
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
+          <div className="col-span-12 md:col-span-7">
+            <motion.h2
+              initial={{ opacity: 0, y: 18 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: duration.slowest, ease: easing.expoOut }}
-              className="text-display-2xl leading-[1.12]"
+              transition={{ duration: 0.8, ease }}
+              className="max-w-[12ch] text-[clamp(36px,6vw,90px)] font-semibold leading-[0.92] tracking-[-0.06em]"
+              style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
             >
-              A few rules I break
-              <br />
-              (and the ones I don’t).
-            </motion.p>
+              A few things I keep coming back to.
+            </motion.h2>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-14">
+        <div className="grid grid-cols-1 gap-0 border-t border-black/12 md:grid-cols-3">
           {values.map((value, index) => (
             <motion.div
-              key={value.heading}
-              initial={{ opacity: 0, y: 16 }}
+              key={value.title}
+              initial={{ opacity: 0, y: 18 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: duration.slower, delay: 0.15 + index * 0.1, ease: easing.expoOut }}
+              transition={{ duration: 0.75, delay: 0.06 + index * 0.06, ease }}
+              className="border-b border-black/12 py-7 md:border-b-0 md:border-r md:px-6 md:py-8 last:md:border-r-0"
             >
-              <div className="w-8 h-[1px] bg-stone-300 mb-8" />
-              <h3 className="text-display-md mb-5">{value.heading}</h3>
-              <p className="text-body-md text-stone-500 font-light leading-relaxed">{value.text}</p>
+              <div className="mb-4 text-[11px] uppercase tracking-[0.16em] text-[#111111]/46">
+                0{index + 1}
+              </div>
+              <h3 className="text-[28px] leading-[1] tracking-[-0.04em] text-[#111111]">
+                {value.title}
+              </h3>
+              <p className="mt-4 max-w-[28ch] text-[14px] leading-6 text-[#111111]/66">
+                {value.text}
+              </p>
             </motion.div>
           ))}
         </div>
+
+        <motion.button
+          initial={{ opacity: 0, y: 14 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.76, delay: 0.16, ease }}
+          onClick={onWork}
+          className="mt-8 inline-flex items-center gap-2 text-[13px] underline underline-offset-[0.18em] transition-opacity duration-300 hover:opacity-60"
+        >
+          See selected work
+          <ArrowUpRight className="h-3.5 w-3.5" />
+        </motion.button>
       </div>
     </section>
   );
 }
 
-function PerspectiveSection({ onWork }: { onWork: () => void }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
+function ClosingSection({
+  onContact,
+  onWork,
+}: {
+  onContact: () => void;
+  onWork: () => void;
+}) {
+  const ref = useRef<HTMLElement | null>(null);
+  const isInView = useInView(ref, { once: true, margin: "-120px" });
 
   return (
-    <section ref={ref} className="py-section-lg px-gutter">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: duration.slower, delay: 0.12, ease: easing.expoOut }}
-            className="md:col-span-5 md:col-start-1 order-2 md:order-1"
-          >
-            <p className="label-caption mb-10">How I work</p>
-
-            <div className="space-y-8">
-              <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                I start with a conversation — not assumptions. I want to know the goal,
-                the audience, the constraints, and what the project should feel like
-                when people meet it.
-              </p>
-
-              <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                Then I build a visual language that can live across formats: identity,
-                web, motion, and image. When it helps, I use code to bridge design and
-                implementation so details translate cleanly.
-              </p>
-
-              <p className="text-body-lg text-stone-600 font-light leading-relaxed">
-                I’m best in long-term collaborations — shared taste + trust + time.
-                That’s where the good stuff happens.
-              </p>
+    <section
+      ref={ref}
+      className="border-t border-black/12 px-5 py-16 md:px-8 md:py-24 lg:px-10 lg:py-28"
+    >
+      <div className="mx-auto max-w-[1600px]">
+        <motion.div
+          initial={{ opacity: 0, y: 22 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease }}
+          className="grid grid-cols-12 gap-y-8 md:gap-x-8"
+        >
+          <div className="col-span-12 md:col-span-8">
+            <div className="mb-5 text-[11px] uppercase tracking-[0.16em] text-[#111111]/50">
+              Next
             </div>
 
-            <div className="mt-10">
+            <h2
+              className="max-w-[10ch] text-[clamp(38px,7vw,110px)] font-semibold leading-[0.9] tracking-[-0.07em]"
+              style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
+            >
+              Want to make
+              <br />
+              something fun?
+            </h2>
+          </div>
+
+          <div className="col-span-12 md:col-span-4 md:pt-2">
+            <p className="max-w-[28ch] text-[14px] leading-6 text-[#111111]/68">
+              If you’ve got a project, brand, campaign, or visual idea that needs
+              shape and character, let’s talk.
+            </p>
+
+            <div className="mt-8 flex flex-col gap-4 text-[11px] uppercase tracking-[0.16em] text-[#111111]/62">
+              <button
+                onClick={onContact}
+                className="text-left transition-opacity duration-300 hover:opacity-60"
+              >
+                Contact
+              </button>
               <button
                 onClick={onWork}
-                className="text-body-sm text-stone-500 hover:text-charcoal transition-colors duration-500 underline-weird"
+                className="text-left transition-opacity duration-300 hover:opacity-60"
               >
-                See projects
+                Work
               </button>
             </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 22 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: duration.slowest, ease: easing.expoOut }}
-            className="md:col-span-5 md:col-start-8 order-1 md:order-2 overflow-hidden"
-          >
-            <motion.div style={{ y: imgY }} className="will-change-transform">
-              <img
-                src="/about/about.jpg"
-                alt="Studio detail"
-                className="w-full aspect-[3/4] object-cover"
-              />
-            </motion.div>
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ClosingSection({ onContact, onWork }: { onContact: () => void; onWork: () => void }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  return (
-    <section ref={ref} className="py-section-lg px-gutter border-t border-stone-200/60">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: duration.slowest, ease: easing.expoOut }}
-          className="md:ml-[16%] max-w-2xl"
-        >
-          <div className="w-10 h-[1px] bg-stone-300 mb-16" />
-
-          <h2 className="text-display-2xl leading-[1.12] mb-8">
-            Want to build something
-            <br />
-            clean, bold, and a bit unexpected?
-          </h2>
-
-          <p className="text-body-lg text-stone-500 font-light leading-relaxed mb-14 max-w-md">
-            If you’ve got a brand, a project, or an idea that needs a visual world — I’m in.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-5">
-            <button onClick={onContact} className="btn-primary">
-              Say hello
-              <ArrowRight className="w-4 h-4" />
-            </button>
-            <button onClick={onWork} className="btn-outline">
-              View work
-            </button>
           </div>
         </motion.div>
       </div>
