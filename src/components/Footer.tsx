@@ -14,9 +14,7 @@ const socialLinks = [
 
 const navLinks: { label: string; page: PageType; index: string }[] = [
   { label: "Hey", page: "home", index: "01" },
-  { label: "About", page: "about", index: "02" },
-  { label: "Work", page: "work", index: "03" },
-  { label: "Contact", page: "contact", index: "04" },
+  { label: "Work", page: "work", index: "02" },
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -37,7 +35,7 @@ export default function Footer({ onNavigate }: FooterProps) {
           <div className="grid grid-cols-1 gap-16 lg:grid-cols-[1.4fr_0.8fr] lg:gap-10">
             <div>
               <div className="mb-6 text-[11px] uppercase tracking-[0.16em] text-[#7b7b74]">
-                04/Contact
+                Contact
               </div>
 
               <h2
