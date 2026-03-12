@@ -1,36 +1,29 @@
 import { useEffect, useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Logo } from "./ui";
+import { AnimatePresence, motion } from "framer-motion";
 import type { PageType } from "../App";
-import { easing } from "../lib/motion";
+import { Logo } from "./ui";
 
 interface HeaderProps {
   currentPage: PageType;
   onNavigate: (page: PageType) => void;
 }
 
-const navItems: { label: string; page: PageType }[] = [
-  { label: "Work", page: "work" },
-  { label: "About", page: "about" },
-  { label: "Contact", page: "contact" },
+const navItems: { label: string; page: PageType; index: string }[] = [
+  { label: "Hey", page: "home", index: "01" },
+  { label: "About", page: "about", index: "02" },
+  { label: "Work", page: "work", index: "03" },
+  { label: "Contact", page: "contact", index: "04" },
 ];
+
+const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Header({ currentPage, onNavigate }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const mobileItems = useMemo(
-    () =>
-      [
-        { label: "Home", page: "home" as PageType },
-        ...navItems,
-        { label: "Visual", page: "visual" as PageType },
-      ].map((it, i) => ({ ...it, idx: String(i + 1).padStart(2, "0") })),
-    []
-  );
-
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -42,157 +35,140 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
     };
   }, [menuOpen]);
 
+  const mobileItems = useMemo(
+    () => [
+      ...navItems,
+      { label: "Visual", page: "visual" as PageType, index: "05" },
+    ],
+    []
+  );
+
   const handleNavigate = (page: PageType) => {
     onNavigate(page);
     setMenuOpen(false);
   };
 
-  const navBase = scrolled ? "text-stone-500 hover:text-charcoal" : "text-cream/75 hover:text-cream";
-  const navActive = scrolled ? "text-charcoal" : "text-cream";
-
   return (
     <>
       <header
         className={[
-          "fixed top-0 inset-x-0 z-50",
-          "transition-all duration-700 ease-expo-out",
+          "fixed inset-x-0 top-0 z-50 transition-all duration-500",
           scrolled
-            ? "bg-cream/92 backdrop-blur-md border-b border-stone-200/50"
+            ? "bg-[#f6f4ef]/85 backdrop-blur-xl"
             : "bg-transparent",
         ].join(" ")}
       >
-        {/* quando não está scrolled, mete um mini gradiente para legibilidade */}
-        {!scrolled && (
-          <div
-            className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-charcoal/45 via-charcoal/15 to-transparent"
-            aria-hidden="true"
-          />
-        )}
-
-        <div className="relative flex items-center justify-between px-gutter py-6 md:py-8">
-          <div className={scrolled ? "text-charcoal" : "text-cream"}>
+        <div className="px-5 md:px-8 lg:px-10">
+          <div className="flex items-center justify-between py-5 md:py-6">
             <div className="flex items-center gap-4">
-              <Logo onClick={() => handleNavigate("home")} />
-              <span
-                className={[
-                  "hidden md:inline-block h-2 w-2 rounded-full",
-                  scrolled ? "bg-charcoal/30" : "bg-cream/55",
-                ].join(" ")}
-                aria-hidden="true"
-              />
+              <div className={scrolled ? "text-[#111111]" : "text-[#111111]"}>
+                <Logo onClick={() => handleNavigate("home")} />
+              </div>
             </div>
+
+            <nav className="hidden md:flex items-center gap-7 lg:gap-10">
+              {navItems.map((item) => {
+                const active = currentPage === item.page;
+                return (
+                  <button
+                    key={item.page}
+                    onClick={() => handleNavigate(item.page)}
+                    className="group flex items-center gap-2 uppercase tracking-[0.16em] text-[11px] lg:text-[12px] text-[#111111] transition-opacity duration-300 hover:opacity-100"
+                    style={{ opacity: active ? 1 : 0.68 }}
+                  >
+                    <span className="text-[#7b7b74]">{item.index}/</span>
+                    <span>{item.label}</span>
+                  </button>
+                );
+              })}
+            </nav>
+
+            <button
+              onClick={() => setMenuOpen(true)}
+              className="md:hidden uppercase tracking-[0.16em] text-[11px] text-[#111111]"
+              aria-label="Open menu"
+              aria-expanded={menuOpen}
+              aria-haspopup="dialog"
+            >
+              Menu
+            </button>
           </div>
-
-          <nav className="hidden md:flex items-center gap-10">
-            {navItems.map((item) => {
-              const active = currentPage === item.page;
-              return (
-                <button
-                  key={item.page}
-                  onClick={() => handleNavigate(item.page)}
-                  className={[
-                    "text-body-sm uppercase tracking-[0.14em]",
-                    "transition-colors duration-300",
-                    active ? navActive : navBase,
-                  ].join(" ")}
-                >
-                  <span className={active ? "underline-weird" : ""}>{item.label}</span>
-                </button>
-              );
-            })}
-          </nav>
-
-          <button
-            onClick={() => setMenuOpen(true)}
-            className={[
-              "md:hidden text-caption uppercase tracking-[0.18em] transition-colors duration-300",
-              scrolled ? "text-charcoal hover:text-stone-600" : "text-cream/85 hover:text-cream",
-            ].join(" ")}
-            aria-haspopup="dialog"
-            aria-expanded={menuOpen}
-            aria-label="Open menu"
-          >
-            Menu
-          </button>
         </div>
       </header>
 
       <AnimatePresence>
         {menuOpen && (
           <motion.div
+            className="fixed inset-0 z-[100] bg-[#f6f4ef]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.45, ease: easing.expoOut }}
-            className="fixed inset-0 z-[100] bg-cream"
+            transition={{ duration: 0.35, ease }}
             role="dialog"
             aria-modal="true"
-            aria-label="Site menu"
+            aria-label="Site navigation"
           >
-            <div className="flex flex-col h-full">
-              <div className="flex items-center justify-between px-gutter py-6">
+            <div className="flex h-full flex-col px-5 md:px-8">
+              <div className="flex items-center justify-between py-5">
                 <Logo onClick={() => handleNavigate("home")} />
                 <button
                   onClick={() => setMenuOpen(false)}
-                  className="text-caption uppercase tracking-[0.18em] text-charcoal hover:text-stone-500 transition-colors duration-300"
+                  className="uppercase tracking-[0.16em] text-[11px] text-[#111111]"
                   aria-label="Close menu"
                 >
                   Close
                 </button>
               </div>
 
-              <div className="px-gutter">
-                <div className="h-px w-full bg-charcoal/10" />
-                <div className="mt-4 text-overline uppercase tracking-[0.16em] text-stone-500">
-                  Navigation
-                </div>
-              </div>
+              <div className="h-px w-full bg-black/10" />
 
-              <nav className="flex-1 flex flex-col justify-center px-gutter">
+              <nav className="flex flex-1 flex-col justify-center py-10">
                 {mobileItems.map((item, index) => {
                   const active = currentPage === item.page;
+
                   return (
                     <motion.button
                       key={item.page}
-                      initial={{ opacity: 0, y: 14 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{
-                        duration: 0.7,
-                        delay: 0.08 + index * 0.06,
-                        ease: easing.expoOut,
-                      }}
                       onClick={() => handleNavigate(item.page)}
-                      className="group flex items-baseline justify-between py-5 text-left"
+                      initial={{ opacity: 0, y: 18 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{
+                        duration: 0.55,
+                        delay: 0.05 + index * 0.05,
+                        ease,
+                      }}
+                      className="group flex items-end justify-between border-b border-black/10 py-5 text-left"
                     >
-                      <div className="flex items-baseline gap-4">
-                        <span className="text-overline text-stone-400">{item.idx}</span>
+                      <div className="flex items-start gap-3">
+                        <span className="pt-3 text-[11px] uppercase tracking-[0.16em] text-[#7b7b74]">
+                          {item.index}/
+                        </span>
+
                         <span
                           className={[
-                            "text-display-xl transition-colors duration-300",
-                            active ? "text-charcoal underline-weird" : "text-charcoal/85 group-hover:text-charcoal",
+                            "text-[16vw] leading-[0.88] tracking-[-0.06em] font-semibold",
+                            "md:text-[96px] lg:text-[120px]",
+                            active ? "text-[#111111]" : "text-[#111111]/88",
                           ].join(" ")}
+                          style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
                         >
                           {item.label}
                         </span>
                       </div>
 
-                      <span
-                        className={[
-                          "text-overline uppercase tracking-[0.16em] transition-opacity duration-300",
-                          active ? "opacity-100 text-charcoal" : "opacity-0 group-hover:opacity-70 text-stone-500",
-                        ].join(" ")}
-                      >
-                        open
+                      <span className="mb-3 hidden uppercase tracking-[0.16em] text-[11px] text-[#7b7b74] md:block">
+                        Open
                       </span>
                     </motion.button>
                   );
                 })}
               </nav>
 
-              <div className="px-gutter py-10 border-t border-stone-200/60">
+              <div className="border-t border-black/10 py-6">
                 <a
                   href="mailto:orangebeaniedesign@gmail.com"
-                  className="text-body-sm text-stone-500 hover:text-charcoal transition-colors duration-300 underline-weird"
+                  className="text-[13px] text-[#111111]/70 transition-opacity duration-300 hover:opacity-100"
                 >
                   orangebeaniedesign@gmail.com
                 </a>
