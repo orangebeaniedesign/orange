@@ -21,8 +21,7 @@ export default function HomePage({
   onProjectClick,
 }: HomePageProps) {
   return (
-    <article className="relative overflow-hidden bg-[#f6f4ef] text-[#111111]">
-      <FloatingSmiles />
+    <article className="relative overflow-hidden bg-white text-[#111111]">
       <HeroSection onViewWork={onViewWork} />
       <AboutSection />
       <WorkSection onProjectClick={onProjectClick} onViewWork={onViewWork} />
@@ -46,81 +45,50 @@ function HeroSection({
   const heroY = useTransform(
     scrollYProgress,
     [0, 1],
-    ["0%", prefersReducedMotion ? "0%" : "18%"]
+    ["0%", prefersReducedMotion ? "0%" : "12%"]
   );
 
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.72]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 0.7]);
 
   return (
     <section
       ref={ref}
-      className="relative min-h-[100svh] px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-36 lg:px-10"
+      className="relative min-h-[100svh] bg-[#e9e5de] px-5 pt-32 pb-16 md:px-8 md:pt-40 md:pb-24 lg:px-10 overflow-hidden"
     >
       <motion.div
         style={{ y: heroY, opacity: heroOpacity }}
-        className="relative z-10 mx-auto max-w-[1600px]"
+        className="relative z-10 mx-auto max-w-[1600px] h-full flex flex-col justify-between"
       >
-        <div className="grid grid-cols-12 gap-y-10 md:gap-x-8">
-          <div className="col-span-12">
+        <div className="grid grid-cols-12 gap-8">
+          <div className="col-span-12 lg:col-span-8">
+            <div className="mb-24 md:mb-32 lg:mb-40 h-64 md:h-80 lg:h-96 bg-black/5 rounded-lg"></div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-12 gap-8">
+          <div className="col-span-12 md:col-span-7">
             <motion.h1
-              initial={{ opacity: 0, y: 22 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease }}
-              className="max-w-[8ch] text-[18vw] font-semibold leading-[0.84] tracking-[-0.08em] md:text-[118px] lg:text-[160px] xl:text-[178px]"
-              style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+              className="text-[clamp(80px,12vw,240px)] font-black leading-[0.9] tracking-[-0.04em] text-black"
+              style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}
             >
               Orange
               <br />
-              <span className="italic font-semibold">Beanie</span>
+              Beanie
             </motion.h1>
           </div>
-
-          <div className="col-span-12 mt-2 grid grid-cols-12 gap-y-8 md:mt-8 md:gap-x-8">
-            <div className="col-span-12 md:col-span-5 lg:col-span-4">
-              <motion.p
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.18, ease }}
-                className="max-w-[12ch] text-[clamp(28px,5vw,56px)] font-semibold leading-[0.96] tracking-[-0.05em]"
-              >
-                Design
-                <br />
-                Photography
-                <br />
-                Motion
-              </motion.p>
-            </div>
-
-            <div className="col-span-12 md:col-span-4 lg:col-span-3">
-              <motion.p
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.85, delay: 0.32, ease }}
-                className="max-w-[28ch] text-[14px] leading-6 text-[#111111]/72"
-              >
-                Orange Beanie is the creative work of Claudia Brito — a
-                Madeira-based designer and photographer building visual systems,
-                brand worlds, and digital experiences with personality.
-              </motion.p>
-            </div>
-
-            <div className="col-span-12 md:col-span-3 lg:col-span-3 lg:col-start-10">
-              <motion.div
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.85, delay: 0.42, ease }}
-              >
-                <button
-                  onClick={onViewWork}
-                  className="inline-flex items-center gap-2 text-[13px] underline underline-offset-[0.18em] transition-opacity duration-300 hover:opacity-60"
-                >
-                  View work
-                  <ArrowUpRight className="h-3.5 w-3.5" />
-                </button>
-              </motion.div>
-            </div>
-          </div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="absolute bottom-6 right-6 md:bottom-8 md:right-8 lg:bottom-10 lg:right-10 text-[11px] font-light tracking-widest text-black/60"
+        >
+          ©2026
+        </motion.div>
       </motion.div>
     </section>
   );
