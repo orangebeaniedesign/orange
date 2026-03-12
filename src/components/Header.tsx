@@ -9,10 +9,10 @@ interface HeaderProps {
 }
 
 const navItems = [
-  { label: "Hey", section: "hey", index: "01" },
-  { label: "About", section: "about", index: "02" },
-  { label: "Work", page: "work" as PageType, index: "03" },
-  { label: "Contact", section: "contact", index: "04" },
+  { label: "HEY", section: "hey", index: "01" },
+  { label: "ABOUT", section: "about", index: "02" },
+  { label: "WORK", page: "work" as PageType, index: "03" },
+  { label: "CONTACT", section: "footer-contact", index: "04" },
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -22,7 +22,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -48,7 +48,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
     if (currentPage !== "home") {
       onNavigate("home");
       requestAnimationFrame(() => {
-        setTimeout(() => scrollToSection(section), 80);
+        setTimeout(() => scrollToSection(section), 120);
       });
     } else {
       scrollToSection(section);
@@ -66,17 +66,18 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
       <header
         className={[
           "fixed inset-x-0 top-0 z-50 transition-all duration-500",
-          scrolled ? "bg-[#f6f4ef]/85 backdrop-blur-xl" : "bg-transparent",
+          scrolled ? "bg-[#f6f4ef]/82 backdrop-blur-xl" : "bg-transparent",
         ].join(" ")}
       >
         <div className="px-5 md:px-8 lg:px-10">
           <div className="flex items-center justify-between py-5 md:py-6">
-            <Logo onClick={() => handlePageNav("home")} />
+            <Logo onClick={() => handlePageNav("home")} className="relative z-10" />
 
-            <nav className="hidden md:flex items-center gap-7 lg:gap-10">
+            <nav className="hidden md:flex items-center gap-6 lg:gap-8">
               {navItems.map((item) => {
-                const active =
-                  item.page ? currentPage === item.page : currentPage === "home";
+                const active = item.page
+                  ? currentPage === item.page
+                  : currentPage === "home";
 
                 return (
                   <button
@@ -86,10 +87,12 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
                         ? handlePageNav(item.page)
                         : handleSectionNav(item.section!)
                     }
-                    className="group flex items-center gap-2 uppercase tracking-[0.16em] text-[11px] lg:text-[12px] text-[#111111] transition-opacity duration-300 hover:opacity-100"
-                    style={{ opacity: active ? 1 : 0.68 }}
+                    className="group flex items-center gap-2 text-[11px] uppercase tracking-[0.16em] text-[#111111] transition-opacity duration-300 hover:opacity-100"
+                    style={{ opacity: active ? 1 : 0.56 }}
                   >
-                    <span className="text-[#7b7b74]">{item.index}/</span>
+                    <span className="rounded-sm border border-[#4a7fe0] px-1.5 py-[1px] text-[#111111]">
+                      {item.index}/
+                    </span>
                     <span>{item.label}</span>
                   </button>
                 );
@@ -98,7 +101,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
 
             <button
               onClick={() => setMenuOpen(true)}
-              className="md:hidden uppercase tracking-[0.16em] text-[11px] text-[#111111]"
+              className="md:hidden text-[11px] uppercase tracking-[0.16em] text-[#111111]"
               aria-label="Open menu"
               aria-expanded={menuOpen}
               aria-haspopup="dialog"
@@ -116,7 +119,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.35, ease }}
+            transition={{ duration: 0.3, ease }}
             role="dialog"
             aria-modal="true"
             aria-label="Site navigation"
@@ -126,7 +129,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
                 <Logo onClick={() => handlePageNav("home")} />
                 <button
                   onClick={() => setMenuOpen(false)}
-                  className="uppercase tracking-[0.16em] text-[11px] text-[#111111]"
+                  className="text-[11px] uppercase tracking-[0.16em] text-[#111111]"
                   aria-label="Close menu"
                 >
                   Close
@@ -148,28 +151,23 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     transition={{
-                      duration: 0.55,
-                      delay: 0.05 + index * 0.05,
+                      duration: 0.5,
+                      delay: 0.04 + index * 0.05,
                       ease,
                     }}
-                    className="group flex items-end justify-between border-b border-black/10 py-5 text-left"
+                    className="flex items-end justify-between border-b border-black/10 py-5 text-left"
                   >
                     <div className="flex items-start gap-3">
                       <span className="pt-3 text-[11px] uppercase tracking-[0.16em] text-[#7b7b74]">
                         {item.index}/
                       </span>
-
                       <span
-                        className="text-[16vw] leading-[0.88] tracking-[-0.06em] font-semibold md:text-[96px] lg:text-[120px] text-[#111111]"
+                        className="text-[15vw] font-semibold leading-[0.88] tracking-[-0.06em] text-[#111111] md:text-[96px]"
                         style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
                       >
                         {item.label}
                       </span>
                     </div>
-
-                    <span className="mb-3 hidden uppercase tracking-[0.16em] text-[11px] text-[#7b7b74] md:block">
-                      Open
-                    </span>
                   </motion.button>
                 ))}
               </nav>
