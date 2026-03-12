@@ -5,14 +5,14 @@ import { Logo } from "./ui";
 
 interface HeaderProps {
   currentPage: PageType;
-  onNavigate: (page: PageType) => void;
+  onNavigate: (page: PageType, projectId?: string) => void;
 }
 
-const navItems: { label: string; page: PageType; index: string }[] = [
-  { label: "Hey", page: "home", index: "01" },
-  { label: "About", page: "about", index: "02" },
-  { label: "Work", page: "work", index: "03" },
-  { label: "Contact", page: "contact", index: "04" },
+const navItems = [
+  { label: "Hey", section: "hey", index: "01" },
+  { label: "About", section: "about", index: "02" },
+  { label: "Work", page: "work" as PageType, index: "03" },
+  { label: "Contact", section: "contact", index: "04" },
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -35,15 +35,28 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
     };
   }, [menuOpen]);
 
-  const mobileItems = useMemo(
-    () => [
-      ...navItems,
-      { label: "Visual", page: "visual" as PageType, index: "05" },
-    ],
-    []
-  );
+  const mobileItems = useMemo(() => navItems, []);
 
-  const handleNavigate = (page: PageType) => {
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const handleSectionNav = (section: string) => {
+    if (currentPage !== "home") {
+      onNavigate("home");
+      requestAnimationFrame(() => {
+        setTimeout(() => scrollToSection(section), 80);
+      });
+    } else {
+      scrollToSection(section);
+    }
+    setMenuOpen(false);
+  };
+
+  const handlePageNav = (page: PageType) => {
     onNavigate(page);
     setMenuOpen(false);
   };
@@ -53,26 +66,26 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
       <header
         className={[
           "fixed inset-x-0 top-0 z-50 transition-all duration-500",
-          scrolled
-            ? "bg-[#f6f4ef]/85 backdrop-blur-xl"
-            : "bg-transparent",
+          scrolled ? "bg-[#f6f4ef]/85 backdrop-blur-xl" : "bg-transparent",
         ].join(" ")}
       >
         <div className="px-5 md:px-8 lg:px-10">
           <div className="flex items-center justify-between py-5 md:py-6">
-            <div className="flex items-center gap-4">
-              <div className={scrolled ? "text-[#111111]" : "text-[#111111]"}>
-                <Logo onClick={() => handleNavigate("home")} />
-              </div>
-            </div>
+            <Logo onClick={() => handlePageNav("home")} />
 
             <nav className="hidden md:flex items-center gap-7 lg:gap-10">
               {navItems.map((item) => {
-                const active = currentPage === item.page;
+                const active =
+                  item.page ? currentPage === item.page : currentPage === "home";
+
                 return (
                   <button
-                    key={item.page}
-                    onClick={() => handleNavigate(item.page)}
+                    key={item.label}
+                    onClick={() =>
+                      item.page
+                        ? handlePageNav(item.page)
+                        : handleSectionNav(item.section!)
+                    }
                     className="group flex items-center gap-2 uppercase tracking-[0.16em] text-[11px] lg:text-[12px] text-[#111111] transition-opacity duration-300 hover:opacity-100"
                     style={{ opacity: active ? 1 : 0.68 }}
                   >
@@ -110,7 +123,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
           >
             <div className="flex h-full flex-col px-5 md:px-8">
               <div className="flex items-center justify-between py-5">
-                <Logo onClick={() => handleNavigate("home")} />
+                <Logo onClick={() => handlePageNav("home")} />
                 <button
                   onClick={() => setMenuOpen(false)}
                   className="uppercase tracking-[0.16em] text-[11px] text-[#111111]"
@@ -123,46 +136,42 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
               <div className="h-px w-full bg-black/10" />
 
               <nav className="flex flex-1 flex-col justify-center py-10">
-                {mobileItems.map((item, index) => {
-                  const active = currentPage === item.page;
-
-                  return (
-                    <motion.button
-                      key={item.page}
-                      onClick={() => handleNavigate(item.page)}
-                      initial={{ opacity: 0, y: 18 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{
-                        duration: 0.55,
-                        delay: 0.05 + index * 0.05,
-                        ease,
-                      }}
-                      className="group flex items-end justify-between border-b border-black/10 py-5 text-left"
-                    >
-                      <div className="flex items-start gap-3">
-                        <span className="pt-3 text-[11px] uppercase tracking-[0.16em] text-[#7b7b74]">
-                          {item.index}/
-                        </span>
-
-                        <span
-                          className={[
-                            "text-[16vw] leading-[0.88] tracking-[-0.06em] font-semibold",
-                            "md:text-[96px] lg:text-[120px]",
-                            active ? "text-[#111111]" : "text-[#111111]/88",
-                          ].join(" ")}
-                          style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
-                        >
-                          {item.label}
-                        </span>
-                      </div>
-
-                      <span className="mb-3 hidden uppercase tracking-[0.16em] text-[11px] text-[#7b7b74] md:block">
-                        Open
+                {mobileItems.map((item, index) => (
+                  <motion.button
+                    key={item.label}
+                    onClick={() =>
+                      item.page
+                        ? handlePageNav(item.page)
+                        : handleSectionNav(item.section!)
+                    }
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{
+                      duration: 0.55,
+                      delay: 0.05 + index * 0.05,
+                      ease,
+                    }}
+                    className="group flex items-end justify-between border-b border-black/10 py-5 text-left"
+                  >
+                    <div className="flex items-start gap-3">
+                      <span className="pt-3 text-[11px] uppercase tracking-[0.16em] text-[#7b7b74]">
+                        {item.index}/
                       </span>
-                    </motion.button>
-                  );
-                })}
+
+                      <span
+                        className="text-[16vw] leading-[0.88] tracking-[-0.06em] font-semibold md:text-[96px] lg:text-[120px] text-[#111111]"
+                        style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
+                      >
+                        {item.label}
+                      </span>
+                    </div>
+
+                    <span className="mb-3 hidden uppercase tracking-[0.16em] text-[11px] text-[#7b7b74] md:block">
+                      Open
+                    </span>
+                  </motion.button>
+                ))}
               </nav>
 
               <div className="border-t border-black/10 py-6">
