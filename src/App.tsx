@@ -6,19 +6,13 @@ import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
 import WorkPage from "./pages/WorkPage";
 import ProjectPage from "./pages/ProjectPage";
-import AboutPage from "./pages/AboutPage";
-import ContactPage from "./pages/ContactPage";
-import VisualPage from "./pages/VisualPage";
 
-export type PageType = "home" | "work" | "project" | "about" | "contact" | "visual";
+export type PageType = "home" | "work" | "project";
 
 type Route =
   | { page: "home" }
   | { page: "work" }
-  | { page: "project"; projectId: string }
-  | { page: "about" }
-  | { page: "contact" }
-  | { page: "visual" };
+  | { page: "project"; projectId: string };
 
 export default function App() {
   const [route, setRoute] = useState<Route>({ page: "home" });
@@ -33,10 +27,11 @@ export default function App() {
 
     if (page === "project") {
       if (!projectId) return;
-      setRoute({ page, projectId });
+      setRoute({ page: "project", projectId });
       return;
     }
-    setRoute({ page } as Route);
+
+    setRoute({ page });
   }, []);
 
   function renderPage() {
@@ -45,9 +40,6 @@ export default function App() {
         return (
           <HomePage
             onViewWork={() => navigate("work")}
-            onViewAbout={() => navigate("about")}
-            onViewContact={() => navigate("contact")}
-            onViewVisual={() => navigate("visual")}
             onProjectClick={(id) => navigate("project", id)}
           />
         );
@@ -56,7 +48,7 @@ export default function App() {
         return (
           <WorkPage
             onProjectClick={(id) => navigate("project", id)}
-            onContact={() => navigate("contact")}
+            onContact={() => navigate("home")}
           />
         );
 
@@ -66,26 +58,7 @@ export default function App() {
             projectId={route.projectId}
             onBack={() => navigate("work")}
             onProjectClick={(id) => navigate("project", id)}
-            onContact={() => navigate("contact")}
-          />
-        );
-
-      case "about":
-        return (
-          <AboutPage
-            onContact={() => navigate("contact")}
-            onWork={() => navigate("work")}
-          />
-        );
-
-      case "contact":
-        return <ContactPage />;
-
-      case "visual":
-        return (
-          <VisualPage
-            onProjectClick={(id) => navigate("project", id)}
-            onContact={() => navigate("contact")}
+            onContact={() => navigate("home")}
           />
         );
 
