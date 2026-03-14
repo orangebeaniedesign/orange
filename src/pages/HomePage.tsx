@@ -6,7 +6,6 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
 import { useProjects } from "../hooks/usePortfolioData";
 
 interface HomePageProps {
@@ -21,19 +20,16 @@ export default function HomePage({
   onProjectClick,
 }: HomePageProps) {
   return (
-    <article className="relative overflow-hidden bg-white text-[#111111]">
-      <HeroSection onViewWork={onViewWork} />
+    <article className="relative overflow-hidden bg-[#E8DCC5] text-[#1847B7]">
+      <HeroSection />
       <AboutSection />
-      <WorkSection onProjectClick={onProjectClick} onViewWork={onViewWork} />
+      <SelectedWorkSection onProjectClick={onProjectClick} onViewWork={onViewWork} />
+      <ContactSection />
     </article>
   );
 }
 
-function HeroSection({
-  onViewWork,
-}: {
-  onViewWork: () => void;
-}) {
+function HeroSection() {
   const ref = useRef<HTMLElement | null>(null);
   const prefersReducedMotion = useReducedMotion();
 
@@ -53,31 +49,46 @@ function HeroSection({
   return (
     <section
       ref={ref}
-      className="relative min-h-[100svh] bg-[#e9e5de] px-5 pt-32 pb-16 md:px-8 md:pt-40 md:pb-24 lg:px-10 overflow-hidden"
+      className="relative min-h-[100svh] px-5 pt-32 pb-16 md:px-8 md:pt-40 md:pb-24 lg:px-10"
     >
       <motion.div
         style={{ y: heroY, opacity: heroOpacity }}
-        className="relative z-10 mx-auto max-w-[1600px] h-full flex flex-col justify-between"
+        className="relative z-10 mx-auto max-w-[1600px]"
       >
-        <div className="grid grid-cols-12 gap-8">
-          <div className="col-span-12 lg:col-span-8">
-            <div className="mb-24 md:mb-32 lg:mb-40 h-64 md:h-80 lg:h-96 bg-black/5 rounded-lg"></div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-12 gap-8">
-          <div className="col-span-12 md:col-span-7">
+        <div className="grid grid-cols-12 gap-8 items-start pt-8">
+          <div className="col-span-12 md:col-span-6">
             <motion.h1
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[clamp(80px,12vw,240px)] font-black leading-[0.9] tracking-[-0.04em] text-black"
-              style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}
+              transition={{ duration: 1, ease }}
+              className="text-[80px] md:text-[120px] lg:text-[160px] font-black leading-[0.9] tracking-[-0.02em]"
+              style={{ fontFamily: "Space Grotesk, Inter, sans-serif" }}
             >
-              Orange
+              <span
+                className="block"
+                style={{
+                  WebkitTextStroke: "2.5px #1847B7",
+                  color: "transparent",
+                }}>
+                ORANGE
+              </span>
               <br />
-              Beanie
+              <span className="text-[#1847B7]">BEANIE</span>
+              <span className="text-lg md:text-2xl ml-1 text-[#1847B7]">®</span>
             </motion.h1>
+          </div>
+
+          <div className="col-span-12 md:col-span-6 flex items-center justify-center pt-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 1.2, delay: 0.2, ease }}
+              className="w-full h-64 md:h-80 lg:h-96 bg-gradient-to-br from-[#FF6A00]/15 to-[#FF6A00]/5 rounded-xl flex items-center justify-center"
+            >
+              <div className="text-center text-[#1847B7]/30 text-sm font-medium">
+                Beanie Visual
+              </div>
+            </motion.div>
           </div>
         </div>
 
@@ -85,9 +96,9 @@ function HeroSection({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="absolute bottom-6 right-6 md:bottom-8 md:right-8 lg:bottom-10 lg:right-10 text-[11px] font-light tracking-widest text-black/60"
+          className="absolute bottom-6 right-6 md:bottom-8 md:right-8 lg:bottom-10 lg:right-10 text-sm md:text-base font-semibold text-[#1847B7]"
         >
-          ©2026
+          ®2026
         </motion.div>
       </motion.div>
     </section>
@@ -99,58 +110,60 @@ function AboutSection() {
   const isInView = useInView(ref, { once: true, margin: "-120px" });
 
   return (
-    <section
-      ref={ref}
-      className="relative px-5 py-10 md:px-8 md:py-16 lg:px-10"
-    >
+    <section ref={ref} id="about" className="relative px-5 py-20 md:px-8 md:py-32 lg:px-10 bg-[#E8DCC5]">
       <div className="mx-auto max-w-[1600px]">
-        <div className="grid grid-cols-12 gap-y-10 md:gap-x-8">
+        <div className="grid grid-cols-12 gap-8 md:gap-12">
           <div className="col-span-12 md:col-span-4">
             <motion.div
-              initial={{ opacity: 0, y: 22 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, ease }}
             >
-              <p className="max-w-[11ch] text-[clamp(34px,4.5vw,64px)] font-semibold leading-[0.96] tracking-[-0.05em]">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight">
                 Playful,
                 <br />
-                sharp,
+                Sharp,
                 <br />
                 human.
+              </h2>
+
+              <p className="mt-8 text-xs md:text-sm leading-relaxed text-[#1847B7]/80 font-medium uppercase tracking-widest">
+                Skills:
               </p>
 
-              <p className="mt-8 max-w-[26ch] text-[14px] leading-6 text-[#111111]/72">
-                I work across branding, photography, web design, art direction,
-                and motion. I like graphic systems with tension and layouts that
-                feel clean without feeling generic.
-              </p>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="mt-6 flex items-center gap-3"
+              >
+                <div className="w-6 h-6 bg-[#FF6A00] transform rotate-45"></div>
+              </motion.div>
             </motion.div>
           </div>
 
-          <div className="col-span-12 md:col-span-3 md:col-start-6">
+          <div className="col-span-12 md:col-span-4">
             <motion.p
-              initial={{ opacity: 0, y: 22 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.9, delay: 0.08, ease }}
-              className="text-[13px] leading-6 text-[#111111]/70"
+              transition={{ duration: 0.8, delay: 0.1, ease }}
+              className="text-sm md:text-base leading-relaxed text-[#1847B7]/80"
             >
-              Orange Beanie comes from a personal moment that stuck — a strange,
-              memorable detail that ended up feeling like the right name for a
-              practice built on personality, instinct, and craft.
+              Orange Beanie comes from a personal moment that stuck — a strange, memorable detail that ended up feeling like the right name for a practice built on personality, instinct, and craft.
             </motion.p>
           </div>
 
-          <div className="col-span-12 md:col-span-3 md:col-start-10">
+          <div className="col-span-12 md:col-span-4">
             <motion.div
-              initial={{ opacity: 0, y: 28 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.95, delay: 0.14, ease }}
-              className="relative overflow-hidden bg-[#d9d6cf]"
+              transition={{ duration: 0.8, delay: 0.2, ease }}
+              className="aspect-square bg-gray-300 rounded-lg overflow-hidden"
             >
               <img
                 src="/dscf2906.jpg"
-                alt="Orange Beanie portrait"
-                className="aspect-[0.92/1] w-full object-cover grayscale"
+                alt="Portrait"
+                className="w-full h-full object-cover"
               />
             </motion.div>
           </div>
@@ -160,7 +173,7 @@ function AboutSection() {
   );
 }
 
-function WorkSection({
+function SelectedWorkSection({
   onProjectClick,
   onViewWork,
 }: {
@@ -168,51 +181,60 @@ function WorkSection({
   onViewWork: () => void;
 }) {
   const { projects } = useProjects();
+  const ref = useRef<HTMLElement | null>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const displayProjects = useMemo(() => {
     const featured = projects.filter((p) => p.featured);
-    return (featured.length ? featured : projects).slice(0, 5);
+    return (featured.length ? featured : projects).slice(0, 3);
   }, [projects]);
 
   return (
-    <section className="px-5 py-16 md:px-8 md:py-24 lg:px-10">
+    <section ref={ref} className="px-5 py-20 md:px-8 md:py-32 lg:px-10 bg-[#E8DCC5]">
       <div className="mx-auto max-w-[1600px]">
-        <div className="mb-10 flex items-end justify-between">
-          <h2
-            className="text-[clamp(32px,6vw,88px)] font-semibold tracking-[-0.06em]"
-            style={{ fontFamily: '"Space Grotesk", Inter, sans-serif' }}
-          >
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease }}
+          className="flex items-end justify-between mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight">
             Selected work
           </h2>
 
-          <button
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
             onClick={onViewWork}
-            className="hidden md:inline-flex items-center gap-2 text-[13px] hover:opacity-60"
+            className="hidden md:flex items-center gap-2 text-xs font-bold text-[#1847B7] hover:opacity-60 transition-opacity uppercase tracking-widest"
           >
             View all
-            <ArrowUpRight className="h-3.5 w-3.5" />
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
-        <div className="border-t border-black/20">
-          {displayProjects.map((project) => (
-            <button
+        <div className="border-t-2 border-[#1847B7]">
+          {displayProjects.map((project, index) => (
+            <motion.button
               key={project.id}
               onClick={() => onProjectClick?.(project.id)}
-              className="grid w-full grid-cols-[1.6fr_1fr_0.7fr] border-b border-black/20 py-6 text-left hover:bg-black/[0.02]"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.1, ease }}
+              className="grid w-full grid-cols-[2fr_1fr_1fr] border-b-2 border-[#1847B7] py-6 text-left hover:bg-[#1847B7]/5 transition-colors gap-8"
             >
-              <span className="text-[32px] font-semibold tracking-[-0.04em]">
+              <span className="text-2xl md:text-3xl font-bold text-[#1847B7]">
                 {project.title}
               </span>
 
-              <span className="text-[11px] uppercase tracking-[0.14em] text-[#111111]/60">
+              <span className="text-xs md:text-sm uppercase tracking-widest font-bold text-[#1847B7]/70">
                 {project.category}
               </span>
 
-              <span className="text-right text-[11px] uppercase tracking-[0.14em] text-[#111111]/60">
-                {project.year ?? "Project"} ↗
+              <span className="text-xs md:text-sm uppercase tracking-widest font-bold text-[#1847B7]/70 text-right">
+                {project.year ?? "Project"}
               </span>
-            </button>
+            </motion.button>
           ))}
         </div>
       </div>
@@ -220,10 +242,106 @@ function WorkSection({
   );
 }
 
-function FloatingSmiles() {
+function ContactSection() {
+  const ref = useRef<HTMLElement | null>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   return (
-    <div className="pointer-events-none absolute inset-0 opacity-20">
-      {/* decorative background removed for brevity */}
-    </div>
+    <section ref={ref} id="contact" className="px-5 py-20 md:px-8 md:py-32 lg:px-10 bg-[#E8DCC5]">
+      <div className="mx-auto max-w-[1600px]">
+        <div className="grid grid-cols-12 gap-12">
+          <div className="col-span-12 md:col-span-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, ease }}
+            >
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight mb-8">
+                Let's work
+                <br />
+                together?
+              </h2>
+
+              <p className="text-sm md:text-base leading-relaxed text-[#1847B7]/80 mb-8">
+                Branding, motion graphics, photography, visual design, and playful digital experiences.
+              </p>
+
+              <motion.a
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                href="mailto:orangebeaniedesign@gmail.com"
+                className="text-sm md:text-base font-bold text-[#1847B7] hover:opacity-60 transition-opacity underline underline-offset-2"
+              >
+                orangebeaniedesign@gmail.com
+              </motion.a>
+
+              <p className="mt-6 text-xs uppercase tracking-widest font-bold text-[#1847B7]/60">
+                Madeira-based, working worldwide.
+              </p>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="mt-12 flex items-center gap-3"
+              >
+                <div className="w-8 h-8 bg-[#FF6A00] transform rotate-45"></div>
+              </motion.div>
+            </motion.div>
+          </div>
+
+          <div className="col-span-12 md:col-span-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.1, ease }}
+            >
+              <h3 className="text-3xl md:text-4xl font-black mb-12 text-[#1847B7]">Say hi!</h3>
+
+              <form className="space-y-6">
+                <div className="border-b-2 border-[#1847B7]/30 pb-3">
+                  <label className="block text-xs uppercase tracking-widest font-bold text-[#1847B7]/60 mb-2">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    placeholder=""
+                    className="w-full bg-transparent text-[#1847B7] placeholder-[#1847B7]/40 focus:outline-none text-sm"
+                  />
+                </div>
+
+                <div className="border-b-2 border-[#1847B7]/30 pb-3">
+                  <label className="block text-xs uppercase tracking-widest font-bold text-[#1847B7]/60 mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    placeholder=""
+                    className="w-full bg-transparent text-[#1847B7] placeholder-[#1847B7]/40 focus:outline-none text-sm"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="mt-8 w-full bg-[#1847B7] text-white py-4 font-bold hover:bg-[#1847B7]/90 transition-colors"
+                >
+                  Send
+                </button>
+              </form>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="mt-12 flex justify-end"
+              >
+                <div className="w-12 h-12 bg-[#FF6A00] rounded-lg"></div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
